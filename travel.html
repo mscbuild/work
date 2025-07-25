@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust Travel Agency</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+
+        /* Mobile Menu Button */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://placehold.co/1200x600/4a90e2/ffffff?text=Explore+the+World') center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Trips Grid */
+        .trips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .trip-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .trip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .trip-image {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .trip-content {
+            padding: 1.5rem;
+        }
+
+        .trip-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .trip-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .trip-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        .trip-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            background-color: #f0f4f8;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-size: cover;
+            margin-right: 1rem;
+        }
+
+        .review-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .review-info p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Social Section */
+        .social-section {
+            text-align: center;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .social-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .followers-count {
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 1rem;
+        }
+
+        /* Sponsors Section */
+        .sponsors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .sponsor-logo {
+            height: 80px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #666;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .copyright {
+            border-top: 1px solid #555;
+            padding-top: 2rem;
+            color: #aaa;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            color: #333;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .trip-summary {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .trip-summary h3 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .trip-summary p {
+            margin: 0.2rem 0;
+            color: #666;
+        }
+
+        .price-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mobile-menu-header h3 {
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-content {
+            padding: 1rem;
+        }
+
+        .mobile-menu-content ul {
+            list-style: none;
+        }
+
+        .mobile-menu-content ul li {
+            margin-bottom: 1rem;
+        }
+
+        .mobile-menu-content ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: block;
+            padding: 0.8rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .mobile-menu-content ul li a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .header-content {
+                flex-direction: row;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .trips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-icons {
+                flex-wrap: wrap;
+            }
+
+            .social-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-globe-americas"></i>
+                Wanderlust Travels
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#deals">Last Minute Deals</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <h3>Menu</h3>
+            <button class="close-menu" id="closeMenu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-menu-content">
+            <ul>
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#deals">Last Minute Deals</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover the World with Us</h1>
+            <p>Experience unforgettable adventures with our curated travel packages. From tropical beaches to mountain peaks, we've got your dream destination covered.</p>
+            <a href="#destinations" class="btn">Explore Destinations</a>
+        </div>
+    </section>
+
+    <!-- Popular Destinations -->
+    <section id="destinations">
+        <div class="container">
+            <div class="section-title">
+                <h2>Popular Destinations</h2>
+                <p>Discover our most sought-after travel experiences around the globe</p>
+            </div>
+            <div class="trips-grid">
+                <!-- Trip 1 -->
+                <div class="trip-card">
+                    <div class="trip-image" style="background-image: url('https://placehold.co/400x300/4a90e2/ffffff?text=Bali+Paradise')"></div>
+                    <div class="trip-content">
+                        <h3>Bali Paradise Getaway</h3>
+                        <p>7 days exploring the beautiful beaches and temples of Bali</p>
+                        <div class="trip-meta">
+                            <span><i class="fas fa-calendar"></i> 7 days</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Indonesia</span>
+                        </div>
+                        <div class="trip-price">$1,299</div>
+                        <button class="btn book-btn" data-trip="Bali Paradise Getaway" data-price="1299">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Trip 2 -->
+                <div class="trip-card">
+                    <div class="trip-image" style="background-image: url('https://placehold.co/400x300/50c878/ffffff?text=Swiss+Alps')"></div>
+                    <div class="trip-content">
+                        <h3>Swiss Alps Adventure</h3>
+                        <p>10 days of skiing and mountain views in Switzerland</p>
+                        <div class="trip-meta">
+                            <span><i class="fas fa-calendar"></i> 10 days</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Switzerland</span>
+                        </div>
+                        <div class="trip-price">$2,499</div>
+                        <button class="btn book-btn" data-trip="Swiss Alps Adventure" data-price="2499">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Trip 3 -->
+                <div class="trip-card">
+                    <div class="trip-image" style="background-image: url('https://placehold.co/400x300/ff6b6b/ffffff?text=Safari+Kenya')"></div>
+                    <div class="trip-content">
+                        <h3>Kenya Safari Experience</h3>
+                        <p>8 days wildlife adventure in the heart of Africa</p>
+                        <div class="trip-meta">
+                            <span><i class="fas fa-calendar"></i> 8 days</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Kenya</span>
+                        </div>
+                        <div class="trip-price">$1,899</div>
+                        <button class="btn book-btn" data-trip="Kenya Safari Experience" data-price="1899">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Last Minute Deals -->
+    <section id="deals" class="reviews-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Last Minute Deals</h2>
+                <p>Limited time offers for spontaneous travelers</p>
+            </div>
+            <div class="trips-grid">
+                <!-- Deal 1 -->
+                <div class="trip-card">
+                    <div class="trip-image" style="background-image: url('https://placehold.co/400x300/ffa500/ffffff?text=Greece+Islands')"></div>
+                    <div class="trip-content">
+                        <h3>Greece Island Hopping</h3>
+                        <p>5 days exploring the beautiful Greek islands</p>
+                        <div class="trip-meta">
+                            <span><i class="fas fa-calendar"></i> 5 days</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Greece</span>
+                        </div>
+                        <div class="trip-price"><span style="text-decoration: line-through; color: #999;">$1,199</span> $899</div>
+                        <button class="btn book-btn" data-trip="Greece Island Hopping" data-price="899">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Deal 2 -->
+                <div class="trip-card">
+                    <div class="trip-image" style="background-image: url('https://placehold.co/400x300/9370db/ffffff?text=Japan+Culture')"></div>
+                    <div class="trip-content">
+                        <h3>Japan Cultural Tour</h3>
+                        <p>6 days experiencing traditional and modern Japan</p>
+                        <div class="trip-meta">
+                            <span><i class="fas fa-calendar"></i> 6 days</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Japan</span>
+                        </div>
+                        <div class="trip-price"><span style="text-decoration: line-through; color: #999;">$1,999</span> $1,499</div>
+                        <button class="btn book-btn" data-trip="Japan Cultural Tour" data-price="1499">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Deal 3 -->
+                <div class="trip-card">
+                    <div class="trip-image" style="background-image: url('https://placehold.co/400x300/20b2aa/ffffff?text=Costa+Rica')"></div>
+                    <div class="trip-content">
+                        <h3>Costa Rica Eco Adventure</h3>
+                        <p>7 days exploring rainforests and beaches</p>
+                        <div class="trip-meta">
+                            <span><i class="fas fa-calendar"></i> 7 days</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Costa Rica</span>
+                        </div>
+                        <div class="trip-price"><span style="text-decoration: line-through; color: #999;">$1,599</span> $1,199</div>
+                        <button class="btn book-btn" data-trip="Costa Rica Eco Adventure" data-price="1199">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section id="reviews">
+        <div class="container">
+            <div class="section-title">
+                <h2>Customer Reviews</h2>
+                <p>What our travelers say about their experiences</p>
+            </div>
+            <div class="reviews-grid">
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background-image: url('https://placehold.co/60x60/4a90e2/ffffff?text=SM')"></div>
+                        <div class="review-info">
+                            <h4>Sarah Mitchell</h4>
+                            <p>Bali Paradise Getaway</p>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"An absolutely incredible experience! The accommodations were perfect and the tour guides were knowledgeable. Will definitely book with Wanderlust again!"</p>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background-image: url('https://placehold.co/60x60/50c878/ffffff?text=DR')"></div>
+                        <div class="review-info">
+                            <h4>David Rodriguez</h4>
+                            <p>Swiss Alps Adventure</p>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">"The Swiss Alps trip exceeded all expectations. The skiing conditions were perfect and the mountain views were breathtaking. Highly recommend this adventure!"</p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background-image: url('https://placehold.co/60x60/ff6b6b/ffffff?text=EJ')"></div>
+                        <div class="review-info">
+                            <h4>Emma Johnson</h4>
+                            <p>Kenya Safari Experience</p>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"The safari was a once-in-a-lifetime experience. Seeing the wildlife up close was incredible. The lodges were comfortable and the staff went above and beyond."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media -->
+    <section class="social-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Follow Our Journey</h2>
+                <p>Join our community of travel enthusiasts</p>
+            </div>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
+            </div>
+            <div class="followers-count">
+                <i class="fas fa-users"></i> Join 50,000+ happy travelers on our social networks
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsors -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Travel Partners</h2>
+                <p>Trusted by leading travel brands worldwide</p>
+            </div>
+            <div class="sponsors-grid">
+                <div class="sponsor-logo">AirGlobal</div>
+                <div class="sponsor-logo">HotelLux</div>
+                <div class="sponsor-logo">CarRental Pro</div>
+                <div class="sponsor-logo">TravelSafe</div>
+                <div class="sponsor-logo">Adventure Gear</div>
+                <div class="sponsor-logo">Local Guides</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Wanderlust Travels</h3>
+                    <p>Making travel dreams come true since 2010. We specialize in creating unforgettable experiences around the world.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#destinations">Destinations</a></li>
+                        <li><a href="#deals">Last Minute Deals</a></li>
+                        <li><a href="#reviews">Customer Reviews</a></li>
+                        <li><a href="#">Travel Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Travel Street, New York</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@wanderlust.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Wanderlust Travel Agency. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2>Book Your Trip</h2>
+            </div>
+            <div class="trip-summary">
+                <h3 id="modalTripName">Trip Name</h3>
+                <p><i class="fas fa-calendar"></i> <span id="modalTripDuration">7 days</span></p>
+                <p><i class="fas fa-map-marker-alt"></i> <span id="modalTripLocation">Destination</span></p>
+            </div>
+            <div class="price-total">Total: $<span id="modalTripPrice">0</span></div>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="travelDate">Preferred Travel Date</label>
+                    <input type="date" id="travelDate" name="travelDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="travelers">Number of Travelers</label>
+                    <select id="travelers" name="travelers" required>
+                        <option value="1">1 Traveler</option>
+                        <option value="2">2 Travelers</option>
+                        <option value="3">3 Travelers</option>
+                        <option value="4">4 Travelers</option>
+                        <option value="5">5+ Travelers</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu functionality
+        const menuToggle = document.getElementById("menuToggle");
+        const closeMenu = document.getElementById("closeMenu");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const overlay = document.getElementById("overlay");
+
+        menuToggle.addEventListener("click", function() {
+            mobileMenu.classList.add("active");
+            overlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+        });
+
+        closeMenu.addEventListener("click", function() {
+            mobileMenu.classList.remove("active");
+            overlay.classList.remove("active");
+            document.body.style.overflow = "";
+        });
+
+        overlay.addEventListener("click", function() {
+            mobileMenu.classList.remove("active");
+            overlay.classList.remove("active");
+            document.body.style.overflow = "";
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll(".mobile-menu-content a").forEach(link => {
+            link.addEventListener("click", function() {
+                mobileMenu.classList.remove("active");
+                overlay.classList.remove("active");
+                document.body.style.overflow = "";
+            });
+        });
+
+        // Modal functionality
+        const modal = document.getElementById("bookingModal");
+        const bookButtons = document.querySelectorAll(".book-btn");
+        const closeBtn = document.querySelector(".close");
+        const bookingForm = document.getElementById("bookingForm");
+
+        // Open modal with trip details
+        bookButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const tripName = this.getAttribute("data-trip");
+                const tripPrice = this.getAttribute("data-price");
+                
+                document.getElementById("modalTripName").textContent = tripName;
+                document.getElementById("modalTripPrice").textContent = tripPrice;
+                
+                // Set minimum date to today
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById("travelDate").min = today;
+                
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden";
+            });
+        });
+
+        // Close modal
+        closeBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+            document.body.style.overflow = "";
+        });
+
+        window.addEventListener("click", function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "";
+            }
+        });
+
+        // Form submission
+        bookingForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            
+            // Get trip details
+            data.tripName = document.getElementById("modalTripName").textContent;
+            data.tripPrice = document.getElementById("modalTripPrice").textContent;
+            
+            // Simulate sending email (in a real app, this would be done server-side)
+            console.log("Booking ", data);
+            alert("Thank you for your booking! We've sent a confirmation to dev@example.com");
+            
+            // Close modal and reset form
+            modal.style.display = "none";
+            document.body.style.overflow = "";
+            this.reset();
+        });
+
+        // Set minimum date for travel date input
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("travelDate").min = today;
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
