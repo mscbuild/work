@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serene Spa & Massage Parlor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f5f0;
+            color: #5d4037;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #8d6e63 0%, #5d4037 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #d7ccc8;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+
+        /* Mobile Menu Button */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://placehold.co/1200x600/8d6e63/ffffff?text=Relax+%26+Rejuvenate') center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #a1887f;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #8d6e63;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #5d4037;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #8d6e63;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            height: 400px;
+            background: url('https://placehold.co/500x400/d7ccc8/5d4037?text=Spa+Environment') center/cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #5d4037;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: #795548;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .service-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .service-content {
+            padding: 1.5rem;
+        }
+
+        .service-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #5d4037;
+        }
+
+        .service-content p {
+            color: #8d6e63;
+            margin-bottom: 1rem;
+        }
+
+        .service-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #a1887f;
+            margin-bottom: 1rem;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            background-color: #efebe9;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-size: cover;
+            margin-right: 1rem;
+        }
+
+        .review-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .review-info p {
+            color: #8d6e63;
+            font-size: 0.9rem;
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            color: #795548;
+            font-style: italic;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-card i {
+            font-size: 2.5rem;
+            color: #a1887f;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            margin-bottom: 1rem;
+            color: #5d4037;
+        }
+
+        /* Footer */
+        footer {
+            background: #5d4037;
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: #d7ccc8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .copyright {
+            border-top: 1px solid #8d6e63;
+            padding-top: 2rem;
+            color: #d7ccc8;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            color: #5d4037;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #5d4037;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #d7ccc8;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #a1887f;
+            outline: none;
+        }
+
+        .service-summary {
+            background: #f8f5f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-summary h3 {
+            margin-bottom: 0.5rem;
+            color: #5d4037;
+        }
+
+        .service-summary p {
+            margin: 0.2rem 0;
+            color: #8d6e63;
+        }
+
+        .price-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #a1887f;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(135deg, #8d6e63 0%, #5d4037 100%);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mobile-menu-header h3 {
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-content {
+            padding: 1rem;
+        }
+
+        .mobile-menu-content ul {
+            list-style: none;
+        }
+
+        .mobile-menu-content ul li {
+            margin-bottom: 1rem;
+        }
+
+        .mobile-menu-content ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: block;
+            padding: 0.8rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .mobile-menu-content ul li a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .header-content {
+                flex-direction: row;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-image {
+                height: 300px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-spa"></i>
+                Serene Spa
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <h3>Menu</h3>
+            <button class="close-menu" id="closeMenu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-menu-content">
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Experience Ultimate Relaxation</h1>
+            <p>Indulge in our premium massage services designed to melt away stress and rejuvenate your mind, body, and soul.</p>
+            <button class="btn book-btn" data-service="Any Service" data-price="0">Book Now</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Serene Spa</h2>
+                <p>Your sanctuary for wellness and relaxation</p>
+            </div>
+            <div class="about-content">
+                <div class="about-image"></div>
+                <div class="about-text">
+                    <h3>Welcome to Your Peaceful Retreat</h3>
+                    <p>At Serene Spa, we believe in the power of touch to heal and restore. Our journey began over a decade ago with a simple mission: to provide exceptional massage therapy that promotes wellness and inner peace.</p>
+                    <p>Our team of certified massage therapists are passionate about their craft and dedicated to providing personalized treatments that address your unique needs. We use only the finest organic oils and create an atmosphere of tranquility that allows you to escape from the stresses of daily life.</p>
+                    <p>Whether you're seeking relief from chronic pain, recovering from an injury, or simply looking to unwind, our spa offers a range of therapeutic treatments designed to enhance your well-being and leave you feeling refreshed and renewed.</p>
+                    <button class="btn book-btn" data-service="Any Service" data-price="0">Book Your Session</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="reviews-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Massage Services</h2>
+                <p>Tailored treatments for your specific needs</p>
+            </div>
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('https://placehold.co/400x300/a1887f/ffffff?text=Swedish+Massage')"></div>
+                    <div class="service-content">
+                        <h3>Swedish Massage</h3>
+                        <p>Classic relaxation massage using long strokes and kneading techniques to promote circulation and relaxation.</p>
+                        <div class="service-price">$85 (60 min) | $125 (90 min)</div>
+                        <button class="btn book-btn" data-service="Swedish Massage" data-price="85">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('https://placehold.co/400x300/8d6e63/ffffff?text=Deep+Tissue')"></div>
+                    <div class="service-content">
+                        <h3>Deep Tissue Massage</h3>
+                        <p>Intensive therapy targeting deeper layers of muscle and connective tissue to relieve chronic tension.</p>
+                        <div class="service-price">$95 (60 min) | $140 (90 min)</div>
+                        <button class="btn book-btn" data-service="Deep Tissue Massage" data-price="95">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('https://placehold.co/400x300/d7ccc8/5d4037?text=Hot+Stone')"></div>
+                    <div class="service-content">
+                        <h3>Hot Stone Massage</h3>
+                        <p>Warm stones are placed on key points of the body to melt away tension and promote deep relaxation.</p>
+                        <div class="service-price">$110 (60 min) | $160 (90 min)</div>
+                        <button class="btn book-btn" data-service="Hot Stone Massage" data-price="110">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('https://placehold.co/400x300/bcaaa4/5d4037?text=Aromatherapy')"></div>
+                    <div class="service-content">
+                        <h3>Aromatherapy Massage</h3>
+                        <p>Customized essential oil blends combined with massage techniques to enhance mood and well-being.</p>
+                        <div class="service-price">$90 (60 min) | $135 (90 min)</div>
+                        <button class="btn book-btn" data-service="Aromatherapy Massage" data-price="90">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('https://placehold.co/400x300/efebe9/5d4037?text=Couples+Massage')"></div>
+                    <div class="service-content">
+                        <h3>Couples Massage</h3>
+                        <p>Share the experience with your partner in our private couples suite for ultimate relaxation.</p>
+                        <div class="service-price">$160 (60 min) | $240 (90 min)</div>
+                        <button class="btn book-btn" data-service="Couples Massage" data-price="160">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('https://placehold.co/400x300/a1887f/ffffff?text=Prenatal+Massage')"></div>
+                    <div class="service-content">
+                        <h3>Prenatal Massage</h3>
+                        <p>Specialized massage designed to support expectant mothers and relieve pregnancy-related discomfort.</p>
+                        <div class="service-price">$80 (60 min) | $120 (90 min)</div>
+                        <button class="btn book-btn" data-service="Prenatal Massage" data-price="80">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section id="reviews">
+        <div class="container">
+            <div class="section-title">
+                <h2>Customer Testimonials</h2>
+                <p>What our clients say about their experience</p>
+            </div>
+            <div class="reviews-grid">
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background-image: url('https://placehold.co/60x60/a1887f/ffffff?text=JS')"></div>
+                        <div class="review-info">
+                            <h4>Jennifer Smith</h4>
+                            <p>Swedish Massage</p>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"The most relaxing massage I've ever had! The therapist was incredibly skilled and attentive to my needs. I left feeling completely rejuvenated."</p>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background-image: url('https://placehold.co/60x60/8d6e63/ffffff?text=MR')"></div>
+                        <div class="review-info">
+                            <h4>Michael Rodriguez</h4>
+                            <p>Deep Tissue Massage</p>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">"As someone with chronic back pain, I was skeptical, but this massage truly made a difference. The therapist knew exactly how to work out my knots."</p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background-image: url('https://placehold.co/60x60/d7ccc8/5d4037?text=EP')"></div>
+                        <div class="review-info">
+                            <h4>Emma Parker</h4>
+                            <p>Hot Stone Massage</p>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"The hot stone massage was pure bliss! The warmth of the stones combined with the skilled hands of the therapist was heavenly. I can't wait to come back."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>We'd love to hear from you</p>
+            </div>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Visit Us</h3>
+                    <p>123 Wellness Street<br>Spa City, SC 12345</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-phone"></i>
+                    <h3>Call Us</h3>
+                    <p>(555) 123-4567<br>Mon-Sat: 9am-8pm<br>Sun: 10am-6pm</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email Us</h3>
+                    <p>info@serenespa.com<br>reservations@serenespa.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Serene Spa</h3>
+                    <p>Your sanctuary for wellness and relaxation. We are committed to providing exceptional massage therapy in a tranquil environment.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Hours</h3>
+                    <ul>
+                        <li>Monday - Saturday: 9am - 8pm</li>
+                        <li>Sunday: 10am - 6pm</li>
+                        <li>Holidays: Closed</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Serene Spa & Massage Parlor. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2>Book Your Massage</h2>
+            </div>
+            <div class="service-summary">
+                <h3 id="modalServiceName">Service Name</h3>
+                <p><i class="fas fa-clock"></i> Duration: <span id="modalServiceDuration">60 minutes</span></p>
+            </div>
+            <div class="price-total">Starting at: $<span id="modalServicePrice">0</span></div>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookingDate">Preferred Date</label>
+                    <input type="date" id="bookingDate" name="bookingDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookingTime">Preferred Time</label>
+                    <select id="bookingTime" name="bookingTime" required>
+                        <option value="">Select a time</option>
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="1:00 PM">1:00 PM</option>
+                        <option value="2:00 PM">2:00 PM</option>
+                        <option value="3:00 PM">3:00 PM</option>
+                        <option value="4:00 PM">4:00 PM</option>
+                        <option value="5:00 PM">5:00 PM</option>
+                        <option value="6:00 PM">6:00 PM</option>
+                        <option value="7:00 PM">7:00 PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <select id="serviceType" name="serviceType" required>
+                        <option value="60 min">60 minutes</option>
+                        <option value="90 min">90 minutes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Special Requests (Optional)</label>
+                    <textarea id="message" name="message" rows="3" style="width: 100%; padding: 12px; border: 2px solid #d7ccc8; border-radius: 8px;"></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu functionality
+        const menuToggle = document.getElementById("menuToggle");
+        const closeMenu = document.getElementById("closeMenu");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const overlay = document.getElementById("overlay");
+
+        menuToggle.addEventListener("click", function() {
+            mobileMenu.classList.add("active");
+            overlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+        });
+
+        closeMenu.addEventListener("click", function() {
+            mobileMenu.classList.remove("active");
+            overlay.classList.remove("active");
+            document.body.style.overflow = "";
+        });
+
+        overlay.addEventListener("click", function() {
+            mobileMenu.classList.remove("active");
+            overlay.classList.remove("active");
+            document.body.style.overflow = "";
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll(".mobile-menu-content a").forEach(link => {
+            link.addEventListener("click", function() {
+                mobileMenu.classList.remove("active");
+                overlay.classList.remove("active");
+                document.body.style.overflow = "";
+            });
+        });
+
+        // Modal functionality
+        const modal = document.getElementById("bookingModal");
+        const bookButtons = document.querySelectorAll(".book-btn");
+        const closeBtn = document.querySelector(".close");
+        const bookingForm = document.getElementById("bookingForm");
+
+        // Open modal with service details
+        bookButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const serviceName = this.getAttribute("data-service");
+                const servicePrice = this.getAttribute("data-price");
+                
+                document.getElementById("modalServiceName").textContent = serviceName;
+                document.getElementById("modalServicePrice").textContent = servicePrice;
+                
+                // Set minimum date to today
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById("bookingDate").min = today;
+                
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden";
+            });
+        });
+
+        // Close modal
+        closeBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+            document.body.style.overflow = "";
+        });
+
+        window.addEventListener("click", function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "";
+            }
+        });
+
+        // Form submission
+        bookingForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            
+            // Get service details
+            data.serviceName = document.getElementById("modalServiceName").textContent;
+            data.servicePrice = document.getElementById("modalServicePrice").textContent;
+            
+            // Simulate sending email (in a real app, this would be done server-side)
+            console.log("Booking ", data);
+            alert("Thank you for your booking! We've sent a confirmation to dev@example.com");
+            
+            // Close modal and reset form
+            modal.style.display = "none";
+            document.body.style.overflow = "";
+            this.reset();
+        });
+
+        // Set minimum date for booking date input
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("bookingDate").min = today;
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                if (mobileMenu.classList.contains("active")) {
+                    mobileMenu.classList.remove("active");
+                    overlay.classList.remove("active");
+                    document.body.style.overflow = "";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
