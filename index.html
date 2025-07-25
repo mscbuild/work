@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="ClearType" content="true" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex Johnson | Web Developer Portfolio</title>
+    <meta name="robots" content="nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="referrer" content="no-referrer">
+	<title>Alex Johnson | Web Developer Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -726,7 +731,7 @@
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
+            <h2 class="section-title">Contact me</h2>
             <div class="contact-content">
                 <div class="contact-info">
                     <h3>Let's Talk About Your Project</h3>
@@ -855,38 +860,6 @@
                 header.style.background = 'white';
             }
         });
-    </script>
-    <script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-  $(document).ready(function() {
-    const userLang = navigator.language || navigator.userLanguage;
-    const pageLang = $('html').attr('lang');
-
-    if (userLang && pageLang && userLang.toLowerCase() !== pageLang.toLowerCase()) {
-      // Загружаем Google Translate API
-      $.getScript('https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', function() {
-        new google.translate.TranslateElement({
-          pageLanguage: pageLang,
-          includedLanguages: 'en,ru,fr,de,es,pl,lv,ua', // Добавьте нужные языки
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-          autoDisplay: false
-        }, 'google_translate_element');
-
-        // Добавляем обработчик события переключения языка
-        $(window).on('load', function() {
-          $('.goog-te-combo').on('change', function() {
-            if ($(this).val() !== pageLang) {
-              console.log("Перевод на: " + $(this).val());
-                // Добавьте код для перевода страницы
-                // Например, можно использовать $.ajax для получения переведенного контента
-            }
-          });
-        });
-      });
-    }
-  });
-</script>
     </script>
 </body>
 </html>
