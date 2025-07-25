@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew & Bean Coffee Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f9f5f0;
+            color: #5d4037;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #5d4037 0%, #3e2723 100%);
+            color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+            color: #d7ccc8;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff5722;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(93, 64, 55, 0.7), rgba(93, 64, 55, 0.8)), url('https://placehold.co/1200x600/5d4037/d7ccc8?text=Fresh+Coffee+Beans');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: #ff5722;
+            color: white;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background: #e64a19;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #5d4037;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #ff5722;
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* Products Section */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #5d4037;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #757575;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            min-height: 60px;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ff5722;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #e64a19;
+        }
+
+        /* Delivery Section */
+        .delivery-section {
+            background: #f3e5db;
+            padding: 4rem 0;
+        }
+
+        .delivery-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .delivery-option {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .delivery-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .delivery-icon {
+            font-size: 3rem;
+            color: #ff5722;
+            margin-bottom: 1rem;
+        }
+
+        .delivery-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #5d4037;
+            margin-bottom: 1rem;
+        }
+
+        .delivery-description {
+            color: #757575;
+            margin-bottom: 1.5rem;
+        }
+
+        .delivery-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ff5722;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(90deg, #5d4037 0%, #3e2723 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        /* Cart Modal */
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .item-price {
+            color: #ff5722;
+            font-weight: 600;
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            background: #f5f5f5;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            margin: 0 0.5rem;
+            padding: 0.3rem;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #f44336;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 1rem;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 1rem 0;
+            border-top: 2px solid #eee;
+        }
+
+        .checkout-btn {
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .checkout-btn:hover {
+            background: #e64a19;
+        }
+
+        /* Registration Form */
+        .registration-form {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #5d4037;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #e0d6cc;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #ff5722;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.2);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .submit-btn {
+            background: linear-gradient(90deg, #ff5722 0%, #5d4037 100%);
+            color: white;
+            padding: 1.1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Checkout Form */
+        .checkout-form {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .customer-info {
+            background: #f9f5f0;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .customer-info h3 {
+            margin-bottom: 1rem;
+            color: #5d4037;
+        }
+
+        .delivery-option-select {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .delivery-option-card {
+            flex: 1;
+            min-width: 150px;
+            border: 2px solid #e0d6cc;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delivery-option-card:hover {
+            border-color: #ff5722;
+        }
+
+        .delivery-option-card.selected {
+            border-color: #ff5722;
+            background: #fff3ee;
+        }
+
+        .delivery-option-card input {
+            display: none;
+        }
+
+        .payment-methods {
+            margin: 1.5rem 0;
+        }
+
+        .payment-methods h3 {
+            margin-bottom: 1rem;
+            color: #5d4037;
+        }
+
+        .payment-methods label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+        }
+
+        .payment-methods input {
+            margin-right: 0.8rem;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(93, 64, 55, 0.95);
+            z-index: 200;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav ul {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-nav ul li {
+            margin: 1.5rem 0;
+        }
+
+        .mobile-nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 500;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        footer {
+            background: #3e2723;
+            color: #d7ccc8;
+            text-align: center;
+            padding: 2.5rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ff5722;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links li {
+            margin: 0 1rem;
+        }
+
+        .footer-links a {
+            color: #d7ccc8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: #a1887f;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: center;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+            }
+
+            .footer-links li {
+                margin: 0.5rem 1rem;
+            }
+            
+            .delivery-option-select {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon"><i class="fas fa-mug-hot"></i></span>
+                <span>Brew & Bean</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#delivery">Delivery</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose">×</button>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#delivery">Delivery</a></li>
+        </ul>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Premium Coffee & More</h1>
+            <p>Experience the finest coffee beans, expertly roasted and delivered to your door. Join our community of coffee lovers today.</p>
+            <button class="cta-button" id="shopNowBtn">Shop Now</button>
+        </div>
+    </section>
+
+    <section class="container" id="products">
+        <h2 class="section-title">Our Products</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <img src="https://placehold.co/300x200/5d4037/d7ccc8?text=Ethiopian+Beans" alt="Ethiopian Coffee Beans" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Ethiopian Single Origin</h3>
+                    <p class="product-description">Rich, fruity notes with a bright acidity. Perfect for pour-over brewing.</p>
+                    <div class="product-price">$14.99</div>
+                    <button class="add-to-cart" data-id="1" data-name="Ethiopian Single Origin" data-price="14.99">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://placehold.co/300x200/3e2723/d7ccc8?text=Colombian+Beans" alt="Colombian Coffee Beans" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Colombian Supremo</h3>
+                    <p class="product-description">Smooth, well-balanced with hints of caramel and nuts. Medium roast.</p>
+                    <div class="product-price">$13.99</div>
+                    <button class="add-to-cart" data-id="2" data-name="Colombian Supremo" data-price="13.99">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://placehold.co/300x200/8d6e63/d7ccc8?text=French+Roast" alt="French Roast Coffee" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">French Roast Dark</h3>
+                    <p class="product-description">Bold, smoky flavor with low acidity. Perfect for espresso lovers.</p>
+                    <div class="product-price">$12.99</div>
+                    <button class="add-to-cart" data-id="3" data-name="French Roast Dark" data-price="12.99">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://placehold.co/300x200/a1887f/d7ccc8?text=Coffee+Mug" alt="Ceramic Coffee Mug" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Ceramic Coffee Mug</h3>
+                    <p class="product-description">Handcrafted ceramic mug with heat-resistant design. Holds 12oz of your favorite brew.</p>
+                    <div class="product-price">$19.99</div>
+                    <button class="add-to-cart" data-id="4" data-name="Ceramic Coffee Mug" data-price="19.99">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://placehold.co/300x200/6d4c41/d7ccc8?text=Coffee+Grinder" alt="Coffee Grinder" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Electric Coffee Grinder</h3>
+                    <p class="product-description">Precision burr grinder with 15 settings. Grind fresh beans for perfect flavor.</p>
+                    <div class="product-price">$49.99</div>
+                    <button class="add-to-cart" data-id="5" data-name="Electric Coffee Grinder" data-price="49.99">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://placehold.co/300x200/4e342e/d7ccc8?text=French+Press" alt="French Press" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">French Press Set</h3>
+                    <p class="product-description">Glass French press with stainless steel filter. Brews 34oz of rich coffee.</p>
+                    <div class="product-price">$24.99</div>
+                    <button class="add-to-cart" data-id="6" data-name="French Press Set" data-price="24.99">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="delivery-section" id="delivery">
+        <div class="container">
+            <h2 class="section-title">Delivery Options</h2>
+            <div class="delivery-options">
+                <div class="delivery-option">
+                    <div class="delivery-icon">
+                        <i class="fas fa-bicycle"></i>
+                    </div>
+                    <h3 class="delivery-title">Standard Delivery</h3>
+                    <p class="delivery-description">Delivered within 3-5 business days. Perfect for regular coffee supplies.</p>
+                    <div class="delivery-price">Free on orders over $30</div>
+                    <div class="delivery-price">$5.99 for orders under $30</div>
+                </div>
+                <div class="delivery-option">
+                    <div class="delivery-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="delivery-title">Express Delivery</h3>
+                    <p class="delivery-description">Delivered within 1-2 business days. Ideal for urgent coffee needs.</p>
+                    <div class="delivery-price">$9.99 flat rate</div>
+                </div>
+                <div class="delivery-option">
+                    <div class="delivery-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="delivery-title">Scheduled Delivery</h3>
+                    <p class="delivery-description">Choose your preferred delivery date. Great for gifts or special occasions.</p>
+                    <div class="delivery-price">$7.99 + $2.99 per item</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Your Shopping Cart</h2>
+                <button class="modal-close" id="cartModalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be dynamically added here -->
+                    <p id="emptyCartMessage">Your cart is empty. Add some products!</p>
+                </div>
+                <div class="cart-total" id="cartTotal">
+                    Total: $0.00
+                </div>
+                <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div class="modal" id="registrationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Customer Registration</h2>
+                <button class="modal-close" id="registrationModalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="registration-form" id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="regFirstName">First Name *</label>
+                            <input type="text" id="regFirstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regLastName">Last Name *</label>
+                            <input type="text" id="regLastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email Address *</label>
+                        <input type="email" id="regEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPhone">Phone Number</label>
+                        <input type="tel" id="regPhone" name="phone">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="regAddress">Street Address *</label>
+                            <input type="text" id="regAddress" name="address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regCity">City *</label>
+                            <input type="text" id="regCity" name="city" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="regState">State *</label>
+                            <select id="regState" name="state" required>
+                                <option value="">Select State</option>
+                                <option value="CA">California</option>
+                                <option value="NY">New York</option>
+                                <option value="TX">Texas</option>
+                                <option value="FL">Florida</option>
+                                <option value="WA">Washington</option>
+                                <option value="OR">Oregon</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="regZip">ZIP Code *</label>
+                            <input type="text" id="regZip" name="zip" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="regDeliveryNotes">Delivery Instructions</label>
+                        <textarea id="regDeliveryNotes" name="deliveryNotes" rows="3" placeholder="Any special delivery instructions?"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Register & Continue Shopping</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Checkout</h2>
+                <button class="modal-close" id="checkoutModalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="customer-info">
+                    <h3>Delivery Information</h3>
+                    <div id="customerDetails">
+                        <p>Please register to provide delivery information</p>
+                        <button class="checkout-btn" id="registerForCheckoutBtn">Register Now</button>
+                    </div>
+                </div>
+                
+                <div class="delivery-option-select">
+                    <label class="delivery-option-card">
+                        <input type="radio" name="deliveryOption" value="standard">
+                        <h4>Standard</h4>
+                        <p>3-5 business days</p>
+                        <p id="standardPrice">Free over $30</p>
+                    </label>
+                    <label class="delivery-option-card">
+                        <input type="radio" name="deliveryOption" value="express">
+                        <h4>Express</h4>
+                        <p>1-2 business days</p>
+                        <p>$9.99</p>
+                    </label>
+                    <label class="delivery-option-card">
+                        <input type="radio" name="deliveryOption" value="scheduled">
+                        <h4>Scheduled</h4>
+                        <p>Choose date</p>
+                        <p>$7.99 + $2.99/item</p>
+                    </label>
+                </div>
+                
+                <div class="payment-methods">
+                    <h3>Payment Method</h3>
+                    <label>
+                        <input type="radio" name="paymentMethod" value="credit" checked>
+                        Credit/Debit Card
+                    </label>
+                    <label>
+                        <input type="radio" name="paymentMethod" value="paypal">
+                        PayPal
+                    </label>
+                    <label>
+                        <input type="radio" name="paymentMethod" value="apple">
+                        Apple Pay
+                    </label>
+                </div>
+                
+                <form class="checkout-form" id="checkoutForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="123">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardName">Name on Card</label>
+                        <input type="text" id="cardName" name="cardName" placeholder="John Doe">
+                    </div>
+                    <button type="submit" class="submit-btn">Complete Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-mug-hot"></i> Brew & Bean Coffee
+            </div>
+            <p>Premium coffee beans and accessories delivered to your door</p>
+            <ul class="footer-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#delivery">Delivery</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+            <div class="copyright">
+                &copy; 2023 Brew & Bean Coffee Shop. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality
+        let cart = [];
+        let customerInfo = null;
+        
+        const cartIcon = document.getElementById('cartIcon');
+        const cartCount = document.getElementById('cartCount');
+        const cartModal = document.getElementById('cartModal');
+        const cartModalClose = document.getElementById('cartModalClose');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const emptyCartMessage = document.getElementById('emptyCartMessage');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        // Modals
+        const registrationModal = document.getElementById('registrationModal');
+        const registrationModalClose = document.getElementById('registrationModalClose');
+        const checkoutModal = document.getElementById('checkoutModal');
+        const checkoutModalClose = document.getElementById('checkoutModalClose');
+        const registerForCheckoutBtn = document.getElementById('registerForCheckoutBtn');
+
+        // Open cart modal
+        cartIcon.addEventListener('click', () => {
+            updateCartDisplay();
+            cartModal.classList.add('active');
+        });
+
+        // Close cart modal
+        cartModalClose.addEventListener('click', () => {
+            cartModal.classList.remove('active');
+        });
+
+        // Close cart modal when clicking outside
+        cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.classList.remove('active');
+            }
+        });
+
+        // Add to cart functionality
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const id = e.target.dataset.id;
+                const name = e.target.dataset.name;
+                const price = parseFloat(e.target.dataset.price);
+                
+                // Check if item already in cart
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: id,
+                        name: name,
+                        price: price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCartCount();
+                showNotification(`${name} added to cart!`);
+            });
+        });
+
+        // Update cart count display
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+
+        // Update cart display in modal
+        function updateCartDisplay() {
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartItems.innerHTML = '';
+                cartTotal.textContent = 'Total: $0.00';
+                return;
+            }
+            
+            emptyCartMessage.style.display = 'none';
+            cartItems.innerHTML = '';
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-price">$${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="item-quantity">
+                        <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                        <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
+                        <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                    </div>
+                    <div class="item-total">$${itemTotal.toFixed(2)}</div>
+                    <button class="remove-item" data-id="${item.id}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.dataset.id;
+                    updateQuantity(id, -1);
+                });
+            });
+            
+            document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.dataset.id;
+                    updateQuantity(id, 1);
+                });
+            });
+            
+            // Add event listeners to quantity inputs
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const id = e.target.dataset.id;
+                    const newQuantity = parseInt(e.target.value);
+                    if (newQuantity > 0) {
+                        updateQuantity(id, newQuantity - cart.find(item => item.id === id).quantity);
+                    }
+                });
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.closest('.remove-item').dataset.id;
+                    removeFromCart(id);
+                });
+            });
+        }
+
+        // Update item quantity
+        function updateQuantity(id, change) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(id);
+                } else {
+                    updateCartCount();
+                    updateCartDisplay();
+                }
+            }
+        }
+
+        // Remove item from cart
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartCount();
+            updateCartDisplay();
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = '#4CAF50';
+            notification.style.color = 'white';
+            notification.style.padding = '15px 20px';
+            notification.style.borderRadius = '4px';
+            notification.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+            notification.style.zIndex = '1000';
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.3s';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Fade in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Checkout button
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            cartModal.classList.remove('active');
+            checkoutModal.classList.add('active');
+            
+            // Update customer details if registered
+            if (customerInfo) {
+                document.getElementById('customerDetails').innerHTML = `
+                    <p><strong>${customerInfo.firstName} ${customerInfo.lastName}</strong></p>
+                    <p>${customerInfo.address}, ${customerInfo.city}, ${customerInfo.state} ${customerInfo.zip}</p>
+                    <p>Email: ${customerInfo.email} | Phone: ${customerInfo.phone || 'N/A'}</p>
+                `;
+            }
+        });
+
+        // Registration Modal
+        registrationModalClose.addEventListener('click', () => {
+            registrationModal.classList.remove('active');
+        });
+
+        registrationModal.addEventListener('click', (e) => {
+            if (e.target === registrationModal) {
+                registrationModal.classList.remove('active');
+            }
+        });
+
+        // Open registration modal from checkout
+        registerForCheckoutBtn.addEventListener('click', () => {
+            checkoutModal.classList.remove('active');
+            registrationModal.classList.add('active');
+        });
+
+        // Registration form submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            customerInfo = {
+                firstName: document.getElementById('regFirstName').value,
+                lastName: document.getElementById('regLastName').value,
+                email: document.getElementById('regEmail').value,
+                phone: document.getElementById('regPhone').value,
+                address: document.getElementById('regAddress').value,
+                city: document.getElementById('regCity').value,
+                state: document.getElementById('regState').value,
+                zip: document.getElementById('regZip').value,
+                deliveryNotes: document.getElementById('regDeliveryNotes').value
+            };
+            
+            // Display success message
+            showNotification('Registration successful!');
+            
+            // Close registration modal
+            registrationModal.classList.remove('active');
+            
+            // If we came from checkout, go back to checkout
+            if (checkoutModal.classList.contains('active')) {
+                document.getElementById('customerDetails').innerHTML = `
+                    <p><strong>${customerInfo.firstName} ${customerInfo.lastName}</strong></p>
+                    <p>${customerInfo.address}, ${customerInfo.city}, ${customerInfo.state} ${customerInfo.zip}</p>
+                    <p>Email: ${customerInfo.email} | Phone: ${customerInfo.phone || 'N/A'}</p>
+                `;
+            }
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Checkout Modal
+        checkoutModalClose.addEventListener('click', () => {
+            checkoutModal.classList.remove('active');
+        });
+
+        checkoutModal.addEventListener('click', (e) => {
+            if (e.target === checkoutModal) {
+                checkoutModal.classList.remove('active');
+            }
+        });
+
+        // Delivery option selection
+        document.querySelectorAll('.delivery-option-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.delivery-option-card').forEach(c => {
+                    c.classList.remove('selected');
+                });
+                card.classList.add('selected');
+                card.querySelector('input').checked = true;
+            });
+        });
+
+        // Checkout form submission
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!customerInfo) {
+                alert('Please register first to provide delivery information.');
+                checkoutModal.classList.remove('active');
+                registrationModal.classList.add('active');
+                return;
+            }
+            
+            // Get selected delivery option
+            const selectedDelivery = document.querySelector('input[name="deliveryOption"]:checked');
+            const deliveryOption = selectedDelivery ? selectedDelivery.value : 'standard';
+            
+            // Calculate total
+            let subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            let deliveryFee = 0;
+            
+            if (deliveryOption === 'standard') {
+                deliveryFee = subtotal >= 30 ? 0 : 5.99;
+            } else if (deliveryOption === 'express') {
+                deliveryFee = 9.99;
+            } else if (deliveryOption === 'scheduled') {
+                deliveryFee = 7.99 + (cart.length * 2.99);
+            }
+            
+            const total = subtotal + deliveryFee;
+            
+            // Display success message
+            alert(`Thank you for your order!\n\nOrder Summary:\nSubtotal: $${subtotal.toFixed(2)}\nDelivery: $${deliveryFee.toFixed(2)}\nTotal: $${total.toFixed(2)}\n\nYour order will be delivered to:\n${customerInfo.firstName} ${customerInfo.lastName}\n${customerInfo.address}\n${customerInfo.city}, ${customerInfo.state} ${customerInfo.zip}`);
+            
+            // Clear cart
+            cart = [];
+            updateCartCount();
+            
+            // Close checkout modal
+            checkoutModal.classList.remove('active');
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+
+        mobileNavClose.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Shop Now button
+        document.getElementById('shopNowBtn').addEventListener('click', () => {
+            document.getElementById('products').scrollIntoView({behavior: 'smooth'});
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Add animation to elements when they come into view
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe product cards and delivery options
+        document.querySelectorAll('.product-card, .delivery-option').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
