@@ -1,0 +1,1159 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrowthAcademy - Online Courses</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/framer-motion@latest/dist/framer-motion.min.js"></script>
+    <style>
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .mobile-menu {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .mobile-menu.active {
+                display: block;
+            }
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .course-video-item {
+            transition: all 0.3s ease;
+        }
+        .course-video-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899);
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-3px);
+        }
+        .course-card {
+            transition: all 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky-header">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="bg-indigo-600 w-8 h-8 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-chart-line text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-800">GrowthAcademy</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <button class="nav-tab px-3 py-2 rounded-md text-sm font-medium transition-colors bg-indigo-100 text-indigo-700" data-tab="home">
+                            Home
+                        </button>
+                        <button class="nav-tab px-3 py-2 rounded-md text-sm font-medium transition-colors text-gray-700 hover:text-indigo-600" data-tab="courses">
+                            Courses
+                        </button>
+                        <button class="nav-tab px-3 py-2 rounded-md text-sm font-medium transition-colors text-gray-700 hover:text-indigo-600" data-tab="consultation">
+                            Consultation
+                        </button>
+                        <button class="nav-tab px-3 py-2 rounded-md text-sm font-medium transition-colors text-gray-700 hover:text-indigo-600" data-tab="donate">
+                            Donate
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <button class="nav-tab flex items-center text-gray-700 hover:text-indigo-600 transition-colors" data-tab="profile">
+                        <i class="fas fa-user mr-2"></i>
+                        <span id="user-display">Profile</span>
+                    </button>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-indigo-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <button class="nav-tab block px-3 py-2 rounded-md text-base font-medium w-full text-left bg-indigo-100 text-indigo-700" data-tab="home">
+                    Home
+                </button>
+                <button class="nav-tab block px-3 py-2 rounded-md text-base font-medium w-full text-left text-gray-700 hover:text-indigo-600" data-tab="courses">
+                    Courses
+                </button>
+                <button class="nav-tab block px-3 py-2 rounded-md text-base font-medium w-full text-left text-gray-700 hover:text-indigo-600" data-tab="consultation">
+                    Consultation
+                </button>
+                <button class="nav-tab block px-3 py-2 rounded-md text-base font-medium w-full text-left text-gray-700 hover:text-indigo-600" data-tab="donate">
+                    Donate
+                </button>
+                <button class="nav-tab block px-3 py-2 rounded-md text-base font-medium w-full text-left text-gray-700 hover:text-indigo-600" data-tab="profile">
+                    Profile
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Tab -->
+        <div id="home-tab" class="tab-content active">
+            <!-- Hero Section -->
+            <section class="hero-section text-white py-20">
+                <div class="container mx-auto px-6 text-center">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">Transform Your Life Through Learning</h1>
+                    <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                        Join thousands of students on their journey to personal growth and professional success
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button id="explore-courses-btn" class="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
+                            Explore Courses
+                        </button>
+                        <button id="book-consultation-btn" class="border-2 border-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-colors">
+                            Book Consultation
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="container mx-auto px-6 py-16">
+                <h2 class="text-4xl font-bold text-center mb-12">Why Choose Our Courses</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card text-center p-8 rounded-xl bg-white shadow-lg">
+                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-award text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Expert Instructors</h3>
+                        <p class="text-gray-600">Learn from industry leaders and experienced professionals who are passionate about your success.</p>
+                    </div>
+                    
+                    <div class="feature-card text-center p-8 rounded-xl bg-white shadow-lg">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-video text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Interactive Learning</h3>
+                        <p class="text-gray-600">Engage with video lessons, live sessions, and hands-on exercises that make learning enjoyable.</p>
+                    </div>
+                    
+                    <div class="feature-card text-center p-8 rounded-xl bg-white shadow-lg">
+                        <div class="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-users text-pink-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Community Support</h3>
+                        <p class="text-gray-600">Join a vibrant community of learners and get support from peers and instructors.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Popular Courses Preview -->
+            <section class="bg-gray-50 py-16">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-4xl font-bold text-center mb-12">Popular Courses</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="popular-courses-container">
+                        <!-- Courses will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials -->
+            <section class="container mx-auto px-6 py-16">
+                <h2 class="text-4xl font-bold text-center mb-12">What Our Students Say</h2>
+                <div class="grid md:grid-cols-3 gap-8" id="testimonials-container">
+                    <!-- Testimonials will be populated by JavaScript -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Courses Tab -->
+        <div id="courses-tab" class="tab-content">
+            <div class="container mx-auto px-6 py-12">
+                <h1 class="text-4xl font-bold mb-8">All Courses</h1>
+                
+                <!-- Search and Filter -->
+                <div class="mb-8">
+                    <div class="relative max-w-md">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="search-courses" placeholder="Search courses..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <!-- Course Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="all-courses-container">
+                    <!-- Courses will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Detail Tab -->
+        <div id="course-detail-tab" class="tab-content">
+            <div class="container mx-auto px-6 py-8">
+                <button id="back-to-courses" class="mb-6 flex items-center text-indigo-600 hover:text-indigo-800">
+                    <span class="mr-2">←</span> Back to Courses
+                </button>
+                
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <img id="course-detail-image" src="" alt="" class="w-full h-64 object-cover rounded-xl mb-6">
+                        
+                        <div class="mb-6">
+                            <h1 id="course-detail-title" class="text-3xl font-bold mb-2"></h1>
+                            <p id="course-detail-instructor" class="text-lg text-gray-600 mb-4"></p>
+                            
+                            <div class="flex items-center mb-4">
+                                <div class="flex items-center mr-6" id="course-detail-rating">
+                                    <!-- Rating stars will be populated by JavaScript -->
+                                </div>
+                                <div class="flex items-center text-gray-600">
+                                    <i class="far fa-clock mr-2"></i>
+                                    <span id="course-detail-duration"></span>
+                                </div>
+                            </div>
+                            
+                            <p id="course-detail-description" class="text-gray-700 text-lg leading-relaxed mb-6"></p>
+                        </div>
+
+                        <!-- Course Schedule -->
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                                <i class="far fa-calendar-alt mr-2 text-indigo-600"></i>
+                                Course Schedule
+                            </h2>
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden" id="course-schedule">
+                                <!-- Schedule will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Course Videos -->
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                                <i class="fas fa-play-circle mr-2 text-indigo-600"></i>
+                                Course Content (<span id="video-count">0</span> lessons)
+                            </h2>
+                            <div class="space-y-3" id="course-videos">
+                                <!-- Videos will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Reviews Section -->
+                        <div>
+                            <h2 class="text-2xl font-bold mb-4">Student Reviews</h2>
+                            <div class="space-y-4" id="course-reviews">
+                                <!-- Reviews will be populated by JavaScript -->
+                            </div>
+                            
+                            <!-- Add Review Form -->
+                            <div class="mt-6 bg-gray-50 p-6 rounded-lg">
+                                <h3 class="text-lg font-semibold mb-4">Leave a Review</h3>
+                                <textarea id="review-text" placeholder="Share your experience with this course..." class="w-full p-3 border border-gray-300 rounded-lg mb-4" rows="3"></textarea>
+                                <button id="submit-review" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                                    Submit Review
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white rounded-xl shadow-lg p-6 sticky top-6">
+                            <div class="text-center mb-6">
+                                <span id="course-detail-price" class="text-3xl font-bold text-indigo-600"></span>
+                            </div>
+                            
+                            <div class="space-y-4 mb-6">
+                                <div class="flex items-center">
+                                    <i class="far fa-clock text-gray-500 mr-3"></i>
+                                    <span id="sidebar-duration"></span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-book-open text-gray-500 mr-3"></i>
+                                    <span id="sidebar-lessons"></span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-users text-gray-500 mr-3"></i>
+                                    <span id="sidebar-students"></span>
+                                </div>
+                            </div>
+
+                            <button id="enroll-button" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors mb-4">
+                                Enroll Now
+                            </button>
+
+                            <button class="w-full border-2 border-indigo-600 text-indigo-600 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition-colors">
+                                Add to Wishlist
+                            </button>
+                        </div>
+
+                        <!-- Instructor Info -->
+                        <div class="bg-white rounded-xl shadow-lg p-6 mt-6">
+                            <h3 class="text-xl font-bold mb-4">About the Instructor</h3>
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-user text-indigo-600"></i>
+                                </div>
+                                <div>
+                                    <h4 id="instructor-name" class="font-semibold"></h4>
+                                    <p class="text-sm text-gray-600">Course Instructor</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 text-sm">
+                                Experienced professional with over 10 years in personal development and education. 
+                                Passionate about helping students achieve their goals.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consultation Tab -->
+        <div id="consultation-tab" class="tab-content">
+            <div class="container mx-auto px-6 py-12">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-4xl font-bold text-center mb-8">Personal Consultation</h1>
+                    <p class="text-xl text-center text-gray-600 mb-12">
+                        Schedule a one-on-one session with our experts to discuss your personal growth goals
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div>
+                            <h2 class="text-2xl font-bold mb-6">Book Your Session</h2>
+                            <form id="consultation-form" class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                                    <input type="text" id="consultation-name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                                    <input type="email" id="consultation-email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                    <input type="tel" id="consultation-phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Date & Time</label>
+                                    <input type="datetime-local" id="consultation-datetime" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                    <textarea id="consultation-message" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Tell us about your goals and what you'd like to discuss..."></textarea>
+                                </div>
+                                
+                                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                                    Book Consultation
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div>
+                            <h2 class="text-2xl font-bold mb-6">Consultation Benefits</h2>
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="bg-indigo-100 w-10 h-10 rounded-full flex items-center justify-center mr-4 mt-1">
+                                        <i class="fas fa-chart-line text-indigo-600"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold mb-2">Personalized Guidance</h3>
+                                        <p class="text-gray-600">Get tailored advice based on your unique situation and goals.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-green-100 w-10 h-10 rounded-full flex items-center justify-center mr-4 mt-1">
+                                        <i class="fas fa-check-circle text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold mb-2">Actionable Steps</h3>
+                                        <p class="text-gray-600">Receive clear, practical steps to move forward in your journey.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-purple-100 w-10 h-10 rounded-full flex items-center justify-center mr-4 mt-1">
+                                        <i class="fas fa-heart text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold mb-2">Ongoing Support</h3>
+                                        <p class="text-gray-600">Continue receiving support and guidance after your session.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl">
+                                <h3 class="text-lg font-semibold mb-2">Session Details</h3>
+                                <ul class="text-gray-600 space-y-1">
+                                    <li>• 60-minute one-on-one session</li>
+                                    <li>• Available via video call or phone</li>
+                                    <li>• Personalized action plan</li>
+                                    <li>• Follow-up email with resources</li>
+                                    <li>• Price: $99 per session</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donate Tab -->
+        <div id="donate-tab" class="tab-content">
+            <div class="container mx-auto px-6 py-12">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h1 class="text-4xl font-bold mb-6">Support Our Mission</h1>
+                    <p class="text-xl text-gray-600 mb-12">
+                        Help us continue providing quality education and personal growth resources to people around the world
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 mb-12">
+                        <div class="bg-white rounded-xl shadow-lg p-8">
+                            <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-heart text-indigo-600 text-2xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold mb-4">Make a Donation</h2>
+                            <p class="text-gray-600 mb-6">
+                                Your contribution helps us provide scholarships, improve our platform, and reach more people in need of personal growth resources.
+                            </p>
+                            
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Donation Amount</label>
+                                <div class="flex items-center">
+                                    <span class="text-2xl font-bold text-gray-700 mr-2">$</span>
+                                    <input type="number" id="donation-amount" class="flex-1 p-3 border border-gray-300 rounded-lg text-2xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="0" min="1">
+                                </div>
+                            </div>
+                            
+                            <button id="donate-button" class="w-full bg-indigo-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors">
+                                Donate Now
+                            </button>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg p-8">
+                            <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-chart-line text-green-600 text-2xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold mb-4">Impact of Your Donation</h2>
+                            <div class="text-left space-y-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-600 mr-3"></i>
+                                    <span>$25 provides one student with course access for a month</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-600 mr-3"></i>
+                                    <span>$50 funds a scholarship for an underprivileged learner</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-600 mr-3"></i>
+                                    <span>$100 supports platform development and new features</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-600 mr-3"></i>
+                                    <span>$250 enables us to create one new course module</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-8 text-white">
+                        <h2 class="text-2xl font-bold mb-4">Our Commitment</h2>
+                        <p class="text-lg mb-6">
+                            100% of your donation goes directly to supporting education and personal growth initiatives. 
+                            We are committed to transparency and making a real impact in people's lives.
+                        </p>
+                        <div class="grid grid-cols-3 gap-8 text-center">
+                            <div>
+                                <div class="text-3xl font-bold mb-2">10,000+</div>
+                                <div class="text-indigo-200">Students Helped</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold mb-2">50+</div>
+                                <div class="text-indigo-200">Courses Created</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold mb-2">95%</div>
+                                <div class="text-indigo-200">Satisfaction Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="profile-tab" class="tab-content">
+            <div class="container mx-auto px-6 py-12">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-3xl font-bold mb-8">My Profile</h1>
+                    
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="md:col-span-1">
+                            <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+                                <div class="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-user text-indigo-600 text-3xl"></i>
+                                </div>
+                                <h2 id="profile-name" class="text-xl font-bold mb-2">Guest User</h2>
+                                <p id="profile-email" class="text-gray-600 mb-4">Not logged in</p>
+                                <button id="login-button" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                                    Login
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <div class="bg-white rounded-xl shadow-lg p-6">
+                                <h3 class="text-xl font-bold mb-6">My Courses</h3>
+                                <div id="enrolled-courses" class="space-y-4">
+                                    <!-- Enrolled courses will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-indigo-600 w-8 h-8 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-chart-line text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold">GrowthAcademy</span>
+                    </div>
+                    <p class="text-gray-400">
+                        Empowering individuals through education and personal development since 2020.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><button class="nav-tab hover:text-white transition-colors" data-tab="courses">Courses</button></li>
+                        <li><button class="nav-tab hover:text-white transition-colors" data-tab="consultation">Consultation</button></li>
+                        <li><button class="nav-tab hover:text-white transition-colors" data-tab="donate">Donate</button></li>
+                        <li><button class="nav-tab hover:text-white transition-colors" data-tab="profile">Profile</button></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Email: info@growthacademy.com</li>
+                        <li>Phone: (555) 123-4567</li>
+                        <li>Address: 123 Education St, Learning City</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 GrowthAcademy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global state
+        let currentState = {
+            activeTab: 'home',
+            user: null,
+            enrolledCourses: [],
+            selectedCourse: null,
+            donationAmount: 0,
+            consultationForm: {
+                name: '',
+                email: '',
+                phone: '',
+                preferredDate: '',
+                message: ''
+            }
+        };
+
+        // Mock data
+        const courses = [
+            {
+                id: 1,
+                title: "Mindfulness & Meditation Mastery",
+                instructor: "Dr. Sarah Johnson",
+                price: 199,
+                duration: "8 weeks",
+                lessons: 24,
+                rating: 4.9,
+                students: 2847,
+                image: "https://placehold.co/400x250/6366f1/ffffff?text=Mindfulness",
+                description: "Transform your mental well-being through ancient meditation techniques adapted for modern life. Learn to reduce stress, increase focus, and cultivate inner peace.",
+                schedule: [
+                    { day: "Monday", time: "18:00 - 19:30", type: "Live Session" },
+                    { day: "Wednesday", time: "19:00 - 20:30", type: "Practice Workshop" },
+                    { day: "Friday", time: "17:00 - 18:00", type: "Q&A Session" }
+                ],
+                videos: [
+                    { id: 1, title: "Introduction to Mindfulness", duration: "15:30", watched: true },
+                    { id: 2, title: "Breathing Techniques", duration: "22:15", watched: true },
+                    { id: 3, title: "Body Scan Meditation", duration: "30:45", watched: false },
+                    { id: 4, title: "Loving-Kindness Practice", duration: "25:20", watched: false }
+                ]
+            },
+            {
+                id: 2,
+                title: "Leadership & Communication Skills",
+                instructor: "Michael Chen",
+                price: 249,
+                duration: "6 weeks",
+                lessons: 18,
+                rating: 4.8,
+                students: 1923,
+                image: "https://placehold.co/400x250/10b981/ffffff?text=Leadership",
+                description: "Develop powerful leadership abilities and communication skills that will transform your professional and personal relationships.",
+                schedule: [
+                    { day: "Tuesday", time: "19:00 - 20:30", type: "Theory Session" },
+                    { day: "Thursday", time: "18:00 - 19:30", type: "Practice Workshop" },
+                    { day: "Saturday", time: "10:00 - 12:00", type: "Group Activity" }
+                ],
+                videos: [
+                    { id: 1, title: "Foundations of Leadership", duration: "18:45", watched: false },
+                    { id: 2, title: "Effective Communication", duration: "24:30", watched: false },
+                    { id: 3, title: "Conflict Resolution", duration: "28:15", watched: false }
+                ]
+            },
+            {
+                id: 3,
+                title: "Financial Freedom & Investment",
+                instructor: "Robert Williams",
+                price: 299,
+                duration: "10 weeks",
+                lessons: 30,
+                rating: 4.7,
+                students: 3421,
+                image: "https://placehold.co/400x250/f59e0b/ffffff?text=Finance",
+                description: "Master your finances and learn smart investment strategies to build long-term wealth and financial security.",
+                schedule: [
+                    { day: "Monday", time: "20:00 - 21:30", type: "Theory Session" },
+                    { day: "Wednesday", time: "19:00 - 20:30", type: "Case Studies" },
+                    { day: "Friday", time: "18:00 - 19:00", type: "Q&A Session" }
+                ],
+                videos: [
+                    { id: 1, title: "Budgeting Basics", duration: "20:15", watched: false },
+                    { id: 2, title: "Investment Fundamentals", duration: "32:45", watched: false },
+                    { id: 3, title: "Retirement Planning", duration: "26:30", watched: false }
+                ]
+            }
+        ];
+
+        const testimonials = [
+            {
+                name: "Emma Thompson",
+                role: "Marketing Director",
+                content: "This course completely transformed my approach to leadership. The practical exercises and community support made all the difference.",
+                rating: 5,
+                avatar: "https://placehold.co/60x60/8b5cf6/ffffff?text=ET"
+            },
+            {
+                name: "David Rodriguez",
+                role: "Entrepreneur",
+                content: "The financial freedom course gave me the confidence and knowledge to invest wisely. My portfolio has grown 40% in just one year!",
+                rating: 5,
+                avatar: "https://placehold.co/60x60/ef4444/ffffff?text=DR"
+            },
+            {
+                name: "Lisa Chang",
+                role: "Teacher",
+                content: "Mindfulness meditation has reduced my stress levels dramatically. I now teach these techniques to my students too.",
+                rating: 5,
+                avatar: "https://placehold.co/60x60/10b981/ffffff?text=LC"
+            }
+        ];
+
+        // DOM Elements
+        const tabContents = document.querySelectorAll('.tab-content');
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const exploreCoursesBtn = document.getElementById('explore-courses-btn');
+        const bookConsultationBtn = document.getElementById('book-consultation-btn');
+        const backToCoursesBtn = document.getElementById('back-to-courses');
+        const loginButton = document.getElementById('login-button');
+        const enrollButton = document.getElementById('enroll-button');
+        const donateButton = document.getElementById('donate-button');
+        const consultationForm = document.getElementById('consultation-form');
+        const submitReviewBtn = document.getElementById('submit-review');
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Render initial content
+            renderPopularCourses();
+            renderTestimonials();
+            renderAllCourses();
+            
+            // Update UI based on current state
+            updateUI();
+        });
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Navigation tabs
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+
+            // Mobile menu toggle
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.className = 'fas fa-times text-xl';
+                } else {
+                    icon.className = 'fas fa-bars text-xl';
+                }
+            });
+
+            // Quick navigation buttons
+            exploreCoursesBtn.addEventListener('click', () => switchTab('courses'));
+            bookConsultationBtn.addEventListener('click', () => switchTab('consultation'));
+            backToCoursesBtn.addEventListener('click', () => switchTab('courses'));
+
+            // User actions
+            loginButton.addEventListener('click', handleLogin);
+            enrollButton.addEventListener('click', () => enrollInCourse(currentState.selectedCourse.id));
+            donateButton.addEventListener('click', makeDonation);
+
+            // Forms
+            consultationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                bookConsultation();
+            });
+
+            submitReviewBtn.addEventListener('click', submitReview);
+
+            // Search courses
+            document.getElementById('search-courses').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const courseElements = document.querySelectorAll('.course-card');
+                
+                courseElements.forEach(element => {
+                    const title = element.querySelector('h3').textContent.toLowerCase();
+                    const description = element.querySelector('p').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        element.style.display = 'block';
+                    } else {
+                        element.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Update state
+            currentState.activeTab = tabName;
+            
+            // Hide all tabs
+            tabContents.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show active tab
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Update navigation active state
+            navTabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === tabName) {
+                    tab.classList.add('bg-indigo-100', 'text-indigo-700');
+                    tab.classList.remove('text-gray-700', 'hover:text-indigo-600');
+                } else {
+                    tab.classList.remove('bg-indigo-100', 'text-indigo-700');
+                    tab.classList.add('text-gray-700', 'hover:text-indigo-600');
+                }
+            });
+            
+            // Close mobile menu if open
+            mobileMenu.classList.remove('active');
+            mobileMenuButton.querySelector('i').className = 'fas fa-bars text-xl';
+            
+            // Update UI based on new state
+            updateUI();
+        }
+
+        // Update UI based on current state
+        function updateUI() {
+            // Update user display
+            const userDisplay = document.getElementById('user-display');
+            const profileName = document.getElementById('profile-name');
+            const profileEmail = document.getElementById('profile-email');
+            
+            if (currentState.user) {
+                userDisplay.textContent = currentState.user.name;
+                profileName.textContent = currentState.user.name;
+                profileEmail.textContent = currentState.user.email;
+                loginButton.textContent = 'Logout';
+            } else {
+                userDisplay.textContent = 'Profile';
+                profileName.textContent = 'Guest User';
+                profileEmail.textContent = 'Not logged in';
+                loginButton.textContent = 'Login';
+            }
+            
+            // Update enrolled courses display
+            updateEnrolledCourses();
+        }
+
+        // Handle login/logout
+        function handleLogin() {
+            if (currentState.user) {
+                // Logout
+                currentState.user = null;
+            } else {
+                // Login
+                currentState.user = { name: "John Doe", email: "john@example.com" };
+            }
+            updateUI();
+        }
+
+        // Render popular courses
+        function renderPopularCourses() {
+            const container = document.getElementById('popular-courses-container');
+            container.innerHTML = '';
+            
+            courses.slice(0, 3).forEach((course, index) => {
+                const courseElement = createCourseCard(course, index);
+                container.appendChild(courseElement);
+            });
+        }
+
+        // Render all courses
+        function renderAllCourses() {
+            const container = document.getElementById('all-courses-container');
+            container.innerHTML = '';
+            
+            courses.forEach((course, index) => {
+                const courseElement = createCourseCard(course, index);
+                container.appendChild(courseElement);
+            });
+        }
+
+        // Create course card element
+        function createCourseCard(course, index) {
+            const card = document.createElement('div');
+            card.className = 'course-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow';
+            card.innerHTML = `
+                <img src="${course.image}" alt="${course.title}" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-indigo-600 font-semibold">${course.instructor}</span>
+                        <div class="flex items-center">
+                            ${renderStars(course.rating)}
+                            <span class="ml-1 text-sm text-gray-600">${course.rating}</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">${course.title}</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">${course.description}</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-2xl font-bold text-indigo-600">$${course.price}</span>
+                        <span class="text-sm text-gray-500">${course.students} students</span>
+                    </div>
+                    <button class="view-course-btn w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors" data-course-id="${course.id}">
+                        View Details
+                    </button>
+                </div>
+            `;
+            
+            // Add event listener to the view button
+            card.querySelector('.view-course-btn').addEventListener('click', function() {
+                const courseId = parseInt(this.getAttribute('data-course-id'));
+                showCourseDetail(courseId);
+            });
+            
+            return card;
+        }
+
+        // Render testimonials
+        function renderTestimonials() {
+            const container = document.getElementById('testimonials-container');
+            container.innerHTML = '';
+            
+            testimonials.forEach((testimonial, index) => {
+                const testimonialElement = document.createElement('div');
+                testimonialElement.className = 'testimonial-card bg-white p-6 rounded-xl shadow-lg';
+                testimonialElement.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <img src="${testimonial.avatar}" alt="${testimonial.name}" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold">${testimonial.name}</h4>
+                            <p class="text-sm text-gray-600">${testimonial.role}</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        ${renderStars(testimonial.rating)}
+                    </div>
+                    <p class="text-gray-700 italic">"${testimonial.content}"</p>
+                `;
+                container.appendChild(testimonialElement);
+            });
+        }
+
+        // Render star rating
+        function renderStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= Math.floor(rating)) {
+                    stars += '<i class="fas fa-star text-yellow-400"></i>';
+                } else {
+                    stars += '<i class="far fa-star text-gray-300"></i>';
+                }
+            }
+            return stars;
+        }
+
+        // Show course detail
+        function showCourseDetail(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            if (!course) return;
+            
+            currentState.selectedCourse = course;
+            
+            // Update course detail page content
+            document.getElementById('course-detail-image').src = course.image;
+            document.getElementById('course-detail-image').alt = course.title;
+            document.getElementById('course-detail-title').textContent = course.title;
+            document.getElementById('course-detail-instructor').textContent = `Instructor: ${course.instructor}`;
+            document.getElementById('course-detail-duration').textContent = course.duration;
+            document.getElementById('course-detail-description').textContent = course.description;
+            document.getElementById('course-detail-price').textContent = `$${course.price}`;
+            document.getElementById('sidebar-duration').textContent = course.duration;
+            document.getElementById('sidebar-lessons').textContent = `${course.lessons} lessons`;
+            document.getElementById('sidebar-students').textContent = `${course.students} students enrolled`;
+            document.getElementById('instructor-name').textContent = course.instructor;
+            document.getElementById('video-count').textContent = course.videos.length;
+            
+            // Render rating stars
+            const ratingContainer = document.getElementById('course-detail-rating');
+            ratingContainer.innerHTML = renderStars(course.rating) + `<span class="ml-2 text-lg font-semibold">${course.rating}</span><span class="text-gray-500 ml-1">(${course.students} students)</span>`;
+            
+            // Render schedule
+            const scheduleContainer = document.getElementById('course-schedule');
+            scheduleContainer.innerHTML = '';
+            course.schedule.forEach(session => {
+                const sessionElement = document.createElement('div');
+                sessionElement.className = 'flex items-center justify-between p-4 border-b border-gray-100 last:border-b-0';
+                sessionElement.innerHTML = `
+                    <div>
+                        <h3 class="font-semibold">${session.day}</h3>
+                        <p class="text-gray-600 text-sm">${session.type}</p>
+                    </div>
+                    <span class="font-semibold text-indigo-600">${session.time}</span>
+                `;
+                scheduleContainer.appendChild(sessionElement);
+            });
+            
+            // Render videos
+            const videosContainer = document.getElementById('course-videos');
+            videosContainer.innerHTML = '';
+            course.videos.forEach(video => {
+                const videoElement = document.createElement('div');
+                videoElement.className = 'course-video-item flex items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow';
+                videoElement.innerHTML = `
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center mr-4 ${video.watched ? 'bg-green-100' : 'bg-gray-100'}">
+                        ${video.watched ? 
+                            '<i class="fas fa-check-circle text-green-600"></i>' : 
+                            '<i class="fas fa-play text-gray-600"></i>'
+                        }
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold">${video.title}</h3>
+                        <p class="text-sm text-gray-500">${video.duration}</p>
+                    </div>
+                    <button class="text-indigo-600 hover:text-indigo-800 font-semibold">
+                        ${video.watched ? 'Replay' : 'Watch'}
+                    </button>
+                `;
+                videosContainer.appendChild(videoElement);
+            });
+            
+            // Render reviews (mock data for now)
+            const reviewsContainer = document.getElementById('course-reviews');
+            reviewsContainer.innerHTML = '<p class="text-gray-500">No reviews yet. Be the first to review this course!</p>';
+            
+            // Switch to course detail tab
+            switchTab('course-detail');
+        }
+
+        // Enroll in course
+        function enrollInCourse(courseId) {
+            if (!currentState.user) {
+                alert("Please log in to enroll in courses");
+                return;
+            }
+            
+            if (!currentState.enrolledCourses.includes(courseId)) {
+                currentState.enrolledCourses.push(courseId);
+                updateEnrolledCourses();
+                alert("Successfully enrolled in the course!");
+            } else {
+                alert("You are already enrolled in this course!");
+            }
+        }
+
+        // Update enrolled courses display
+        function updateEnrolledCourses() {
+            const container = document.getElementById('enrolled-courses');
+            
+            if (currentState.enrolledCourses.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fas fa-book-open text-5xl text-gray-400 mx-auto mb-4"></i>
+                        <p class="text-gray-600 mb-4">You haven't enrolled in any courses yet.</p>
+                        <button id="browse-courses-btn" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                            Browse Courses
+                        </button>
+                    </div>
+                `;
+                document.getElementById('browse-courses-btn').addEventListener('click', () => switchTab('courses'));
+            } else {
+                container.innerHTML = '';
+                currentState.enrolledCourses.forEach(courseId => {
+                    const course = courses.find(c => c.id === courseId);
+                    if (course) {
+                        const courseElement = document.createElement('div');
+                        courseElement.className = 'flex items-center p-4 border border-gray-200 rounded-lg';
+                        courseElement.innerHTML = `
+                            <img src="${course.image}" alt="${course.title}" class="w-16 h-16 object-cover rounded-lg mr-4">
+                            <div class="flex-1">
+                                <h4 class="font-semibold">${course.title}</h4>
+                                <p class="text-sm text-gray-600">Instructor: ${course.instructor}</p>
+                            </div>
+                            <button class="continue-course-btn text-indigo-600 hover:text-indigo-800 font-semibold" data-course-id="${course.id}">
+                                Continue
+                            </button>
+                        `;
+                        courseElement.querySelector('.continue-course-btn').addEventListener('click', function() {
+                            const courseId = parseInt(this.getAttribute('data-course-id'));
+                            showCourseDetail(courseId);
+                        });
+                        container.appendChild(courseElement);
+                    }
+                });
+            }
+        }
+
+        // Make donation
+        function makeDonation() {
+            const amountInput = document.getElementById('donation-amount');
+            const amount = parseFloat(amountInput.value);
+            
+            if (!currentState.user) {
+                alert("Please log in to make donations");
+                return;
+            }
+            
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid donation amount");
+                return;
+            }
+            
+            alert(`Thank you for your donation of $${amount}!`);
+            amountInput.value = '';
+        }
+
+        // Book consultation
+        function bookConsultation() {
+            const name = document.getElementById('consultation-name').value;
+            const email = document.getElementById('consultation-email').value;
+            
+            if (!currentState.user) {
+                alert("Please log in to book a consultation");
+                return;
+            }
+            
+            if (!name || !email) {
+                alert("Please fill in all required fields");
+                return;
+            }
+            
+            alert("Consultation booked successfully! We'll contact you soon.");
+            
+            // Reset form
+            document.getElementById('consultation-form').reset();
+        }
+
+        // Submit review
+        function submitReview() {
+            const reviewText = document.getElementById('review-text').value;
+            
+            if (!reviewText.trim()) {
+                alert("Please enter your review");
+                return;
+            }
+            
+            alert("Thank you for your review!");
+            document.getElementById('review-text').value = '';
+        }
+    </script>
+</body>
+</html>
+
+
+     
+                    
