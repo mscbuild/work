@@ -1,0 +1,624 @@
+<html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              
+</head>
+<body>
+  <style>
+   body {
+                  background-color: white; /* Ensure the iframe has a white background */
+                }
+    
+                
+              </style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedNote - Социальная сеть</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Шапка */
+        header {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 30px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 75, 43, 0.5);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-icon {
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Основной контент */
+        .main-content {
+            display: flex;
+            padding: 30px 0;
+            gap: 30px;
+        }
+
+        /* Левая панель */
+        .sidebar {
+            width: 250px;
+            background: #2d2d2d;
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu i {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        /* Центральная лента */
+        .feed {
+            flex: 1;
+        }
+
+        .create-post {
+            background: #2d2d2d;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+
+        .post-input {
+            flex: 1;
+            background: #3d3d3d;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 20px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #444;
+            padding-top: 15px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            color: #e0e0e0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .action-btn:hover {
+            color: #ff4b2b;
+        }
+
+        .action-btn i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        /* Посты */
+        .post {
+            background: #2d2d2d;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .post-user {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .post-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+
+        .post-user-info h3 {
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        .post-user-info p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .post-content {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .post-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #444;
+        }
+
+        .post-actions-bottom {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .post-action:hover {
+            color: #ff4b2b;
+        }
+
+        .post-action i {
+            margin-right: 8px;
+        }
+
+        /* Правая панель */
+        .trends {
+            width: 300px;
+            background: #2d2d2d;
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .trends h2 {
+            margin-bottom: 20px;
+            color: white;
+            font-size: 22px;
+        }
+
+        .trend-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #444;
+        }
+
+        .trend-item:last-child {
+            border-bottom: none;
+        }
+
+        .trend-item h3 {
+            color: #ff4b2b;
+            margin-bottom: 5px;
+        }
+
+        .trend-item p {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .trend-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar, .trends {
+                width: 100%;
+            }
+            
+            .sidebar {
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+                margin: 10px 0;
+            }
+            
+            .nav-icons {
+                gap: 15px;
+            }
+        }
+
+        /* Анимации */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 75, 43, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 75, 43, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 75, 43, 0); }
+        } 
+  </style>
+    <!-- Шапка -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-fire"></i>
+                    RedNote
+                </a>
+                
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Поиск по RedNote...">
+                </div>
+                
+                <div class="nav-icons">
+                    <i class="fas fa-home nav-icon"></i>
+                    <i class="fas fa-bell nav-icon"></i>
+                    <i class="fas fa-envelope nav-icon"></i>
+                    <i class="fas fa-user nav-icon"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Левая панель -->
+            <div class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="#"><i class="fas fa-compass"></i> Исследовать</a></li>
+                    <li><a href="#"><i class="fas fa-bell"></i> Уведомления</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Сообщения</a></li>
+                    <li><a href="#"><i class="fas fa-bookmark"></i> Закладки</a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> Профиль</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Настройки</a></li>
+                </ul>
+            </div>
+
+            <!-- Центральная лента -->
+            <div class="feed">
+                <!-- Создание поста -->
+                <div class="create-post">
+                    <div class="post-header">
+                        <div class="avatar">А</div>
+                        <input type="text" class="post-input" placeholder="О чем вы думаете?">
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn"><i class="fas fa-image"></i> Фото</button>
+                        <button class="action-btn"><i class="fas fa-video"></i> Видео</button>
+                        <button class="action-btn"><i class="fas fa-poll"></i> Опрос</button>
+                        <button class="action-btn" style="color: #ff4b2b;"><i class="fas fa-paper-plane"></i> Опубликовать</button>
+                    </div>
+                </div>
+
+                <!-- Посты -->
+                <div class="post">
+                    <div class="post-user">
+                        <div class="post-avatar">М</div>
+                        <div class="post-user-info">
+                            <h3>Мария Петрова</h3>
+                            <p>2 часа назад</p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>Только что открыла для себя новый стиль в интерьере! Кто-нибудь пробовал сочетать бордовый и золотой? 🏠✨</p>
+                    </div>
+                    <img src="https://placehold.co/600x400/ff416c/ffffff?text=Интерьер" alt="Интерьер" class="post-image">
+                    <div class="post-stats">
+                        <span>1.2K просмотров</span>
+                        <span>245 комментариев</span>
+                    </div>
+                    <div class="post-actions-bottom">
+                        <a href="#" class="post-action"><i class="fas fa-heart"></i> 342</a>
+                        <a href="#" class="post-action"><i class="fas fa-comment"></i> 45</a>
+                        <a href="#" class="post-action"><i class="fas fa-share"></i> 12</a>
+                        <a href="#" class="post-action"><i class="fas fa-bookmark"></i></a>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <div class="post-user">
+                        <div class="post-avatar">А</div>
+                        <div class="post-user-info">
+                            <h3>Алексей Иванов</h3>
+                            <p>5 часов назад</p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>Посетил невероятный концерт вчера! Энергетика была на высоте 🔥 #концерт #музыка #живыесвоимгородом</p>
+                    </div>
+                    <img src="https://placehold.co/600x300/ff4b2b/ffffff?text=Концерт" alt="Концерт" class="post-image">
+                    <div class="post-stats">
+                        <span>3.5K просмотров</span>
+                        <span>512 комментариев</span>
+                    </div>
+                    <div class="post-actions-bottom">
+                        <a href="#" class="post-action"><i class="fas fa-heart"></i> 892</a>
+                        <a href="#" class="post-action"><i class="fas fa-comment"></i> 124</a>
+                        <a href="#" class="post-action"><i class="fas fa-share"></i> 45</a>
+                        <a href="#" class="post-action"><i class="fas fa-bookmark"></i></a>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <div class="post-user">
+                        <div class="post-avatar">Е</div>
+                        <div class="post-user-info">
+                            <h3>Елена Сидорова</h3>
+                            <p>1 день назад</p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>Рецепт дня: Паста карбонара с изюминкой! Кто хочет рецепт? 🍝 #кулинария #рецепты #домашняякухня</p>
+                    </div>
+                    <div class="post-stats">
+                        <span>5.7K просмотров</span>
+                        <span>892 комментария</span>
+                    </div>
+                    <div class="post-actions-bottom">
+                        <a href="#" class="post-action"><i class="fas fa-heart"></i> 1.2K</a>
+                        <a href="#" class="post-action"><i class="fas fa-comment"></i> 234</a>
+                        <a href="#" class="post-action"><i class="fas fa-share"></i> 87</a>
+                        <a href="#" class="post-action"><i class="fas fa-bookmark"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая панель -->
+            <div class="trends">
+                <h2>В тренде</h2>
+                <div class="trend-item">
+                    <h3>#путешествия</h3>
+                    <p>25.4K постов</p>
+                    <div class="trend-stats">
+                        <span>Растет</span>
+                        <span>2 часа назад</span>
+                    </div>
+                </div>
+                <div class="trend-item">
+                    <h3>#фотография</h3>
+                    <p>18.7K постов</p>
+                    <div class="trend-stats">
+                        <span>Стабильно</span>
+                        <span>5 часов назад</span>
+                    </div>
+                </div>
+                <div class="trend-item">
+                    <h3>#технологии</h3>
+                    <p>15.2K постов</p>
+                    <div class="trend-stats">
+                        <span>Растет</span>
+                        <span>1 день назад</span>
+                    </div>
+                </div>
+                <div class="trend-item">
+                    <h3>#здоровье</h3>
+                    <p>12.8K постов</p>
+                    <div class="trend-stats">
+                        <span>Снижается</span>
+                        <span>2 дня назад</span>
+                    </div>
+                </div>
+                <div class="trend-item">
+                    <h3>#искусство</h3>
+                    <p>9.5K постов</p>
+                    <div class="trend-stats">
+                        <span>Растет</span>
+                        <span>3 дня назад</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+ // Интерактивность для кнопок лайков
+        document.querySelectorAll('.post-action').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if(this.querySelector('i').classList.contains('fa-heart')) {
+                    e.preventDefault();
+                    const heart = this.querySelector('i');
+                    const count = this.querySelector('span') || this.nextSibling;
+                    
+                    if(heart.style.color === 'rgb(255, 75, 43)') {
+                        heart.style.color = '';
+                        heart.classList.remove('fas');
+                        heart.classList.add('far');
+                    } else {
+                        heart.style.color = '#ff4b2b';
+                        heart.classList.remove('far');
+                        heart.classList.add('fas');
+                    }
+                }
+            });
+        });
+
+        // Анимация для поиска
+        const searchInput = document.querySelector('.search-bar input');
+        searchInput.addEventListener('focus', function() {
+            this.parentElement.classList.add('pulse');
+        });
+        
+        searchInput.addEventListener('blur', function() {
+            this.parentElement.classList.remove('pulse');
+        });   
+</script>
+     
+</body>
+</html>
+
+
+    
+             
+                       
+                    
