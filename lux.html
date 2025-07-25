@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury 4-Star Hotel Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a2530);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        .logo span {
+            color: var(--secondary);
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        nav a:hover {
+            color: var(--secondary);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        /* Mobile Navigation */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background: var(--primary);
+            transition: right 0.3s ease;
+            z-index: 2000;
+            padding: 2rem;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .mobile-nav.active {
+            right: 0;
+        }
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .close-nav {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .mobile-nav ul {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        .mobile-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 0;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mobile-auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .mobile-auth-buttons .btn {
+            width: 100%;
+            text-align: center;
+        }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3') no-repeat center center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        /* Search Form */
+        .search-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-top: 2rem;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .form-group {
+            position: relative;
+        }
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+        }
+        .form-control {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin: 3rem 0;
+        }
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* Hotels Grid */
+        .hotels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .hotel-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hotel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        .hotel-image {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .rating {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .rating i {
+            color: #f39c12;
+        }
+        .hotel-content {
+            padding: 1.5rem;
+        }
+        .hotel-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        .location {
+            display: flex;
+            align-items: center;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .location i {
+            margin-right: 0.5rem;
+            color: var(--secondary);
+        }
+        .description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        .amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .amenity {
+            background: #f1f8ff;
+            color: var(--secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: normal;
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-image {
+            height: 300px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .modal-body {
+            padding: 2rem;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        .modal-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .modal-price {
+            text-align: right;
+        }
+        .modal-price .price {
+            font-size: 2.5rem;
+        }
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .amenity-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .amenity-item i {
+            color: var(--secondary);
+        }
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+        .btn-block {
+            flex: 1;
+        }
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        .footer-column ul {
+            list-style: none;
+        }
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: row;
+                gap: 1rem;
+            }
+            nav ul {
+                display: none;
+            }
+            .auth-buttons {
+                display: none;
+            }
+            .mobile-nav-toggle {
+                display: block;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .modal-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .modal-price {
+                text-align: center;
+                margin-top: 1rem;
+            }
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero {
+                height: 400px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">Lux<span>Stay</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Hotels</a></li>
+                    <li><a href="#">Deals</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-outline">Sign In</button>
+                <button class="btn btn-primary">Register</button>
+            </div>
+            <button class="mobile-nav-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <a href="#" class="logo">Lux<span>Stay</span></a>
+            <button class="close-nav" id="closeNav">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Hotels</a></li>
+                <li><a href="#">Deals</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-auth-buttons">
+            <button class="btn btn-outline">Sign In</button>
+            <button class="btn btn-primary">Register</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Find Your Perfect Luxury Stay</h1>
+            <p>Discover premium 4-star hotels with exceptional service and exclusive deals around the world</p>
+            <!-- Search Form -->
+            <div class="search-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" class="form-control" placeholder="Where are you going?">
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-calendar"></i>
+                        <input type="date" class="form-control" placeholder="Check-in">
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-calendar"></i>
+                        <input type="date" class="form-control" placeholder="Check-out">
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-users"></i>
+                        <select class="form-control">
+                            <option>1 Guest</option>
+                            <option>2 Guests</option>
+                            <option>3 Guests</option>
+                            <option>4 Guests</option>
+                            <option>5+ Guests</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-search"></i> Search Hotels
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Featured Hotels -->
+    <section class="container">
+        <div class="section-title">
+            <h2>Featured 4-Star Hotels</h2>
+            <p>Handpicked luxury accommodations with exceptional service and premium amenities</p>
+        </div>
+        <div class="hotels-grid">
+            <!-- Hotel 1 -->
+            <div class="hotel-card" onclick="openModal(1)">
+                <div class="hotel-image" style="background-image: url('https://placehold.co/400x300/4f46e5/ffffff?text=Grand+Palace');">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.8</span>
+                    </div>
+                </div>
+                <div class="hotel-content">
+                    <h3>Grand Palace Hotel</h3>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Downtown, New York</span>
+                    </div>
+                    <p class="description">Luxury accommodation in the heart of the city with stunning views and premium amenities.</p>
+                    <div class="amenities">
+                        <span class="amenity"><i class="fas fa-wifi"></i> WiFi</span>
+                        <span class="amenity"><i class="fas fa-swimming-pool"></i> Pool</span>
+                        <span class="amenity"><i class="fas fa-dumbbell"></i> Gym</span>
+                    </div>
+                    <div class="price-section">
+                        <div class="price">$299<span>/night</span></div>
+                        <button class="btn btn-primary">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Hotel 2 -->
+            <div class="hotel-card" onclick="openModal(2)">
+                <div class="hotel-image" style="background-image: url('https://placehold.co/400x300/0ea5e9/ffffff?text=Oceanview');">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.6</span>
+                    </div>
+                </div>
+                <div class="hotel-content">
+                    <h3>Oceanview Resort</h3>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Beachfront, Miami</span>
+                    </div>
+                    <p class="description">Breathtaking ocean views with direct beach access and world-class dining experiences.</p>
+                    <div class="amenities">
+                        <span class="amenity"><i class="fas fa-umbrella-beach"></i> Beach</span>
+                        <span class="amenity"><i class="fas fa-cocktail"></i> Bar</span>
+                        <span class="amenity"><i class="fas fa-spa"></i> Spa</span>
+                    </div>
+                    <div class="price-section">
+                        <div class="price">$349<span>/night</span></div>
+                        <button class="btn btn-primary">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Hotel 3 -->
+            <div class="hotel-card" onclick="openModal(3)">
+                <div class="hotel-image" style="background-image: url('https://placehold.co/400x300/10b981/ffffff?text=Mountain+Retreat');">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.9</span>
+                    </div>
+                </div>
+                <div class="hotel-content">
+                    <h3>Mountain Retreat</h3>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Aspen, Colorado</span>
+                    </div>
+                    <p class="description">Cozy mountain luxury with ski-in/ski-out access and panoramic mountain views.</p>
+                    <div class="amenities">
+                        <span class="amenity"><i class="fas fa-skiing"></i> Ski</span>
+                        <span class="amenity"><i class="fas fa-fire"></i> Fireplace</span>
+                        <span class="amenity"><i class="fas fa-hot-tub"></i> Hot Tub</span>
+                    </div>
+                    <div class="price-section">
+                        <div class="price">$429<span>/night</span></div>
+                        <button class="btn btn-primary">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Hotel 4 -->
+            <div class="hotel-card" onclick="openModal(4)">
+                <div class="hotel-image" style="background-image: url('https://placehold.co/400x300/f59e0b/ffffff?text=City+Lights');">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.7</span>
+                    </div>
+                </div>
+                <div class="hotel-content">
+                    <h3>City Lights Inn</h3>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Downtown, San Francisco</span>
+                    </div>
+                    <p class="description">Modern urban retreat with stunning city skyline views and exceptional service.</p>
+                    <div class="amenities">
+                        <span class="amenity"><i class="fas fa-concierge-bell"></i> Concierge</span>
+                        <span class="amenity"><i class="fas fa-utensils"></i> Restaurant</span>
+                        <span class="amenity"><i class="fas fa-car"></i> Parking</span>
+                    </div>
+                    <div class="price-section">
+                        <div class="price">$279<span>/night</span></div>
+                        <button class="btn btn-primary">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div id="hotelModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <div class="modal-image" id="modalImage"></div>
+            <div class="modal-body">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <h2 id="modalHotelName">Grand Palace Hotel</h2>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="modalLocation">Downtown, New York</span>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <span id="modalRating">4.8</span>
+                        </div>
+                    </div>
+                    <div class="modal-price">
+                        <div class="price" id="modalPrice">$299<span>/night</span></div>
+                    </div>
+                </div>
+                <p id="modalDescription">Luxury accommodation in the heart of the city with stunning views and premium amenities.</p>
+                <h3>Amenities</h3>
+                <div class="amenities-grid" id="modalAmenities">
+                    <!-- Amenities will be populated by JavaScript -->
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary btn-large btn-block">
+                        <i class="fas fa-calendar-check"></i> Book This Room
+                    </button>
+                    <button class="btn btn-outline btn-large btn-block">
+                        <i class="fas fa-heart"></i> Save for Later
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>LuxStay</h3>
+                    <p style="color: #bdc3c7; margin-bottom: 1rem;">Your gateway to luxury 4-star accommodations around the world.</p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="#">Destinations</a></li>
+                        <li><a href="#">Hotels</a></li>
+                        <li><a href="#">Special Offers</a></li>
+                        <li><a href="#">Travel Guides</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Cancellation Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p style="color: #bdc3c7; margin-bottom: 1rem;">Subscribe for exclusive deals and travel tips.</p>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Your email address">
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Subscribe</button>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 LuxStay. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile Navigation Toggle
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const closeNav = document.querySelector('#closeNav');
+        const mobileNav = document.querySelector('#mobileNav');
+
+        mobileNavToggle.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+
+        closeNav.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+
+        // Close mobile nav when clicking on links
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Hotel data
+        const hotels = [
+            {
+                id: 1,
+                name: "Grand Palace Hotel",
+                location: "Downtown, New York",
+                rating: 4.8,
+                price: 299,
+                image: "https://placehold.co/800x500/4f46e5/ffffff?text=Grand+Palace+1",
+                images: [
+                    "https://placehold.co/800x500/4f46e5/ffffff?text=Grand+Palace+1",
+                    "https://placehold.co/800x500/7c3aed/ffffff?text=Grand+Palace+2",
+                    "https://placehold.co/800x500/2563eb/ffffff?text=Grand+Palace+3"
+                ],
+                amenities: [
+                    { name: "Free WiFi", icon: "wifi" },
+                    { name: "Parking", icon: "car" },
+                    { name: "Gym", icon: "dumbbell" },
+                    { name: "Spa", icon: "spa" },
+                    { name: "Restaurant", icon: "utensils" },
+                    { name: "Pool", icon: "swimming-pool" }
+                ],
+                description: "Luxury accommodation in the heart of the city with stunning views and premium amenities. Experience unparalleled comfort and exceptional service in our elegant rooms and suites."
+            },
+            {
+                id: 2,
+                name: "Oceanview Resort",
+                location: "Beachfront, Miami",
+                rating: 4.6,
+                price: 349,
+                image: "https://placehold.co/800x500/0ea5e9/ffffff?text=Oceanview+1",
+                images: [
+                    "https://placehold.co/800x500/0ea5e9/ffffff?text=Oceanview+1",
+                    "https://placehold.co/800x500/06b6d4/ffffff?text=Oceanview+2",
+                    "https://placehold.co/800x500/0891b2/ffffff?text=Oceanview+3"
+                ],
+                amenities: [
+                    { name: "Free WiFi", icon: "wifi" },
+                    { name: "Beach Access", icon: "umbrella-beach" },
+                    { name: "Pool", icon: "swimming-pool" },
+                    { name: "Spa", icon: "spa" },
+                    { name: "Restaurant", icon: "utensils" },
+                    { name: "Bar", icon: "cocktail" }
+                ],
+                description: "Breathtaking ocean views with direct beach access and world-class dining experiences. Relax in our luxurious accommodations while enjoying the sounds of the ocean."
+            },
+            {
+                id: 3,
+                name: "Mountain Retreat",
+                location: "Aspen, Colorado",
+                rating: 4.9,
+                price: 429,
+                image: "https://placehold.co/800x500/10b981/ffffff?text=Mountain+Retreat+1",
+                images: [
+                    "https://placehold.co/800x500/10b981/ffffff?text=Mountain+Retreat+1",
+                    "https://placehold.co/800x500/059669/ffffff?text=Mountain+Retreat+2",
+                    "https://placehold.co/800x500/047857/ffffff?text=Mountain+Retreat+3"
+                ],
+                amenities: [
+                    { name: "Free WiFi", icon: "wifi" },
+                    { name: "Ski Access", icon: "skiing" },
+                    { name: "Spa", icon: "spa" },
+                    { name: "Restaurant", icon: "utensils" },
+                    { name: "Fireplace", icon: "fire" },
+                    { name: "Hot Tub", icon: "hot-tub" }
+                ],
+                description: "Cozy mountain luxury with ski-in/ski-out access and panoramic mountain views. Perfect for winter sports enthusiasts and nature lovers seeking tranquility."
+            },
+            {
+                id: 4,
+                name: "City Lights Inn",
+                location: "Downtown, San Francisco",
+                rating: 4.7,
+                price: 279,
+                image: "https://placehold.co/800x500/f59e0b/ffffff?text=City+Lights+1",
+                images: [
+                    "https://placehold.co/800x500/f59e0b/ffffff?text=City+Lights+1",
+                    "https://placehold.co/800x500/d97706/ffffff?text=City+Lights+2",
+                    "https://placehold.co/800x500/b45309/ffffff?text=City+Lights+3"
+                ],
+                amenities: [
+                    { name: "Free WiFi", icon: "wifi" },
+                    { name: "Parking", icon: "car" },
+                    { name: "Gym", icon: "dumbbell" },
+                    { name: "Restaurant", icon: "utensils" },
+                    { name: "Rooftop Bar", icon: "cocktail" },
+                    { name: "Concierge", icon: "concierge-bell" }
+                ],
+                description: "Modern urban retreat with stunning city skyline views and exceptional service. Located in the heart of downtown, offering easy access to major attractions and business districts."
+            }
+        ];
+        // Open modal function
+        function openModal(hotelId) {
+            const hotel = hotels.find(h => h.id === hotelId);
+            if (!hotel) return;
+            document.getElementById('modalHotelName').textContent = hotel.name;
+            document.getElementById('modalLocation').innerHTML = hotel.location;
+            document.getElementById('modalRating').textContent = hotel.rating;
+            document.getElementById('modalPrice').innerHTML = `$${hotel.price}<span>/night</span>`;
+            document.getElementById('modalDescription').textContent = hotel.description;
+            document.getElementById('modalImage').style.backgroundImage = `url('${hotel.image}')`;
+            // Populate amenities
+            const amenitiesContainer = document.getElementById('modalAmenities');
+            amenitiesContainer.innerHTML = '';
+            hotel.amenities.forEach(amenity => {
+                const amenityElement = document.createElement('div');
+                amenityElement.className = 'amenity-item';
+                amenityElement.innerHTML = `
+                    <i class="fas fa-${amenity.icon}"></i>
+                    <span>${amenity.name}</span>
+                `;
+                amenitiesContainer.appendChild(amenityElement);
+            });
+            document.getElementById('hotelModal').style.display = 'flex';
+        }
+        // Close modal function
+        function closeModal() {
+            document.getElementById('hotelModal').style.display = 'none';
+        }
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('hotelModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        // Initialize date inputs with today's date
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+            dateInputs.forEach(input => {
+                if (!input.value) {
+                    input.value = today;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
