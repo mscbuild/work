@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savory Bites Restaurant</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-light: #f8f9fa;
+            --secondary-light: #e9ecef;
+            --accent-color: #ff6b6b;
+            --text-dark: #343a40;
+            --text-light: #6c757d;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-light);
+            color: var(--text-dark);
+        }
+        
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)), url('https://placehold.co/1200x600/f8f9fa/adb5bd?text=Restaurant+Interior') center/cover;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        .menu-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .price-tag {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .reservation-form {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+        }
+        
+        .review-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .star-rating {
+            color: #ffc107;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .footer {
+            background-color: var(--secondary-light);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #ff5252;
+            border-color: #ff5252;
+        }
+        
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+        }
+        
+        .carousel-indicators [data-bs-target] {
+            background-color: var(--accent-color);
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+        }
+        
+        .modal-header {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .cart-item {
+            border-bottom: 1px solid var(--secondary-light);
+            padding: 15px 0;
+        }
+        
+        .cart-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="#">
+                <i class="bi bi-egg-fried me-2"></i>Savory Bites
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#menu">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#reservation">Reservation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#reviews">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#gallery">Gallery</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <div class="cart-icon">
+                                <i class="bi bi-cart"></i>
+                                <span class="cart-badge" id="cartCount">0</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-3 fw-bold mb-4">Experience Culinary Excellence</h1>
+            <p class="lead mb-5">Fresh ingredients, creative recipes, and unforgettable dining experiences</p>
+            <a href="#reservation" class="btn btn-primary btn-lg px-5 py-3">Book a Table</a>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Our Menu</h2>
+            <p class="text-center text-muted mb-5">Discover our delicious selection of dishes</p>
+            
+            <div class="row">
+                <!-- Starter -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card menu-card">
+                        <img src="https://placehold.co/600x400/f8f9fa/adb5bd?text=Caesar+Salad" class="card-img-top menu-img" alt="Caesar Salad">
+                        <div class="card-body">
+                            <h5 class="card-title">Caesar Salad</h5>
+                            <p class="card-text text-muted">Crisp romaine lettuce, parmesan cheese, croutons, and our signature dressing.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">$12.99</span>
+                                <button class="btn btn-sm btn-outline-primary add-to-cart" data-name="Caesar Salad" data-price="12.99">
+                                    <i class="bi bi-cart-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Course -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card menu-card">
+                        <img src="https://placehold.co/600x400/f8f9fa/adb5bd?text=Grilled+Salmon" class="card-img-top menu-img" alt="Grilled Salmon">
+                        <div class="card-body">
+                            <h5 class="card-title">Grilled Salmon</h5>
+                            <p class="card-text text-muted">Fresh Atlantic salmon with lemon herb butter, served with seasonal vegetables.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">$24.99</span>
+                                <button class="btn btn-sm btn-outline-primary add-to-cart" data-name="Grilled Salmon" data-price="24.99">
+                                    <i class="bi bi-cart-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dessert -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card menu-card">
+                        <img src="https://placehold.co/600x400/f8f9fa/adb5bd?text=Chocolate+Lava+Cake" class="card-img-top menu-img" alt="Chocolate Lava Cake">
+                        <div class="card-body">
+                            <h5 class="card-title">Chocolate Lava Cake</h5>
+                            <p class="card-text text-muted">Warm chocolate cake with a molten center, served with vanilla ice cream.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">$8.99</span>
+                                <button class="btn btn-sm btn-outline-primary add-to-cart" data-name="Chocolate Lava Cake" data-price="8.99">
+                                    <i class="bi bi-cart-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pasta -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card menu-card">
+                        <img src="https://placehold.co/600x400/f8f9fa/adb5bd?text=Truffle+Pasta" class="card-img-top menu-img" alt="Truffle Pasta">
+                        <div class="card-body">
+                            <h5 class="card-title">Truffle Pasta</h5>
+                            <p class="card-text text-muted">Fresh fettuccine with black truffle sauce, parmesan, and herbs.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">$18.99</span>
+                                <button class="btn btn-sm btn-outline-primary add-to-cart" data-name="Truffle Pasta" data-price="18.99">
+                                    <i class="bi bi-cart-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Steak -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card menu-card">
+                        <img src="https://placehold.co/600x400/f8f9fa/adb5bd?text=Ribeye+Steak" class="card-img-top menu-img" alt="Ribeye Steak">
+                        <div class="card-body">
+                            <h5 class="card-title">Ribeye Steak</h5>
+                            <p class="card-text text-muted">Premium aged ribeye, grilled to perfection, served with garlic mashed potatoes.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">$32.99</span>
+                                <button class="btn btn-sm btn-outline-primary add-to-cart" data-name="Ribeye Steak" data-price="32.99">
+                                    <i class="bi bi-cart-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cocktail -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card menu-card">
+                        <img src="https://placehold.co/600x400/f8f9fa/adb5bd?text=Mojito+Cocktail" class="card-img-top menu-img" alt="Mojito Cocktail">
+                        <div class="card-body">
+                            <h5 class="card-title">Mojito Cocktail</h5>
+                            <p class="card-text text-muted">Classic mojito with fresh mint, lime, rum, and soda water.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">$9.99</span>
+                                <button class="btn btn-sm btn-outline-primary add-to-cart" data-name="Mojito Cocktail" data-price="9.99">
+                                    <i class="bi bi-cart-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="py-5 bg-secondary-light">
+        <div class="container">
+            <h2 class="text-center section-title">Make a Reservation</h2>
+            <p class="text-center text-muted mb-5">Book your table online for an unforgettable dining experience</p>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="reservation-form">
+                        <form id="reservationForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="date" class="form-label">Date</label>
+                                    <input type="date" class="form-control" id="date" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="time" class="form-label">Time</label>
+                                    <select class="form-select" id="time" required>
+                                        <option value="">Select Time</option>
+                                        <option value="17:00">5:00 PM</option>
+                                        <option value="18:00">6:00 PM</option>
+                                        <option value="19:00">7:00 PM</option>
+                                        <option value="20:00">8:00 PM</option>
+                                        <option value="21:00">9:00 PM</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="guests" class="form-label">Number of Guests</label>
+                                    <select class="form-select" id="guests" required>
+                                        <option value="">Select Guests</option>
+                                        <option value="1">1 Person</option>
+                                        <option value="2">2 People</option>
+                                        <option value="3">3 People</option>
+                                        <option value="4">4 People</option>
+                                        <option value="5">5 People</option>
+                                        <option value="6">6 People</option>
+                                        <option value="7">7 People</option>
+                                        <option value="8">8 People</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="specialRequests" class="form-label">Special Requests</label>
+                                <textarea class="form-control" id="specialRequests" rows="3"></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">Reserve Table</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Customer Reviews</h2>
+            <p class="text-center text-muted mb-5">See what our guests are saying about us</p>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="review-card">
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <img src="https://placehold.co/60x60/f8f9fa/adb5bd?text=JS" alt="Customer" class="rounded-circle">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="mb-0">John Smith</h5>
+                                <div class="star-rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0">"The food was absolutely incredible! The salmon was cooked to perfection and the service was impeccable. Will definitely be coming back!"</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="review-card">
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <img src="https://placehold.co/60x60/f8f9fa/adb5bd?text=MR" alt="Customer" class="rounded-circle">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="mb-0">Maria Rodriguez</h5>
+                                <div class="star-rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0">"Celebrated our anniversary here and it was magical. The truffle pasta was divine and the ambiance was perfect for a special occasion."</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="review-card">
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <img src="https://placehold.co/60x60/f8f9fa/adb5bd?text=TW" alt="Customer" class="rounded-circle">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="mb-0">Thomas Wilson</h5>
+                                <div class="star-rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0">"As a food critic, I'm rarely impressed, but this place exceeded all expectations. The attention to detail in every dish is remarkable."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-5 bg-secondary-light">
+        <div class="container">
+            <h2 class="text-center section-title">Food Gallery</h2>
+            <p class="text-center text-muted mb-5">A visual journey through our culinary creations</p>
+            
+            <div id="foodCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#foodCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#foodCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#foodCarousel" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#foodCarousel" data-bs-slide-to="3"></button>
+                </div>
+                
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-md-6 mb-4 mb-md-0">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Gourmet+Burger" class="d-block w-100 gallery-item" alt="Gourmet Burger">
+                            </div>
+                            <div class="col-md-6">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Seafood+Platter" class="d-block w-100 gallery-item mb-4" alt="Seafood Platter">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Dessert+Selection" class="d-block w-100 gallery-item" alt="Dessert Selection">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-md-6 mb-4 mb-md-0">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Vegetarian+Delight" class="d-block w-100 gallery-item" alt="Vegetarian Delight">
+                            </div>
+                            <div class="col-md-6">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Steak+Dinner" class="d-block w-100 gallery-item mb-4" alt="Steak Dinner">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Cocktail+Bar" class="d-block w-100 gallery-item" alt="Cocktail Bar">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-md-6 mb-4 mb-md-0">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Brunch+Special" class="d-block w-100 gallery-item" alt="Brunch Special">
+                            </div>
+                            <div class="col-md-6">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Wine+Selection" class="d-block w-100 gallery-item mb-4" alt="Wine Selection">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Chef+Special" class="d-block w-100 gallery-item" alt="Chef Special">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-md-6 mb-4 mb-md-0">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Appetizer+Platter" class="d-block w-100 gallery-item" alt="Appetizer Platter">
+                            </div>
+                            <div class="col-md-6">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Main+Course" class="d-block w-100 gallery-item mb-4" alt="Main Course">
+                                <img src="https://placehold.co/800x600/f8f9fa/adb5bd?text=Pastry+Display" class="d-block w-100 gallery-item" alt="Pastry Display">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-control-prev" type="button" data-bs-target="#foodCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#foodCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-egg-fried me-2"></i>Savory Bites
+                    </h5>
+                    <p>Experience culinary excellence with our fresh ingredients and creative recipes in a warm, inviting atmosphere.</p>
+                    <div class="d-flex">
+                        <a href="#" class="text-dark me-3"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-dark me-3"><i class="bi bi-instagram fs-4"></i></a>
+                        <a href="#" class="text-dark me-3"><i class="bi bi-twitter fs-4"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="fw-bold mb-3">Contact Info</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> 123 Gourmet Street, Foodville</li>
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> (555) 123-4567</li>
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@savorybites.com</li>
+                        <li><i class="bi bi-clock me-2"></i> Open Daily: 5pm - 11pm</li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3">Newsletter</h5>
+                    <p>Subscribe to receive updates and special offers.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Your Email">
+                        <button class="btn btn-primary" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 Savory Bites Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">
+                        <i class="bi bi-cart me-2"></i>Shopping Cart
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartItems">
+                        <!-- Cart items will be dynamically added here -->
+                        <div class="text-center py-5" id="emptyCartMessage">
+                            <i class="bi bi-cart-x fs-1 text-muted mb-3"></i>
+                            <p class="mb-0">Your cart is empty</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-3 border-top">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0">Total:</h5>
+                            <h4 class="cart-total mb-0">$0.00</h4>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-lg" id="checkoutBtn" disabled>
+                                <i class="bi bi-credit-card me-2"></i>Proceed to Checkout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="checkoutModalLabel">
+                        <i class="bi bi-credit-card me-2"></i>Checkout
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h5 class="mb-4">Delivery Information</h5>
+                            <form id="checkoutForm">
+                                <div class="mb-3">
+                                    <label for="fullName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="fullName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="city" class="form-label">City</label>
+                                        <input type="text" class="form-control" id="city" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="zipCode" class="form-label">ZIP Code</label>
+                                        <input type="text" class="form-control" id="zipCode" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phoneCheckout" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phoneCheckout" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="emailCheckout" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="emailCheckout" required>
+                                </div>
+                                
+                                <h5 class="mt-4 mb-4">Payment Information</h5>
+                                <div class="mb-3">
+                                    <label for="cardNumber" class="form-label">Card Number</label>
+                                    <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="expiryDate" class="form-label">Expiry Date</label>
+                                        <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cvv" class="form-label">CVV</label>
+                                        <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-5">
+                            <h5 class="mb-4">Order Summary</h5>
+                            <div id="orderSummary">
+                                <!-- Order summary will be dynamically added here -->
+                            </div>
+                            
+                            <div class="mt-4 pt-3 border-top">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Subtotal:</span>
+                                    <span id="subtotalAmount">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Delivery Fee:</span>
+                                    <span>$3.99</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span>Tax:</span>
+                                    <span id="taxAmount">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between fw-bold fs-5">
+                                    <span>Total:</span>
+                                    <span id="totalAmount">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="placeOrderBtn">
+                        <i class="bi bi-check-circle me-2"></i>Place Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-center">
+                <div class="modal-body py-5">
+                    <i class="bi bi-check-circle-fill text-success fs-1 mb-4"></i>
+                    <h3 class="mb-3">Order Confirmed!</h3>
+                    <p class="mb-4">Thank you for your order. Your delicious meal is being prepared and will be delivered soon.</p>
+                    <p class="text-muted">Order ID: <span id="orderId">ORD-789456</span></p>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Shopping cart functionality
+        let cart = [];
+        let orderId = 1000;
+        
+        // Add to cart buttons
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const name = this.getAttribute('data-name');
+                const price = parseFloat(this.getAttribute('data-price'));
+                
+                // Check if item already exists in cart
+                const existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        name: name,
+                        price: price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                showNotification(`${name} added to cart!`);
+            });
+        });
+        
+        // Update cart display
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const emptyCartMessage = document.getElementById('emptyCartMessage');
+            const cartCount = document.getElementById('cartCount');
+            const cartTotal = document.querySelector('.cart-total');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            // Update cart count badge
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Clear cart items
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.appendChild(emptyCartMessage);
+                emptyCartMessage.style.display = 'block';
+                cartTotal.textContent = '$0.00';
+                checkoutBtn.disabled = true;
+                return;
+            }
+            
+            emptyCartMessage.style.display = 'none';
+            checkoutBtn.disabled = false;
+            
+            // Add items to cart
+            let total = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">${item.name}</h6>
+                            <p class="mb-0 text-muted">$${item.price.toFixed(2)} × ${item.quantity}</p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <strong class="me-3">$${itemTotal.toFixed(2)}</strong>
+                            <button class="btn btn-sm btn-outline-danger remove-item" data-index="${index}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    cart.splice(index, 1);
+                    updateCart();
+                });
+            });
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'toast align-items-center text-bg-success border-0 position-fixed bottom-0 end-0 m-3';
+            notification.setAttribute('role', 'alert');
+            notification.setAttribute('aria-live', 'assertive');
+            notification.setAttribute('aria-atomic', 'true');
+            notification.style.zIndex = '10000';
+            
+            notification.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Initialize and show toast
+            const toast = new bootstrap.Toast(notification);
+            toast.show();
+            
+            // Remove notification after it's hidden
+            notification.addEventListener('hidden.bs.toast', function() {
+                document.body.removeChild(notification);
+            });
+        }
+        
+        // Checkout button
+        document.getElementById('checkoutBtn').addEventListener('click', function() {
+            const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+            cartModal.hide();
+            
+            // Update order summary
+            updateOrderSummary();
+            
+            // Show checkout modal
+            const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+            checkoutModal.show();
+        });
+        
+        // Update order summary
+        function updateOrderSummary() {
+            const orderSummary = document.getElementById('orderSummary');
+            const subtotalAmount = document.getElementById('subtotalAmount');
+            const taxAmount = document.getElementById('taxAmount');
+            const totalAmount = document.getElementById('totalAmount');
+            
+            orderSummary.innerHTML = '';
+            
+            let subtotal = 0;
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'd-flex justify-content-between mb-2';
+                itemElement.innerHTML = `
+                    <span>${item.name} × ${item.quantity}</span>
+                    <span>$${itemTotal.toFixed(2)}</span>
+                `;
+                orderSummary.appendChild(itemElement);
+            });
+            
+            const tax = subtotal * 0.08;
+            const total = subtotal + tax + 3.99; // Adding delivery fee
+            
+            subtotalAmount.textContent = `$${subtotal.toFixed(2)}`;
+            taxAmount.textContent = `$${tax.toFixed(2)}`;
+            totalAmount.textContent = `$${total.toFixed(2)}`;
+        }
+        
+        // Place order button
+        document.getElementById('placeOrderBtn').addEventListener('click', function() {
+            const form = document.getElementById('checkoutForm');
+            if (form.checkValidity()) {
+                // Hide checkout modal
+                const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
+                checkoutModal.hide();
+                
+                // Generate order ID
+                orderId++;
+                document.getElementById('orderId').textContent = `ORD-${orderId}`;
+                
+                // Show confirmation modal
+                const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+                confirmationModal.show();
+                
+                // Clear cart
+                cart = [];
+                updateCart();
+            } else {
+                form.classList.add('was-validated');
+            }
+        });
+        
+        // Set minimum date for reservation to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').min = today;
+            
+            // Form submission
+            document.getElementById('reservationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your reservation! We will contact you shortly to confirm.');
+                this.reset();
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
