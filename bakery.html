@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Crumb Bakery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff8e1;
+            color: #5d4037;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #e65100;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #5d4037;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #e65100;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e65100;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #ff9800, #e65100);
+            color: white;
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: #e65100;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffecb3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Categories */
+        .categories {
+            padding: 60px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #e65100;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 15px;
+            background-color: #fff3e0;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            background-color: #ffe0b2;
+        }
+
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #e65100;
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Menu */
+        .menu {
+            padding: 60px 0;
+            background-color: #fff8e1;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background-color: #ffd180;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #5d4037;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e65100;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #5d4037;
+        }
+
+        .product-description {
+            color: #757575;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background-color: #e65100;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #f57c00;
+        }
+
+        /* About */
+        .about {
+            padding: 60px 0;
+            background-color: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #e65100;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .star {
+            color: #ffc107;
+            font-size: 20px;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 300px;
+            background-color: #8d6e63;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Contact */
+        .contact {
+            padding: 60px 0;
+            background-color: #fff3e0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .contact-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #e65100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info {
+            margin-bottom: 20px;
+        }
+
+        .contact-info div {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #5d4037;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h5 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #ffcc80;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #ffe0b2;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #8d6e63;
+            color: #ffe0b2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-content,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🎂</span>
+                    <span>Sweet Crumb Bakery</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#menu">Меню</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </nav>
+                <div class="cart-icon">
+                    🛒
+                    <span class="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Свежая выпечка каждый день</h1>
+            <p>Артизанская выпечка из лучших ингредиентов, приготовленная с любовью</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">Посмотреть меню</button>
+                <button class="btn btn-secondary">Заказать онлайн</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Наши специальности</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">🍞</div>
+                    <h3 class="category-title">Свежий хлеб</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🍰</div>
+                    <h3 class="category-title">Торты на заказ</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🍪</div>
+                    <h3 class="category-title">Выпечка</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">☕</div>
+                    <h3 class="category-title">Кофе и чай</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu -->
+    <section id="menu" class="menu">
+        <div class="container">
+            <h2 class="section-title">Наше меню</h2>
+            <div class="menu-grid">
+                <div class="product-card">
+                    <div class="product-image">Круассан</div>
+                    <div class="product-info">
+                        <div class="product-header">
+                            <h3 class="product-name">Классический круассан</h3>
+                            <span class="product-price">3.50 $</span>
+                        </div>
+                        <p class="product-description">Сочная, слоеная выпечка с маслянистым вкусом</p>
+                        <button class="add-to-cart">Добавить в корзину</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">Шоколадный торт</div>
+                    <div class="product-info">
+                        <div class="product-header">
+                            <h3 class="product-name">Шоколадный торт</h3>
+                            <span class="product-price">28.00 $</span>
+                        </div>
+                        <p class="product-description">Насыщенный шоколадный торт с глазурью</p>
+                        <button class="add-to-cart">Добавить в корзину</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">Хлеб</div>
+                    <div class="product-info">
+                        <div class="product-header">
+                            <h3 class="product-name">Хлеб на закваске</h3>
+                            <span class="product-price">6.50 $</span>
+                        </div>
+                        <p class="product-description">Артизанский хлеб с хрустящей корочкой</p>
+                        <button class="add-to-cart">Добавить в корзину</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Наша история</h3>
+                    <p>Основанная в 2010 году, Sweet Crumb Bakery уже более 10 лет радует своих клиентов свежей выпечкой из лучших ингредиентов.</p>
+                    <p>Каждое утро наши пекари приходят на работу еще до рассвета, чтобы приготовить свежий хлеб, выпечку и десерты, которые наполняют нашу пекарню неповторимыми ароматами.</p>
+                    <div class="rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span>4.9/5 (500+ отзывов)</span>
+                    </div>
+                </div>
+                <div class="about-image">Интерьер пекарни</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Посетите нас</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h4>🕐 Режим работы</h4>
+                    <div class="contact-info">
+                        <div><strong>Понедельник - Пятница:</strong> 6:00 - 19:00</div>
+                        <div><strong>Суббота:</strong> 7:00 - 20:00</div>
+                        <div><strong>Воскресенье:</strong> 7:00 - 17:00</div>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <h4>📍 Адрес</h4>
+                    <div class="contact-info">
+                        <div>ул. Пекарская, 123, г. Сладково</div>
+                        <div>📞 (555) 123-4567</div>
+                        <div>✉️ info@sweetcrumb.com</div>
+                        <button class="btn btn-primary" style="margin-top: 15px;">Проложить маршрут</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <div class="logo" style="color: white; margin-bottom: 15px;">
+                        <span class="logo-icon">🎂</span>
+                        <span>Sweet Crumb Bakery</span>
+                    </div>
+                    <p>Создаем вкусные воспоминания с каждым укусом.</p>
+                </div>
+                <div class="footer-column">
+                    <h5>Быстрые ссылки</h5>
+                    <ul>
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#menu">Меню</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h5>Контакты</h5>
+                    <ul>
+                        <li>ул. Пекарская, 123, г.Рига</li>
+                        <li>(555) 123-4567</li>
+                        <li>info@sweetcrumb.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2024 Sweet Crumb Bakery. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Простая функциональность корзины
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartButtons = document.querySelectorAll('.add-to-cart');
+            const cartCount = document.querySelector('.cart-count');
+            let count = 0;
+
+            cartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    count++;
+                    cartCount.textContent = count;
+                    
+                    // Анимация
+                    this.textContent = 'Добавлено!';
+                    this.style.backgroundColor = '#4caf50';
+                    
+                    setTimeout(() => {
+                        this.textContent = 'Добавить в корзину';
+                        this.style.backgroundColor = '#e65100';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
