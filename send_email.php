@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate input
     if (!empty($name) && !empty($email) && !empty($message) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
         // Set recipient email
-        $to = "jura@inbox.lv";
+        $to = "dev@example.com";
         
         // Create email headers
         $headers = "From: " . $email . "\r\n";
