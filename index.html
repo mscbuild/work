@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="ClearType" content="true" />
+	<meta http-equiv="ClearType" content="true" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="referrer" content="no-referrer">
-    <title>Alex Johnson | Web Developer Portfolio</title>
+	<title>Alex Johnson | Web Developer Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -25,6 +25,8 @@
             --light: #f8fafc;
             --gray: #64748b;
             --light-gray: #e2e8f0;
+            --success: #10b981;
+            --error: #ef4444;
         }
         body {
             background-color: var(--light);
@@ -355,24 +357,26 @@
             height: 150px;
             resize: vertical;
         }
-        /* Form response messages */
-        .form-response {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
+        /* Validation styles */
+        .contact-form input.error,
+        .contact-form textarea.error {
+            border-color: var(--error);
+        }
+        .contact-form input.success,
+        .contact-form textarea.success {
+            border-color: var(--success);
+        }
+        .error-message {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 5px;
             display: none;
         }
-        .form-response.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            display: block;
-        }
-        .form-response.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            display: block;
+        .success-message {
+            color: var(--success);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
         }
         /* Footer */
         footer {
@@ -692,19 +696,26 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <div id="form-response" class="form-response"></div>
-                    <form id="contactForm" method="POST" action="send_email.php">
+                    <form id="contactForm">
                         <div class="form-group">
-                            <input type="text" name="name" placeholder="Your Name" required>
+                            <input type="text" id="name" placeholder="Your Name" required>
+                            <div class="error-message" id="name-error">Please enter your name</div>
+                            <div class="success-message" id="name-success">Name looks good!</div>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" placeholder="Your Email" required>
+                            <input type="email" id="email" placeholder="Your Email" required>
+                            <div class="error-message" id="email-error">Please enter a valid email address</div>
+                            <div class="success-message" id="email-success">Email looks good!</div>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="subject" placeholder="Subject">
+                            <input type="text" id="subject" placeholder="Subject">
+                            <div class="error-message" id="subject-error">Subject is required</div>
+                            <div class="success-message" id="subject-success">Subject looks good!</div>
                         </div>
                         <div class="form-group">
-                            <textarea name="message" placeholder="Your Message" required></textarea>
+                            <textarea id="message" placeholder="Your Message" required></textarea>
+                            <div class="error-message" id="message-error">Please enter your message</div>
+                            <div class="success-message" id="message-success">Message looks good!</div>
                         </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
                     </form>
@@ -775,46 +786,179 @@
                 header.style.background = 'white';
             }
         });
-        // Handle form submission with AJAX
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const form = this;
-            const formData = new FormData(form);
-            const responseDiv = document.getElementById('form-response');
-            
-            // Show loading state
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalText = submitButton.textContent;
-            submitButton.textContent = 'Sending...';
-            submitButton.disabled = true;
-            
-            // Send form data using fetch
-            fetch('send_email.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                if (data === 'success') {
-                    responseDiv.className = 'form-response success';
-                    responseDiv.textContent = 'Your message has been sent successfully!';
-                    form.reset();
-                } else if (data === 'validation_error') {
-                    responseDiv.className = 'form-response error';
-                    responseDiv.textContent = 'Please fill in all required fields correctly.';
+
+        // Form validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contactForm');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const subjectInput = document.getElementById('subject');
+            const messageInput = document.getElementById('message');
+
+            // Validation functions
+            function validateName() {
+                const nameValue = nameInput.value.trim();
+                const nameError = document.getElementById('name-error');
+                const nameSuccess = document.getElementById('name-success');
+                
+                if (nameValue === '') {
+                    showError(nameInput, nameError, nameSuccess, 'Please enter your name');
+                    return false;
+                } else if (nameValue.length < 2) {
+                    showError(nameInput, nameError, nameSuccess, 'Name must be at least 2 characters');
+                    return false;
                 } else {
-                    responseDiv.className = 'form-response error';
-                    responseDiv.textContent = 'There was an error sending your message. Please try again.';
+                    showSuccess(nameInput, nameError, nameSuccess);
+                    return true;
                 }
-            })
-            .catch(error => {
-                responseDiv.className = 'form-response error';
-                responseDiv.textContent = 'There was an error sending your message. Please try again.';
-            })
-            .finally(() => {
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
+            }
+
+            function validateEmail() {
+                const emailValue = emailInput.value.trim();
+                const emailError = document.getElementById('email-error');
+                const emailSuccess = document.getElementById('email-success');
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (emailValue === '') {
+                    showError(emailInput, emailError, emailSuccess, 'Please enter your email');
+                    return false;
+                } else if (!emailRegex.test(emailValue)) {
+                    showError(emailInput, emailError, emailSuccess, 'Please enter a valid email address');
+                    return false;
+                } else {
+                    showSuccess(emailInput, emailError, emailSuccess);
+                    return true;
+                }
+            }
+
+            function validateSubject() {
+                const subjectValue = subjectInput.value.trim();
+                const subjectError = document.getElementById('subject-error');
+                const subjectSuccess = document.getElementById('subject-success');
+                
+                if (subjectValue === '') {
+                    showError(subjectInput, subjectError, subjectSuccess, 'Subject is required');
+                    return false;
+                } else if (subjectValue.length < 3) {
+                    showError(subjectInput, subjectError, subjectSuccess, 'Subject must be at least 3 characters');
+                    return false;
+                } else {
+                    showSuccess(subjectInput, subjectError, subjectSuccess);
+                    return true;
+                }
+            }
+
+            function validateMessage() {
+                const messageValue = messageInput.value.trim();
+                const messageError = document.getElementById('message-error');
+                const messageSuccess = document.getElementById('message-success');
+                
+                if (messageValue === '') {
+                    showError(messageInput, messageError, messageSuccess, 'Please enter your message');
+                    return false;
+                } else if (messageValue.length < 10) {
+                    showError(messageInput, messageError, messageSuccess, 'Message must be at least 10 characters');
+                    return false;
+                } else {
+                    showSuccess(messageInput, messageError, messageSuccess);
+                    return true;
+                }
+            }
+
+            function showError(input, errorElement, successElement, message) {
+                input.classList.remove('success');
+                input.classList.add('error');
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                successElement.style.display = 'none';
+            }
+
+            function showSuccess(input, errorElement, successElement) {
+                input.classList.remove('error');
+                input.classList.add('success');
+                errorElement.style.display = 'none';
+                successElement.style.display = 'block';
+            }
+
+            // Event listeners for real-time validation
+            nameInput.addEventListener('blur', validateName);
+            emailInput.addEventListener('blur', validateEmail);
+            subjectInput.addEventListener('blur', validateSubject);
+            messageInput.addEventListener('blur', validateMessage);
+
+            // Clear validation on focus
+            nameInput.addEventListener('focus', function() {
+                this.classList.remove('error', 'success');
+                document.getElementById('name-error').style.display = 'none';
+                document.getElementById('name-success').style.display = 'none';
+            });
+
+            emailInput.addEventListener('focus', function() {
+                this.classList.remove('error', 'success');
+                document.getElementById('email-error').style.display = 'none';
+                document.getElementById('email-success').style.display = 'none';
+            });
+
+            subjectInput.addEventListener('focus', function() {
+                this.classList.remove('error', 'success');
+                document.getElementById('subject-error').style.display = 'none';
+                document.getElementById('subject-success').style.display = 'none';
+            });
+
+            messageInput.addEventListener('focus', function() {
+                this.classList.remove('error', 'success');
+                document.getElementById('message-error').style.display = 'none';
+                document.getElementById('message-success').style.display = 'none';
+            });
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate all fields
+                const isNameValid = validateName();
+                const isEmailValid = validateEmail();
+                const isSubjectValid = validateSubject();
+                const isMessageValid = validateMessage();
+                
+                // If all fields are valid, submit the form
+                if (isNameValid && isEmailValid && isSubjectValid && isMessageValid) {
+                    // In a real implementation, you would send the form data to a server here
+                    alert('Form submitted successfully! (This is a demo - in a real application, this would send an email)');
+                    
+                    // Clear the form
+                    form.reset();
+                    
+                    // Remove all validation classes and messages
+                    const inputs = form.querySelectorAll('input, textarea');
+                    inputs.forEach(input => {
+                        input.classList.remove('error', 'success');
+                    });
+                    
+                    const errorMessages = form.querySelectorAll('.error-message');
+                    const successMessages = form.querySelectorAll('.success-message');
+                    errorMessages.forEach(msg => msg.style.display = 'none');
+                    successMessages.forEach(msg => msg.style.display = 'none');
+                }
+            });
+
+            // Clear form when user leaves the page
+            window.addEventListener('beforeunload', function() {
+                // Only clear if the form has been touched
+                if (form.querySelector('input:focus') || form.querySelector('textarea:focus')) {
+                    form.reset();
+                    
+                    // Remove all validation classes and messages
+                    const inputs = form.querySelectorAll('input, textarea');
+                    inputs.forEach(input => {
+                        input.classList.remove('error', 'success');
+                    });
+                    
+                    const errorMessages = form.querySelectorAll('.error-message');
+                    const successMessages = form.querySelectorAll('.success-message');
+                    errorMessages.forEach(msg => msg.style.display = 'none');
+                    successMessages.forEach(msg => msg.style.display = 'none');
+                }
             });
         });
     </script>
