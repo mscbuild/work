@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Innovation Conference 2023</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(90deg, #2c3e50 0%, #4a6491 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), url('https://placehold.co/1200x600/2c3e50/ffffff?text=Business+Conference');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: #3498db;
+            color: white;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #3498db;
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .registration-form {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #e1e5eb;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .submit-btn {
+            background: linear-gradient(90deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            padding: 1.1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .schedule-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .schedule-day {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .schedule-day:hover {
+            transform: translateY(-10px);
+        }
+
+        .day-header {
+            background: linear-gradient(90deg, #2c3e50 0%, #4a6491 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .session {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .session:last-child {
+            border-bottom: none;
+        }
+
+        .session-time {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .session-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .session-speaker {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .session-description {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .speakers-section {
+            background: #f8f9fa;
+            padding: 4rem 0;
+        }
+
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .speaker-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .speaker-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .speaker-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .speaker-info {
+            padding: 1.5rem;
+        }
+
+        .speaker-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.3rem;
+        }
+
+        .speaker-title {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .speaker-bio {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2.5rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .footer-links li {
+            margin: 0 1rem;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(90deg, #2c3e50 0%, #4a6491 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        /* Mobile Navigation Styles */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            z-index: 200;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav ul {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-nav ul li {
+            margin: 1.5rem 0;
+        }
+
+        .mobile-nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 500;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: center;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+            }
+
+            .footer-links li {
+                margin: 0.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon"></span>
+                <span>BizCon 2023</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#register">Register</a></li>
+                    <li><a href="#schedule">Schedule</a></li>
+                    <li><a href="#speakers">Speakers</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose">×</button>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#register">Register</a></li>
+            <li><a href="#schedule">Schedule</a></li>
+            <li><a href="#speakers">Speakers</a></li>
+        </ul>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Business Innovation Conference 2023</h1>
+            <p>Join industry leaders, innovators, and entrepreneurs for three days of insights, networking, and transformative ideas that will shape the future of business.</p>
+            <button class="cta-button" id="registerBtn">Register Now</button>
+        </div>
+    </section>
+
+    <!-- Registration Modal -->
+    <div class="modal" id="registrationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Conference Registration</h2>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="registration-form" id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jobTitle">Job Title</label>
+                            <input type="text" id="jobTitle" name="jobTitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="ticketType">Ticket Type *</label>
+                            <select id="ticketType" name="ticketType" required>
+                                <option value="">Select a ticket</option>
+                                <option value="early-bird">Early Bird - $299</option>
+                                <option value="standard">Standard - $399</option>
+                                <option value="vip">VIP - $599</option>
+                                <option value="student">Student - $149</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dietary">Dietary Requirements</label>
+                        <textarea id="dietary" name="dietary" rows="3" placeholder="Any special dietary requirements?"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Complete Registration</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <section class="container" id="register">
+        <h2 class="section-title">Registration</h2>
+        <div class="registration-form">
+            <p>Register for the Business Innovation Conference 2023 to secure your spot at this premier business event. Choose from our flexible ticket options and join industry leaders for an unforgettable experience.</p>
+            <p style="margin-top: 1.5rem; text-align: center;">
+                <button class="cta-button" id="registerBtn2" style="background: linear-gradient(90deg, #2c3e50 0%, #4a6491 100%);">Register Now</button>
+            </p>
+        </div>
+    </section>
+
+    <section class="speakers-section" id="speakers">
+        <div class="container">
+            <h2 class="section-title">Featured Speakers</h2>
+            <div class="speakers-grid">
+                <div class="speaker-card">
+                    <img src="https://placehold.co/300x250/3498db/ffffff?text=Sarah+Johnson" alt="Sarah Johnson" class="speaker-image">
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Sarah Johnson</h3>
+                        <div class="speaker-title">CEO, TechInnovate Inc.</div>
+                        <p class="speaker-bio">Digital transformation expert with 15+ years of experience leading Fortune 500 companies through major technological shifts.</p>
+                    </div>
+                </div>
+                <div class="speaker-card">
+                    <img src="https://placehold.co/300x250/e74c3c/ffffff?text=Michael+Chen" alt="Michael Chen" class="speaker-image">
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Michael Chen</h3>
+                        <div class="speaker-title">Founder, StartupHub</div>
+                        <p class="speaker-bio">Serial entrepreneur who has founded 4 successful startups and invested in over 50 companies across Silicon Valley.</p>
+                    </div>
+                </div>
+                <div class="speaker-card">
+                    <img src="https://placehold.co/300x250/2ecc71/ffffff?text=Dr.+Amanda+Rodriguez" alt="Dr. Amanda Rodriguez" class="speaker-image">
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">Dr. Amanda Rodriguez</h3>
+                        <div class="speaker-title">Professor of Business Strategy, Harvard</div>
+                        <p class="speaker-bio">Renowned researcher in organizational behavior and strategic management with publications in top-tier journals.</p>
+                    </div>
+                </div>
+                <div class="speaker-card">
+                    <img src="https://placehold.co/300x250/f39c12/ffffff?text=James+Williams" alt="James Williams" class="speaker-image">
+                    <div class="speaker-info">
+                        <h3 class="speaker-name">James Williams</h3>
+                        <div class="speaker-title">Chief Innovation Officer, Global Solutions</div>
+                        <p class="speaker-bio">Innovation leader driving breakthrough products in AI and machine learning across multiple industries.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="schedule">
+        <h2 class="section-title">Conference Schedule</h2>
+        <div class="schedule-container">
+            <div class="schedule-day">
+                <div class="day-header">Day 1: October 15, 2023</div>
+                <div class="session">
+                    <div class="session-time">08:00 - 09:00</div>
+                    <div class="session-title">Registration & Welcome Breakfast</div>
+                    <div class="session-description">Network with fellow attendees over a continental breakfast</div>
+                </div>
+                <div class="session">
+                    <div class="session-time">09:15 - 10:30</div>
+                    <div class="session-title">Keynote: The Future of Business Innovation</div>
+                    <div class="session-speaker">Sarah Johnson</div>
+                    <div class="session-description">Explore emerging trends that will reshape industries in the next decade</div>
+                </div>
+                <div class="session">
+                    <div class="session-time">10:45 - 12:00</div>
+                    <div class="session-title">Panel: Digital Transformation Strategies</div>
+                    <div class="session-speaker">Moderated by Dr. Amanda Rodriguez</div>
+                    <div class="session-description">Hear from industry leaders on successful transformation journeys</div>
+                </div>
+                <div class="session">
+                    <div class="session-time">13:30 - 14:45</div>
+                    <div class="session-title">Workshop: Agile Leadership in Uncertain Times</div>
+                    <div class="session-speaker">James Williams</div>
+                    <div class="session-description">Practical strategies for leading teams through change and uncertainty</div>
+                </div>
+            </div>
+
+            <div class="schedule-day">
+                <div class="day-header">Day 2: October 16, 2023</div>
+                <div class="session">
+                    <div class="session-time">09:00 - 10:15</div>
+                    <div class="session-title">Keynote: Building Sustainable Competitive Advantage</div>
+                    <div class="session-speaker">Michael Chen</div>
+                    <div class="session-description">How startups and established companies can create lasting value</div>
+                </div>
+                <div class="session">
+                    <div class="session-time">10:30 - 11:45</div>
+                    <div class="session-title">Case Study: Disruptive Innovation in Traditional Industries</div>
+                    <div class="session-speaker">Dr. Amanda Rodriguez</div>
+                    <div class="session-description">Lessons from companies that successfully transformed their sectors</div>
+                </div>
+                <div class="session">
+                    <div class="session-time">13:15 - 14:30</div>
+                    <div class="session-title">Panel: The Future of Work</div>
+                    <div class="session-speaker">Moderated by Sarah Johnson</div>
+                    <div class="session-description">Exploring hybrid work models, AI integration, and talent development</div>
+                </div>
+                <div class="session">
+                    <div class="session-time">14:45 - 16:00</div>
+                    <div class="session-title">Networking & Innovation Showcase</div>
+                    <div class="session-description">Connect with exhibitors and fellow attendees</div>
+                </div>
+            </div>
+
+            <div class="schedule-day">
+                <div class="day-header">Day 3: October 17, 2023</div>
+                <div class="session">
+                    <div class="session-time">09:00 - 10:15</div>
+                    <div class="session-title">Keynote: Ethical Leadership in the Digital Age</div>
+                    <div class="session-speaker">James Williams</div>
+                    <div class="session-description">Navigating the ethical challenges of modern business practices</div>
+                </div>
+                <div class="session">
+                    <div class="session-time">10:30 - 11:45</div>
+                    <div class="session-title">Workshop: Data-Driven Decision Making</div>
+                    <div class="session-speaker">Michael Chen</div>
+                    <div class="session-description">Transforming data into actionable business insights</div>
+                </div>
+                <div class="session">
+                    <div class="session-time">13:15 - 14:30</div>
+                    <div class="session-title">Panel: Funding Innovation</div>
+                    <div class="session-speaker">Moderated by Dr. Amanda Rodriguez</div>
+                    <div class="session-description">Venture capital perspectives on investing in breakthrough ideas</div>
+                </div>
+                <div class="session">
+                    <div class="session-time">15:00 - 16:30</div>
+                    <div class="session-title">Closing Keynote & Awards Ceremony</div>
+                    <div class="session-speaker">Sarah Johnson</div>
+                    <div class="session-description">Celebrating innovation and announcing conference awards</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">BizCon 2023</div>
+            <p>Business Innovation Conference</p>
+            <ul class="footer-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#register">Register</a></li>
+                <li><a href="#schedule">Schedule</a></li>
+                <li><a href="#speakers">Speakers</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="copyright">
+                &copy; 2023 Business Innovation Conference. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Modal functionality
+        const registerBtn = document.getElementById('registerBtn');
+        const registerBtn2 = document.getElementById('registerBtn2');
+        const modal = document.getElementById('registrationModal');
+        const modalClose = document.getElementById('modalClose');
+
+        // Open modal
+        registerBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        registerBtn2.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        // Close modal
+        modalClose.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+
+        mobileNavClose.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Registration form submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const ticketType = document.getElementById('ticketType').value;
+            
+            // Simple validation
+            if (!firstName || !lastName || !email || !ticketType) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Display success message
+            alert(`Thank you ${firstName} ${lastName} for registering!\nA confirmation email has been sent to ${email}.\nYou have selected the ${document.getElementById('ticketType').options[document.getElementById('ticketType').selectedIndex].text}.`);
+            
+            // Reset form
+            this.reset();
+            
+            // Close modal
+            modal.classList.remove('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Add animation to elements when they come into view
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe schedule items and speaker cards
+        document.querySelectorAll('.schedule-day, .speaker-card').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
