@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta http-equiv="ClearType" content="true" />
+    <meta http-equiv="ClearType" content="true" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="referrer" content="no-referrer">
-	<title>Alex Johnson | Web Developer Portfolio</title>
+    <title>Alex Johnson | Web Developer Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -355,6 +355,25 @@
             height: 150px;
             resize: vertical;
         }
+        /* Form response messages */
+        .form-response {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+        .form-response.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        .form-response.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
         /* Footer */
         footer {
             background: var(--dark);
@@ -410,18 +429,6 @@
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
-                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-                padding: 20px;
-                gap: 15px;
-            }
-            .nav-links.active {
-                display: flex;
             }
             .mobile-menu {
                 display: block;
@@ -685,18 +692,19 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form>
+                    <div id="form-response" class="form-response"></div>
+                    <form id="contactForm" method="POST" action="send_email.php">
                         <div class="form-group">
-                            <input type="text" placeholder="Your Name" required>
+                            <input type="text" name="name" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="Your Email" required>
+                            <input type="email" name="email" placeholder="Your Email" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Subject">
+                            <input type="text" name="subject" placeholder="Subject">
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Your Message" required></textarea>
+                            <textarea name="message" placeholder="Your Message" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
                     </form>
@@ -746,12 +754,14 @@
         const mobileMenu = document.querySelector('.mobile-menu');
         const navLinks = document.querySelector('.nav-links');
         mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
         });
         // Close mobile menu when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
+                if (window.innerWidth <= 768) {
+                    navLinks.style.display = 'none';
+                }
             });
         });
         // Header scroll effect
@@ -765,7 +775,48 @@
                 header.style.background = 'white';
             }
         });
+        // Handle form submission with AJAX
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = this;
+            const formData = new FormData(form);
+            const responseDiv = document.getElementById('form-response');
+            
+            // Show loading state
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            // Send form data using fetch
+            fetch('send_email.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'success') {
+                    responseDiv.className = 'form-response success';
+                    responseDiv.textContent = 'Your message has been sent successfully!';
+                    form.reset();
+                } else if (data === 'validation_error') {
+                    responseDiv.className = 'form-response error';
+                    responseDiv.textContent = 'Please fill in all required fields correctly.';
+                } else {
+                    responseDiv.className = 'form-response error';
+                    responseDiv.textContent = 'There was an error sending your message. Please try again.';
+                }
+            })
+            .catch(error => {
+                responseDiv.className = 'form-response error';
+                responseDiv.textContent = 'There was an error sending your message. Please try again.';
+            })
+            .finally(() => {
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            });
+        });
     </script>
 </body>
 </html>
- 
