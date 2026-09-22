@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forus— Security Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0a;
+    color: #e0e0e0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Top Nav */
+  .topnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 56px;
+    background: #0d0d0d;
+    border-bottom: 1px solid #1e1e1e;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+  }
+  .topnav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+  }
+  .logo img { width: 28px; height: 28px; }
+  .github-stars {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #ccc;
+    background: #1a1a1a;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #2a2a2a;
+  }
+  .github-stars svg { width: 16px; height: 16px; }
+  .github-stars .star { color: #f59e0b; }
+  .topnav-center {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-link {
+    color: #b0b0b0;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav-link:hover { color: #fff; background: #1a1a1a; }
+  .nav-link.has-dropdown::after {
+    content: '▾';
+    margin-left: 4px;
+    font-size: 10px;
+  }
+  .topnav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .demo-link {
+    color: #b0b0b0;
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .demo-link .demo-badge {
+    background: #2a2a2a;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #888;
+  }
+  .btn-register {
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-register:hover { background: #e0e0e0; }
+  .btn-register .avatar {
+    width: 24px; height: 24px;
+    background: #3b82f6;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #fff; font-weight: 600;
+  }
+
+  /* Layout */
+  .layout {
+    display: flex;
+    margin-top: 56px;
+    min-height: calc(100vh - 56px);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 240px;
+    background: #0d0d0d;
+    border-right: 1px solid #1e1e1e;
+    padding: 16px 0;
+    position: fixed;
+    top: 56px;
+    bottom: 0;
+    overflow-y: auto;
+  }
+  .sidebar-company {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px 16px;
+    border-bottom: 1px solid #1e1e1e;
+    margin-bottom: 8px;
+  }
+  .company-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .company-avatar {
+    width: 28px; height: 28px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #fff;
+  }
+  .company-name { font-size: 14px; font-weight: 600; color: #fff; }
+  .pro-badge {
+    background: #22c55e;
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+  }
+  .sidebar-toggle {
+    color: #666;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .sidebar-nav { padding: 8px 0; }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    font-size: 13.5px;
+    color: #999;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+  .sidebar-item:hover { color: #fff; background: #151515; }
+  .sidebar-item.active {
+    color: #fff;
+    background: #1a1a2e;
+    border-right: 2px solid #6366f1;
+  }
+  .sidebar-item svg { width: 16px; height: 16px; opacity: 0.7; }
+  .sidebar-item.active svg { opacity: 1; }
+  .sidebar-divider {
+    height: 1px;
+    background: #1e1e1e;
+    margin: 8px 16px;
+  }
+  .sidebar-section-label {
+    font-size: 11px;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 16px 6px;
+  }
+
+  /* Main Content */
+  .main {
+    flex: 1;
+    margin-left: 240px;
+    padding: 24px 28px;
+  }
+
+  /* Dashboard Header */
+  .dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .dash-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .dash-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .date-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #ccc;
+    cursor: pointer;
+  }
+  .date-picker svg { width: 16px; height: 16px; }
+  .btn-pentest {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .btn-pentest:hover { background: #252525; border-color: #3a3a3a; }
+
+  /* Stats Row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .stat-value .stat-sub {
+    font-size: 14px;
+    color: #666;
+    font-weight: 400;
+  }
+  .stat-value .stat-critical {
+    font-size: 12px;
+    color: #ef4444;
+    font-weight: 500;
+    margin-left: 6px;
+  }
+
+  /* Panels Grid */
+  .panels-row {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 0.8fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .panel {
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .panel-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .panel-link {
+    font-size: 12px;
+    color: #666;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .panel-link:hover { color: #aaa; }
+
+  /* Issues List */
+  .issue-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .issue-item:last-child { border-bottom: none; }
+  .issue-name {
+    font-size: 13px;
+    color: #ccc;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 12px;
+  }
+  .issue-score {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    min-width: 32px;
+    text-align: center;
+  }
+  .score-critical { background: #7f1d1d; color: #fca5a5; }
+  .score-high { background: #78350f; color: #fcd34d; }
+
+  /* Assets List */
+  .asset-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .asset-item:last-child { border-bottom: none; }
+  .asset-name {
+    font-size: 13px;
+    color: #ccc;
+    flex: 1;
+  }
+  .asset-badges {
+    display: flex;
+    gap: 6px;
+  }
+  .asset-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #999;
+  }
+  .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .dot-critical { background: #ef4444; }
+  .dot-high { background: #f59e0b; }
+  .dot-medium { background: #eab308; }
+  .dot-low { background: #3b82f6; }
+
+  /* Severity Chart */
+  .severity-chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .donut-wrap {
+    position: relative;
+    width: 180px;
+    height: 180px;
+  }
+  .donut-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .donut-center-label { font-size: 12px; color: #777; }
+  .donut-center-value { font-size: 28px; font-weight: 700; color: #fff; }
+  .severity-legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #999;
+  }
+
+  /* Charts Row */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .chart-panel {
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .chart-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .chart-legend-custom {
+    display: flex;
+    gap: 14px;
+  }
+  .chart-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #999;
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+  .chart-big-value {
+    text-align: right;
+    margin-bottom: 8px;
+  }
+  .chart-big-value .val {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .chart-big-value .unit {
+    font-size: 12px;
+    color: #666;
+  }
+  .chart-wrap {
+    height: 180px;
+    position: relative;
+  }
+  .score-display {
+    text-align: right;
+    margin-bottom: 4px;
+  }
+  .score-display .big {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .score-display .sub {
+    font-size: 14px;
+    color: #666;
+  }
+  .open-fixed-legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .of-item {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .of-item .label { font-weight: 400; color: #666; font-size: 12px; margin-left: 4px; }
+  .of-open { color: #ef4444; }
+  .of-fixed { color: #10b981; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+
+  @media (max-width: 1200px) {
+    .panels-row { grid-template-columns: 1fr 1fr; }
+    .charts-row { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
+    .panels-row { grid-template-columns: 1fr; }
+    .charts-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav class="topnav">
+  <div class="topnav-left">
+    <a href="#" class="logo">
+      <img src="https://image.qwenlm.ai/public_source/af5ad0f5-763f-40b8-bf4f-fdf6eae874e6/10dbdb30d-75e7-47f0-9508-c4221bb4ec3b.png" alt="Forus">
+      Forus
+    </a>
+    <div class="github-stars">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>54,000</span>
+      <span class="star">★</span>
+    </div>
+  </div>
+  <div class="topnav-center">
+    <a href="#" class="nav-link has-dropdown">Functions</a>
+    <a href="#" class="nav-link">Enterprise</a>
+    <a href="#" class="nav-link">Blog</a>
+    <a href="#" class="nav-link">Prices</a>
+    <a href="#" class="nav-link">Documents</a>
+  </div>
+  <div class="topnav-right">
+    <a href="#" class="demo-link">Demo <span class="demo-badge">D</span></a>
+    <button class="btn-register">
+      Register
+      <span class="avatar">F</span>
+    </button>
+  </div>
+</nav>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-company">
+      <div class="company-info">
+        <div class="company-avatar">M</div>
+        <span class="company-name">Mono, Inc <span class="pro-badge">Pro</span></span>
+      </div>
+      <span class="sidebar-toggle"></span>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-item active" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Pentests
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        PR Reviews
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Issues
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Chat
+      </a>
+      <div class="sidebar-divider"></div>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Repositories
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Domains
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        Networks
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Integrations
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Report
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Billing
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="dash-header">
+      <h1 class="dash-title">Security Dashboard</h1>
+      <div class="dash-actions">
+        <div class="date-picker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Last 30 Days ▾
+        </div>
+        <button class="btn-pentest">+ New Pentest</button>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Security Score</div>
+        <div class="stat-value">43.0 <span class="stat-sub">/ 100</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Vulnerabilities</div>
+        <div class="stat-value">15 <span class="stat-critical">4 critical</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Open Issues</div>
+        <div class="stat-value">11</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pentests</div>
+        <div class="stat-value">5</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">PRs Reviewed</div>
+        <div class="stat-value">25</div>
+      </div>
+    </div>
+
+    <!-- Panels Row -->
+    <div class="panels-row">
+      <!-- Top Issues -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Top Issues</span>
+          <a class="panel-link">View all →</a>
+        </div>
+        <div class="issue-item">
+          <span class="issue-name">Unauthenticated SSRF in /dashboard/api/edge-functions/test via UR...</span>
+          <span class="issue-score score-critical">10</span>
+        </div>
+        <div class="issue-item">
+          <span class="issue-name">Tenant Assignment Bypass in Signup Allows Arbitrary Cross-Tenant A...</span>
+          <span class="issue-score score-critical">10</span>
+        </div>
+        <div class="issue-item">
+          <span class="issue-name">Unauthenticated Remote Code Execution via POST /execute-python</span>
+          <span class="issue-score score-high">9.8</span>
+        </div>
+        <div class="issue-item">
+          <span class="issue-name">Public Firebase Cloud Storage Bucket Allows Unauthenticated Listin...</span>
+          <span class="issue-score score-high">9.8</span>
+        </div>
+      </div>
+
+      <!-- Top Affected Assets -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Top Affected Assets</span>
+          <a class="panel-link">View all →</a>
+        </div>
+        <div class="asset-item">
+          <span class="asset-name">demo-security/api-gateway</span>
+          <div class="asset-badges">
+            <span class="asset-badge"><span class="badge-dot dot-critical"></span> 2</span>
+            <span class="asset-badge"><span class="badge-dot dot-high"></span> 2</span>
+            <span class="asset-badge"><span class="badge-dot dot-medium"></span> 1</span>
+          </div>
+        </div>
+        <div class="asset-item">
+          <span class="asset-name">api.demo.strix.test</span>
+          <div class="asset-badges">
+            <span class="asset-badge"><span class="badge-dot dot-critical"></span> 1</span>
+            <span class="asset-badge"><span class="badge-dot dot-high"></span> 2</span>
+            <span class="asset-badge"><span class="badge-dot dot-medium"></span> 1</span>
+          </div>
+        </div>
+        <div class="asset-item">
+          <span class="asset-name">demo-security/web-portal</span>
+          <div class="asset-badges">
+            <span class="asset-badge"><span class="badge-dot dot-critical"></span> 1</span>
+            <span class="asset-badge"><span class="badge-dot dot-high"></span> 2</span>
+          </div>
+        </div>
+        <div class="asset-item">
+          <span class="asset-name">app-alpha.demo.strix.test</span>
+          <div class="asset-badges">
+            <span class="asset-badge"><span class="badge-dot dot-critical"></span> 1</span>
+            <span class="asset-badge"><span class="badge-dot dot-high"></span> 2</span>
+          </div>
+        </div>
+        <div class="asset-item">
+          <span class="asset-name">admin.demo.strix.test</span>
+          <div class="asset-badges">
+            <span class="asset-badge"><span class="badge-dot dot-critical"></span> 1</span>
+            <span class="asset-badge"><span class="badge-dot dot-high"></span> 1</span>
+            <span class="asset-badge"><span class="badge-dot dot-medium"></span> 1</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Severity Breakdown -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Severity Breakdown</span>
+        </div>
+        <div class="severity-chart-container">
+          <div class="donut-wrap">
+            <canvas id="severityChart"></canvas>
+            <div class="donut-center">
+              <div class="donut-center-label">Total</div>
+              <div class="donut-center-value">11</div>
+            </div>
+          </div>
+          <div class="severity-legend">
+            <span class="legend-item"><span class="badge-dot dot-critical"></span> Critical</span>
+            <span class="legend-item"><span class="badge-dot dot-high"></span> High</span>
+            <span class="legend-item"><span class="badge-dot dot-medium"></span> Medium</span>
+            <span class="legend-item"><span class="badge-dot dot-low"></span> Low</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+      <!-- Security Score Chart -->
+      <div class="chart-panel">
+        <div class="chart-header">
+          <span class="chart-title">Security Score</span>
+        </div>
+        <div class="score-display">
+          <span class="big">46.0</span>
+          <span class="sub">/ 100</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="scoreChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Open vs Fixed -->
+      <div class="chart-panel">
+        <div class="chart-header">
+          <span class="chart-title">Open vs Fixed Issues</span>
+          <div class="chart-legend-custom">
+            <span class="chart-legend-item"><span class="legend-dot" style="background:#ef4444"></span> Open</span>
+            <span class="chart-legend-item"><span class="legend-dot" style="background:#10b981"></span> Fixed</span>
+          </div>
+        </div>
+        <div class="open-fixed-legend">
+          <span class="of-item of-open">10 <span class="label">open</span></span>
+          <span class="of-item of-fixed">2 <span class="label">fixed</span></span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="openFixedChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Mean Time to Remediate -->
+      <div class="chart-panel">
+        <div class="chart-header">
+          <span class="chart-title">Mean Time to Remediate</span>
+        </div>
+        <div class="chart-big-value">
+          <span class="val">1.8</span>
+          <span class="unit">days avg</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="mttrChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// Chart.js defaults for dark theme
+Chart.defaults.color = '#666';
+Chart.defaults.borderColor = '#1e1e1e';
+Chart.defaults.font.family = "'Inter', sans-serif";
+
+// Severity Donut Chart
+new Chart(document.getElementById('severityChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Critical', 'High', 'Medium', 'Low'],
+    datasets: [{
+      data: [4, 4, 2, 1],
+      backgroundColor: ['#ef4444', '#f59e0b', '#eab308', '#3b82f6'],
+      borderWidth: 0,
+      hoverOffset: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '72%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1a1a',
+        titleColor: '#fff',
+        bodyColor: '#ccc',
+        borderColor: '#2a2a2a',
+        borderWidth: 1,
+        padding: 10,
+        cornerRadius: 8
+      }
+    }
+  }
+});
+
+// Security Score Line Chart
+const scoreCtx = document.getElementById('scoreChart').getContext('2d');
+const scoreGrad = scoreCtx.createLinearGradient(0, 0, 0, 180);
+scoreGrad.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
+scoreGrad.addColorStop(1, 'rgba(16, 185, 129, 0)');
+
+new Chart(scoreCtx, {
+  type: 'line',
+  data: {
+    labels: ['Dec 15', 'Dec 29', 'Jan 12', 'Jan 26', 'Feb 9', 'Feb 23'],
+    datasets: [{
+      data: [85, 82, 75, 68, 55, 46],
+      borderColor: '#10b981',
+      backgroundColor: scoreGrad,
+      borderWidth: 2,
+      fill: true,
+      tension: 0.4,
+      pointRadius: 0,
+      pointHoverRadius: 5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1a1a',
+        titleColor: '#fff',
+        bodyColor: '#ccc',
+        borderColor: '#2a2a2a',
+        borderWidth: 1,
+        padding: 10,
+        cornerRadius: 8,
+        callbacks: {
+          label: ctx => `Score: ${ctx.parsed.y}`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { font: { size: 10 }, color: '#555' }
+      },
+      y: {
+        min: 0, max: 100,
+        grid: { color: '#1a1a1a' },
+        ticks: { font: { size: 10 }, color: '#555', stepSize: 50 }
+      }
+    }
+  }
+});
+
+// Open vs Fixed Chart
+const ofCtx = document.getElementById('openFixedChart').getContext('2d');
+const openGrad = ofCtx.createLinearGradient(0, 0, 0, 180);
+openGrad.addColorStop(0, 'rgba(239, 68, 68, 0.25)');
+openGrad.addColorStop(1, 'rgba(239, 68, 68, 0)');
+const fixedGrad = ofCtx.createLinearGradient(0, 0, 0, 180);
+fixedGrad.addColorStop(0, 'rgba(16, 185, 129, 0.25)');
+fixedGrad.addColorStop(1, 'rgba(16, 185, 129, 0)');
+
+new Chart(ofCtx, {
+  type: 'line',
+  data: {
+    labels: ['Dec 8', 'Dec 22', 'Jan 5', 'Jan 19', 'Feb 2', 'Feb 16'],
+    datasets: [
+      {
+        label: 'Open',
+        data: [1, 2, 5, 7, 9, 10],
+        borderColor: '#ef4444',
+        backgroundColor: openGrad,
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
+        pointRadius: 0
+      },
+      {
+        label: 'Fixed',
+        data: [0, 0, 1, 1, 2, 2],
+        borderColor: '#10b981',
+        backgroundColor: fixedGrad,
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
+        pointRadius: 0
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1a1a',
+        titleColor: '#fff',
+        bodyColor: '#ccc',
+        borderColor: '#2a2a2a',
+        borderWidth: 1,
+        padding: 10,
+        cornerRadius: 8
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { font: { size: 10 }, color: '#555' }
+      },
+      y: {
+        min: 0, max: 10,
+        grid: { color: '#1a1a1a' },
+        ticks: { font: { size: 10 }, color: '#555', stepSize: 5 }
+      }
+    }
+  }
+});
+
+// MTTR Chart
+const mttrCtx = document.getElementById('mttrChart').getContext('2d');
+const mttrGrad = mttrCtx.createLinearGradient(0, 0, 0, 180);
+mttrGrad.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
+mttrGrad.addColorStop(1, 'rgba(16, 185, 129, 0)');
+
+new Chart(mttrCtx, {
+  type: 'line',
+  data: {
+    labels: ['Dec 8', 'Dec 22', 'Jan 5', 'Jan 19', 'Feb 2', 'Feb 16'],
+    datasets: [{
+      data: [2, 0.2, 0.3, 0.5, 2, 1.8],
+      borderColor: '#10b981',
+      backgroundColor: mttrGrad,
+      borderWidth: 2,
+      fill: true,
+      tension: 0.4,
+      pointRadius: 0,
+      pointHoverRadius: 5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1a1a',
+        titleColor: '#fff',
+        bodyColor: '#ccc',
+        borderColor: '#2a2a2a',
+        borderWidth: 1,
+        padding: 10,
+        cornerRadius: 8,
+        callbacks: {
+          label: ctx => `${ctx.parsed.y} days`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { font: { size: 10 }, color: '#555' }
+      },
+      y: {
+        min: 0, max: 2.5,
+        grid: { color: '#1a1a1a' },
+        ticks: {
+          font: { size: 10 },
+          color: '#555',
+          callback: v => v + 'd'
+        }
+      }
+    }
+  }
+});
+
+// Sidebar item click
+document.querySelectorAll('.sidebar-item').forEach(item => {
+  item.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
