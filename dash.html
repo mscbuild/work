@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nimbus Analytics — B2B SaaS Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/index.min.css" />
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --panel-2:#f1f3f9;
+    --text:#0f172a;
+    --muted:#64748b;
+    --border:#e5e7eb;
+    --primary:#6366f1;
+    --primary-2:#8b5cf6;
+    --accent:#22d3ee;
+    --success:#10b981;
+    --danger:#ef4444;
+    --warning:#f59e0b;
+  }
+  .dark{
+    --bg:#0b1020;
+    --panel:#111827;
+    --panel-2:#1a2236;
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+    --border:#1f2937;
+  }
+  *{font-family:'Inter',system-ui,sans-serif}
+  body{background:var(--bg);color:var(--text);transition:background .3s,color .3s}
+  .panel{background:var(--panel);border:1px solid var(--border);transition:background .3s,border .3s}
+  .panel-2{background:var(--panel-2)}
+  .muted{color:var(--muted)}
+  .grid-bg{
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(99,102,241,.15) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+  .gradient-text{
+    background:linear-gradient(90deg,#6366f1,#8b5cf6,#22d3ee);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    color:#fff;box-shadow:0 8px 24px -12px rgba(99,102,241,.6);
+  }
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px -10px rgba(99,102,241,.7)}
+  .chip{background:var(--panel-2);border:1px solid var(--border)}
+  .sidebar-link{
+    display:flex;align-items:center;gap:.75rem;padding:.65rem .85rem;border-radius:.6rem;
+    color:var(--muted);font-weight:500;transition:all .2s;cursor:pointer;
+  }
+  .sidebar-link:hover{background:var(--panel-2);color:var(--text)}
+  .sidebar-link.active{background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(139,92,246,.1));color:#6366f1;font-weight:600}
+  .kpi-card{transition:transform .25s,box-shadow .25s}
+  .kpi-card:hover{transform:translateY(-3px);box-shadow:0 20px 40px -20px rgba(99,102,241,.25)}
+  .scrollbar::-webkit-scrollbar{width:6px;height:6px}
+  .scrollbar::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+  .fade-in{animation:fadeIn .5s ease both}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .pulse-dot{animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .tab-active{color:#6366f1;border-color:#6366f1}
+  .notif-panel{transform-origin:top right;animation:scaleIn .2s ease}
+  @keyframes scaleIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+  .progress-bar{background:linear-gradient(90deg,#6366f1,#8b5cf6,#22d3ee)}
+  input,select{background:var(--panel-2);border:1px solid var(--border);color:var(--text)}
+  input:focus,select:focus{outline:none;border-color:#6366f1}
+</style>
+</head>
+<body class="min-h-screen">
+<div class="flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-64 shrink-0 panel border-r-0 hidden lg:flex flex-col">
+    <div class="p-5 flex items-center gap-3 border-b" style="border-color:var(--border)">
+      <img src="https://image.qwenlm.ai/public_source/cd64a8a1-0cae-4ed2-aec8-7195af841c76/18803d8e7-a04c-43ca-9325-c3c141a51d08.png" class="w-9 h-9 rounded-lg" alt="logo"/>
+      <div>
+        <div class="font-bold text-base gradient-text">Nimbus</div>
+        <div class="text-xs muted">Analytics Suite</div>
+      </div>
+    </div>
+    <nav class="p-4 space-y-1 flex-1 scrollbar overflow-y-auto">
+      <div class="text-xs uppercase muted font-semibold px-3 py-2">Overview</div>
+      <a class="sidebar-link active" data-page="dashboard">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+        Dashboard
+      </a>
+      <a class="sidebar-link" data-page="revenue">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Revenue
+      </a>
+      <a class="sidebar-link" data-page="customers">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        Customers
+      </a>
+      <a class="sidebar-link" data-page="analytics">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></svg>
+        Analytics
+      </a>
+      <a class="sidebar-link" data-page="funnel">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 4h18l-7 8v7l-4 2v-9L3 4z"/></svg>
+        Funnel
+      </a>
+      <div class="text-xs uppercase muted font-semibold px-3 py-2 mt-4">Workspace</div>
+      <a class="sidebar-link" data-page="team">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        Team
+      </a>
+      <a class="sidebar-link" data-page="settings">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33h0a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51h0a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v0a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+    <div class="p-4 border-t" style="border-color:var(--border)">
+      <div class="panel-2 rounded-xl p-4">
+        <div class="text-sm font-semibold">Upgrade to Pro</div>
+        <div class="text-xs muted mt-1">Unlock advanced cohorts & forecasts.</div>
+        <button class="btn-primary text-xs font-semibold px-3 py-2 rounded-lg mt-3 w-full">Upgrade</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 flex flex-col min-w-0">
+    <!-- Header -->
+    <header class="panel border-b px-4 lg:px-8 py-4 flex items-center gap-4 sticky top-0 z-30">
+      <button id="menuBtn" class="lg:hidden p-2 rounded-lg hover:bg-[var(--panel-2)]">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div class="relative flex-1 max-w-md">
+        <svg class="w-4 h-4 muted absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input id="searchInput" class="w-full pl-9 pr-4 py-2 rounded-lg text-sm" placeholder="Search customers, invoices, events…"/>
+      </div>
+      <div class="hidden md:flex items-center gap-2 chip rounded-lg px-2 py-1.5 text-xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-dot"></span>
+        <span class="muted">Live</span>
+        <span class="font-semibold" id="liveCount">1,284</span>
+      </div>
+      <button id="themeBtn" class="p-2 rounded-lg hover:bg-[var(--panel-2)]" title="Toggle theme">
+        <svg id="themeIcon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <button id="notifBtn" class="p-2 rounded-lg hover:bg-[var(--panel-2)] relative">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full"></span>
+      </button>
+      <div class="flex items-center gap-3 pl-2 border-l" style="border-color:var(--border)">
+        <img src="https://image.qwenlm.ai/public_source/cd64a8a1-0cae-4ed2-aec8-7195af841c76/18803d8e7-a04c-43ca-9325-c3c141a51d08.png" class="w-9 h-9 rounded-full object-cover" alt="avatar"/>
+        <div class="hidden sm:block">
+          <div class="text-sm font-semibold leading-tight">Alex Morgan</div>
+          <div class="text-xs muted leading-tight">Admin · Nimbus</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Notifications dropdown -->
+    <div id="notifPanel" class="hidden fixed top-20 right-4 lg:right-8 w-80 panel rounded-xl shadow-2xl notif-panel z-40">
+      <div class="p-4 border-b flex items-center justify-between" style="border-color:var(--border)">
+        <div class="font-semibold">Notifications</div>
+        <button class="text-xs text-indigo-500 font-semibold">Mark all read</button>
+      </div>
+      <div class="max-h-80 overflow-y-auto scrollbar">
+        <div class="p-4 border-b flex gap-3 hover:bg-[var(--panel-2)] cursor-pointer" style="border-color:var(--border)">
+          <div class="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div>
+            <div class="text-sm font-semibold">New enterprise deal closed</div>
+            <div class="text-xs muted">Acme Corp signed a $48k/yr contract.</div>
+            <div class="text-xs muted mt-1">2 min ago</div>
+          </div>
+        </div>
+        <div class="p-4 border-b flex gap-3 hover:bg-[var(--panel-2)] cursor-pointer" style="border-color:var(--border)">
+          <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-500 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+          </div>
+          <div>
+            <div class="text-sm font-semibold">Churn risk alert</div>
+            <div class="text-xs muted">3 accounts show declining usage.</div>
+            <div class="text-xs muted mt-1">1 hr ago</div>
+          </div>
+        </div>
+        <div class="p-4 flex gap-3 hover:bg-[var(--panel-2)] cursor-pointer">
+          <div class="w-9 h-9 rounded-full bg-indigo-500/20 text-indigo-500 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div>
+            <div class="text-sm font-semibold">Milestone reached</div>
+            <div class="text-xs muted">You hit $1M ARR. Congrats!</div>
+            <div class="text-xs muted mt-1">Yesterday</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-4 lg:p-8 space-y-6">
+      <!-- Title row -->
+      <div class="flex flex-wrap items-end justify-between gap-4 fade-in">
+        <div>
+          <div class="text-xs muted font-semibold uppercase tracking-wider">Sunday · June 14, 2026</div>
+          <h1 class="text-2xl lg:text-3xl font-bold mt-1">Welcome back, Alex 👋</h1>
+          <p class="muted text-sm mt-1">Here's what's happening with Nimbus today.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <select id="rangeSelect" class="rounded-lg px-3 py-2 text-sm">
+            <option>Last 7 days</option>
+            <option selected>Last 30 days</option>
+            <option>Last 90 days</option>
+            <option>This year</option>
+          </select>
+          <button class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Export
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 fade-in">
+        <!-- MRR -->
+        <div class="kpi-card panel rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <div class="text-xs muted font-semibold uppercase tracking-wider">Monthly Recurring Revenue</div>
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/15 text-indigo-500 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            </div>
+          </div>
+          <div class="mt-4 flex items-baseline gap-2">
+            <div class="text-3xl font-bold">$284,920</div>
+            <div class="text-xs font-semibold text-emerald-500 flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17l5-5 5 5M7 7l5 5 5-5"/></svg>
+              +12.4%
+            </div>
+          </div>
+          <div class="muted text-xs mt-1">vs. $253,410 last month</div>
+          <div class="mt-4 h-1.5 rounded-full bg-[var(--panel-2)] overflow-hidden">
+            <div class="progress-bar h-full rounded-full" style="width:72%"></div>
+          </div>
+        </div>
+        <!-- ARR -->
+        <div class="kpi-card panel rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <div class="text-xs muted font-semibold uppercase tracking-wider">Annual Run Rate</div>
+            <div class="w-8 h-8 rounded-lg bg-violet-500/15 text-violet-500 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></svg>
+            </div>
+          </div>
+          <div class="mt-4 flex items-baseline gap-2">
+            <div class="text-3xl font-bold">$3.42M</div>
+            <div class="text-xs font-semibold text-emerald-500 flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17l5-5 5 5M7 7l5 5 5-5"/></svg>
+              +18.1%
+            </div>
+          </div>
+          <div class="muted text-xs mt-1">Annualized from current MRR</div>
+          <div class="mt-4 h-1.5 rounded-full bg-[var(--panel-2)] overflow-hidden">
+            <div class="progress-bar h-full rounded-full" style="width:85%"></div>
+          </div>
+        </div>
+        <!-- Net Revenue Retention -->
+        <div class="kpi-card panel rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <div class="text-xs muted font-semibold uppercase tracking-wider">Net Revenue Retention</div>
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-500 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+          </div>
+          <div class="mt-4 flex items-baseline gap-2">
+            <div class="text-3xl font-bold">118%</div>
+            <div class="text-xs font-semibold text-emerald-500 flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17l5-5 5 5M7 7l5 5 5-5"/></svg>
+              +2.3%
+            </div>
+          </div>
+          <div class="muted text-xs mt-1">Healthy expansion revenue</div>
+          <div class="mt-4 h-1.5 rounded-full bg-[var(--panel-2)] overflow-hidden">
+            <div class="progress-bar h-full rounded-full" style="width:92%"></div>
+          </div>
+        </div>
+        <!-- Churn -->
+        <div class="kpi-card panel rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <div class="text-xs muted font-semibold uppercase tracking-wider">Logo Churn Rate</div>
+            <div class="w-8 h-8 rounded-lg bg-rose-500/15 text-rose-500 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </div>
+          </div>
+          <div class="mt-4 flex items-baseline gap-2">
+            <div class="text-3xl font-bold">1.8%</div>
+            <div class="text-xs font-semibold text-emerald-500 flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17l5-5 5 5M7 7l5 5 5-5"/></svg>
+              -0.4%
+            </div>
+          </div>
+          <div class="muted text-xs mt-1">Down from 2.2% last month</div>
+          <div class="mt-4 h-1.5 rounded-full bg-[var(--panel-2)] overflow-hidden">
+            <div class="progress-bar h-full rounded-full" style="width:22%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts row 1 -->
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 fade-in">
+        <!-- Revenue chart -->
+        <div class="panel rounded-2xl p-5 xl:col-span-2">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div class="font-semibold text-lg">Revenue Overview</div>
+              <div class="muted text-xs">MRR growth over time</div>
+            </div>
+            <div class="flex gap-1 chip rounded-lg p-1 text-xs">
+              <button class="tab-btn tab-active px-3 py-1 rounded-md font-semibold" data-tab="mrr">MRR</button>
+              <button class="tab-btn px-3 py-1 rounded-md font-semibold muted" data-tab="arr">ARR</button>
+              <button class="tab-btn px-3 py-1 rounded-md font-semibold muted" data-tab="arpu">ARPU</button>
+            </div>
+          </div>
+          <div class="mt-4 h-72"><canvas id="revenueChart"></canvas></div>
+        </div>
+        <!-- MRR breakdown -->
+        <div class="panel rounded-2xl p-5">
+          <div class="font-semibold text-lg">MRR Breakdown</div>
+          <div class="muted text-xs">By plan type</div>
+          <div class="mt-4 h-56"><canvas id="breakdownChart"></canvas></div>
+          <div class="mt-4 space-y-2 text-sm">
+            <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>Enterprise</span><span class="font-semibold">$142,460</span></div>
+            <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-violet-500"></span>Pro</span><span class="font-semibold">$99,322</span></div>
+            <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>Starter</span><span class="font-semibold">$43,138</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts row 2 -->
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 fade-in">
+        <div class="panel rounded-2xl p-5 xl:col-span-2">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-semibold text-lg">New Customers & Expansion</div>
+              <div class="muted text-xs">Acquisition vs upsell revenue</div>
+            </div>
+            <div class="flex gap-2 text-xs">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>New</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>Expansion</span>
+            </div>
+          </div>
+          <div class="mt-4 h-64"><canvas id="acquisitionChart"></canvas></div>
+        </div>
+        <!-- Cohort / Health -->
+        <div class="panel rounded-2xl p-5">
+          <div class="font-semibold text-lg">Customer Health</div>
+          <div class="muted text-xs">Distribution of active accounts</div>
+          <div class="mt-4 space-y-4">
+            <div>
+              <div class="flex justify-between text-sm"><span>Healthy</span><span class="font-semibold">68%</span></div>
+              <div class="h-2 rounded-full bg-[var(--panel-2)] mt-1.5 overflow-hidden"><div class="h-full bg-emerald-500 rounded-full" style="width:68%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm"><span>At Risk</span><span class="font-semibold">22%</span></div>
+              <div class="h-2 rounded-full bg-[var(--panel-2)] mt-1.5 overflow-hidden"><div class="h-full bg-amber-500 rounded-full" style="width:22%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm"><span>Critical</span><span class="font-semibold">10%</span></div>
+              <div class="h-2 rounded-full bg-[var(--panel-2)] mt-1.5 overflow-hidden"><div class="h-full bg-rose-500 rounded-full" style="width:10%"></div></div>
+            </div>
+          </div>
+          <div class="mt-6 grid grid-bg rounded-xl p-4">
+            <div class="text-xs muted">Avg. LTV</div>
+            <div class="text-xl font-bold">$48,200</div>
+            <div class="text-xs muted mt-3">Payback Period</div>
+            <div class="text-xl font-bold">11 months</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table + Activity -->
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 fade-in">
+        <!-- Top Customers -->
+        <div class="panel rounded-2xl p-5 xl:col-span-2">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <div class="font-semibold text-lg">Top Customers</div>
+              <div class="muted text-xs">By revenue contribution</div>
+            </div>
+            <button class="text-xs font-semibold text-indigo-500">View all →</button>
+          </div>
+          <div class="overflow-x-auto scrollbar">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="muted text-xs uppercase tracking-wider">
+                  <th class="text-left py-2 font-semibold">Customer</th>
+                  <th class="text-left py-2 font-semibold">Plan</th>
+                  <th class="text-left py-2 font-semibold">MRR</th>
+                  <th class="text-left py-2 font-semibold">Health</th>
+                  <th class="text-left py-2 font-semibold">Trend</th>
+                </tr>
+              </thead>
+              <tbody id="customerTable" class="divide-y" style="--tw-divide-opacity:1"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Activity -->
+        <div class="panel rounded-2xl p-5">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <div class="font-semibold text-lg">Recent Activity</div>
+              <div class="muted text-xs">Last 24 hours</div>
+            </div>
+          </div>
+          <div class="space-y-4 max-h-96 overflow-y-auto scrollbar pr-1">
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <div class="text-sm font-semibold">Acme Corp upgraded to Enterprise</div>
+                <div class="text-xs muted">+$4,000 MRR · 12 min ago</div>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-indigo-500/15 text-indigo-500 flex items-center justify-center shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8.5 11a4 4 0 100-8 4 4 0 000 8M20 8v6M23 11h-6"/></svg>
+              </div>
+              <div>
+                <div class="text-sm font-semibold">New signup: Globex Inc.</div>
+                <div class="text-xs muted">Starter plan · 48 min ago</div>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-amber-500/15 text-amber-500 flex items-center justify-center shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+              </div>
+              <div>
+                <div class="text-sm font-semibold">Churn risk: Wayne Enterprises</div>
+                <div class="text-xs muted">Login drop 42% · 2 hr ago</div>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-violet-500/15 text-violet-500 flex items-center justify-center shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              </div>
+              <div>
+                <div class="text-sm font-semibold">Invoice paid: $12,400</div>
+                <div class="text-xs muted">Stark Industries · 5 hr ago</div>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 rounded-full bg-cyan-500/15 text-cyan-500 flex items-center justify-center shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></svg>
+              </div>
+              <div>
+                <div class="text-sm font-semibold">NRR milestone: 118%</div>
+                <div class="text-xs muted">Highest this quarter · 8 hr ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="text-center muted text-xs py-4">
+        © 2026 Nimbus Analytics · Built for B2B SaaS teams
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  const themeIcon = document.getElementById('themeIcon');
+  themeBtn.addEventListener('click',()=>{
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    themeIcon.innerHTML = isDark
+      ? '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>'
+      : '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
+    updateChartsTheme();
+  });
+
+  // Sidebar links
+  document.querySelectorAll('.sidebar-link').forEach(link=>{
+    link.addEventListener('click',()=>{
+      document.querySelectorAll('.sidebar-link').forEach(l=>l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  // Menu toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  menuBtn.addEventListener('click',()=>{
+    sidebar.classList.toggle('hidden');
+    sidebar.classList.toggle('fixed');
+    sidebar.classList.toggle('inset-y-0');
+    sidebar.classList.toggle('left-0');
+    sidebar.classList.toggle('z-40');
+  });
+
+  // Notifications
+  const notifBtn = document.getElementById('notifBtn');
+  const notifPanel = document.getElementById('notifPanel');
+  notifBtn.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    notifPanel.classList.toggle('hidden');
+  });
+  document.addEventListener('click',(e)=>{
+    if(!notifPanel.contains(e.target) && e.target!==notifBtn) notifPanel.classList.add('hidden');
+  });
+
+  // Tab switcher
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('tab-active');b.classList.add('muted')});
+      btn.classList.add('tab-active');btn.classList.remove('muted');
+      const tab = btn.dataset.tab;
+      updateRevenueChart(tab);
+    });
+  });
+
+  // Chart defaults
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  const gridColor = ()=> document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+  const textColor = ()=> document.documentElement.classList.contains('dark') ? '#94a3b8' : '#64748b';
+
+  // Revenue Chart
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const mrrData = [180,195,210,225,240,253,260,270,278,284,290,295];
+  const arrData = mrrData.map(v=>v*12);
+  const arpuData = [420,430,445,450,460,470,475,485,490,500,510,520];
+
+  const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+  const revenueGrad = revenueCtx.createLinearGradient(0,0,0,280);
+  revenueGrad.addColorStop(0,'rgba(99,102,241,0.4)');
+  revenueGrad.addColorStop(1,'rgba(99,102,241,0)');
+
+  const revenueChart = new Chart(revenueCtx,{
+    type:'line',
+    data:{
+      labels:months,
+      datasets:[{
+        label:'MRR (k$)',
+        data:mrrData,
+        borderColor:'#6366f1',
+        backgroundColor:revenueGrad,
+        fill:true,
+        tension:0.4,
+        pointRadius:0,
+        pointHoverRadius:6,
+        pointHoverBackgroundColor:'#6366f1',
+        borderWidth:3
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',titleColor:'#fff',bodyColor:'#fff',padding:10,cornerRadius:8,displayColors:false,callbacks:{label:c=>`$${c.parsed.y}k`}}},
+      scales:{
+        x:{grid:{color:gridColor()},ticks:{color:textColor()}},
+        y:{grid:{color:gridColor()},ticks:{color:textColor(),callback:v=>'$'+v+'k'}}
+      }
+    }
+  });
+
+  function updateRevenueChart(tab){
+    let data,label,color;
+    if(tab==='mrr'){data=mrrData;label='MRR (k$)';color='#6366f1'}
+    else if(tab==='arr'){data=arrData;label='ARR (k$)';color='#8b5cf6'}
+    else{data=arpuData;label='ARPU ($)';color='#22d3ee'}
+    revenueChart.data.datasets[0].data=data;
+    revenueChart.data.datasets[0].label=label;
+    revenueChart.data.datasets[0].borderColor=color;
+    const g = revenueCtx.createLinearGradient(0,0,0,280);
+    g.addColorStop(0,color+'66');g.addColorStop(1,color+'00');
+    revenueChart.data.datasets[0].backgroundColor=g;
+    revenueChart.options.scales.y.ticks.callback = tab==='arpu' ? v=>'$'+v : v=>'$'+v+'k';
+    revenueChart.update();
+  }
+
+  // Breakdown Chart
+  const breakdownCtx = document.getElementById('breakdownChart').getContext('2d');
+  const breakdownChart = new Chart(breakdownCtx,{
+    type:'doughnut',
+    data:{
+      labels:['Enterprise','Pro','Starter'],
+      datasets:[{data:[50,35,15],backgroundColor:['#6366f1','#8b5cf6','#22d3ee'],borderWidth:0,hoverOffset:6}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:'72%',
+      plugins:{legend:{display:false}}
+    }
+  });
+
+  // Acquisition Chart
+  const acqCtx = document.getElementById('acquisitionChart').getContext('2d');
+  const acqChart = new Chart(acqCtx,{
+    type:'bar',
+    data:{
+      labels:months,
+      datasets:[
+        {label:'New',data:[12,15,18,22,25,28,30,32,35,38,40,42],backgroundColor:'#6366f1',borderRadius:6},
+        {label:'Expansion',data:[5,6,8,9,10,12,13,14,15,17,18,20],backgroundColor:'#22d3ee',borderRadius:6}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#111827',cornerRadius:8}},
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{color:textColor()}},
+        y:{stacked:true,grid:{color:gridColor()},ticks:{color:textColor(),callback:v=>'$'+v+'k'}}
+      }
+    }
+  });
+
+  function updateChartsTheme(){
+    [revenueChart,breakdownChart,acqChart].forEach(c=>{
+      if(c.options.scales?.x){c.options.scales.x.grid.color=gridColor();c.options.scales.x.ticks.color=textColor()}
+      if(c.options.scales?.y){c.options.scales.y.grid.color=gridColor();c.options.scales.y.ticks.color=textColor()}
+      c.update();
+    });
+  }
+
+  // Customer table
+  const customers = [
+    {name:'Acme Corp',plan:'Enterprise',mrr:48000,health:92,up:true},
+    {name:'Stark Industries',plan:'Enterprise',mrr:36000,health:88,up:true},
+    {name:'Wayne Enterprises',plan:'Pro',mrr:18500,health:64,up:false},
+    {name:'Globex Inc.',plan:'Pro',mrr:12400,health:81,up:true},
+    {name:'Initech LLC',plan:'Starter',mrr:6200,health:74,up:true},
+    {name:'Umbrella Co.',plan:'Enterprise',mrr:41560,health:95,up:true},
+  ];
+  const tbody = document.getElementById('customerTable');
+  customers.forEach(c=>{
+    const healthColor = c.health>=80?'bg-emerald-500':c.health>=60?'bg-amber-500':'bg-rose-500';
+    const trendIcon = c.up
+      ? '<svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17l5-5 5 5M7 7l5 5 5-5"/></svg>'
+      : '<svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 7l5 5 5-5M7 17l5-5 5 5"/></svg>';
+    const row = document.createElement('tr');
+    row.className='hover:bg-[var(--panel-2)] transition-colors';
+    row.innerHTML=`
+      <td class="py-3">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500 text-white flex items-center justify-center font-bold text-sm">${c.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
+          <div class="font-semibold">${c.name}</div>
+        </div>
+      </td>
+      <td class="py-3"><span class="chip px-2 py-1 rounded-md text-xs font-semibold">${c.plan}</span></td>
+      <td class="py-3 font-semibold">$${c.mrr.toLocaleString()}</td>
+      <td class="py-3">
+        <div class="flex items-center gap-2">
+          <div class="w-20 h-1.5 rounded-full bg-[var(--panel-2)] overflow-hidden"><div class="h-full ${healthColor} rounded-full" style="width:${c.health}%"></div></div>
+          <span class="text-xs font-semibold">${c.health}</span>
+        </div>
+      </td>
+      <td class="py-3">${trendIcon}</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  // Search filter
+  document.getElementById('searchInput').addEventListener('input',(e)=>{
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('#customerTable tr').forEach((row,i)=>{
+      row.style.display = customers[i].name.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+
+  // Live counter animation
+  const liveEl = document.getElementById('liveCount');
+  setInterval(()=>{
+    const base = 1284;
+    const delta = Math.floor(Math.random()*20)-10;
+    liveEl.textContent = (base+delta).toLocaleString();
+  },2500);
+</script>
+</body>
+</html>
+
