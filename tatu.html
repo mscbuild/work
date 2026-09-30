@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АРИСТОКРАТ — Rīga Tattoo Studio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/playfair-display@5.0.16/index.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.16/index.css" rel="stylesheet">
+    <style>
+        :root {
+            --blue-accent: #1a8cff;
+            --blue-hover: #0066cc;
+            --dark-bg: #0a0a0a;
+            --dark-card: #111111;
+            --dark-card2: #161616;
+            --text-muted: #8a8a8a;
+            --text-light: #cccccc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: var(--dark-bg);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .top-bar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+        }
+
+        .logo-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo-sub {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .top-info {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .top-info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-info-item .icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(26, 140, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .top-info-item .icon-circle i {
+            color: var(--blue-accent);
+            font-size: 1rem;
+        }
+
+        .top-info-item .info-text {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .top-info-item .info-text a {
+            color: var(--blue-accent);
+            text-decoration: underline;
+            font-size: 0.78rem;
+        }
+
+        .top-info-item .info-text strong {
+            color: #fff;
+        }
+
+        .top-phone {
+            text-align: right;
+        }
+
+        .top-phone a {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--blue-accent);
+            text-decoration: none;
+            display: block;
+        }
+
+        .top-phone span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Navigation */
+        .main-nav {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue-accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue-accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp7NulFXgnQyFEqpIWz8qbScaSgLA5L5343jFWSR74kw&s=10') center right / cover no-repeat;
+            opacity: 0.6;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.3) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 80px 0;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            max-width: 700px;
+        }
+
+        .hero-title .highlight {
+            color: var(--blue-accent);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            max-width: 550px;
+            margin-bottom: 40px;
+        }
+
+        .hero-subtitle strong {
+            color: #fff;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-custom {
+            background: var(--blue-accent);
+            color: #fff;
+            border: 2px solid var(--blue-accent);
+            padding: 16px 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--blue-hover);
+            border-color: var(--blue-hover);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(26, 140, 255, 0.3);
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            color: var(--blue-accent);
+            border: 2px solid var(--blue-accent);
+            padding: 16px 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--blue-accent);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(26, 140, 255, 0.3);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--dark-card);
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--blue-accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .section-title .highlight {
+            color: var(--blue-accent);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .service-card {
+            background: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 40px 30px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--blue-accent);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(26, 140, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: rgba(26, 140, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .service-icon i {
+            font-size: 1.5rem;
+            color: var(--blue-accent);
+        }
+
+        .service-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Portfolio */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 60px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-overlay span {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Artists */
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .artist-card {
+            background: var(--dark-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .artist-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        .artist-info {
+            padding: 25px;
+        }
+
+        .artist-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .artist-info .style {
+            color: var(--blue-accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .artist-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .testimonial-card {
+            background: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 35px;
+            position: relative;
+        }
+
+        .testimonial-card .quote-icon {
+            font-size: 2rem;
+            color: var(--blue-accent);
+            opacity: 0.3;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--blue-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .testimonial-stars {
+            color: #ffc107;
+            font-size: 0.8rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(26, 140, 255, 0.1) 0%, var(--dark-bg) 100%);
+            padding: 100px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .cta-section .section-title {
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+
+        .cta-section .section-subtitle {
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 60px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            background: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 14px 18px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--blue-accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-info-item {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .contact-info-item .ci-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(26, 140, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-info-item .ci-icon i {
+            color: var(--blue-accent);
+            font-size: 1.2rem;
+        }
+
+        .contact-info-item h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-info-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .contact-info-item a {
+            color: var(--blue-accent);
+            text-decoration: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-card);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .logo-main {
+            font-size: 1.5rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-top: 15px;
+            max-width: 300px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: var(--blue-accent);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--blue-accent);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.98);
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--blue-accent);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            .top-info {
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .services-grid,
+            .artists-grid,
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .portfolio-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .top-info {
+                display: none;
+            }
+            .top-phone {
+                display: none;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .services-grid,
+            .artists-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .btn-primary-custom,
+            .btn-outline-custom {
+                text-align: center;
+            }
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--blue-accent);
+            color: #fff;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(26, 140, 255, 0.4);
+        }
+
+        .scroll-top.visible {
+            display: flex;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+            background: var(--blue-hover);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .modal-content .form-group {
+            margin-bottom: 15px;
+        }
+
+        .modal-content .btn-primary-custom {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-inner">
+                <div class="logo">
+                    <a href="#" class="logo-main">АРИСТОКРАТ</a>
+                    <span class="logo-sub">Riga Tattoo Studio</span>
+                </div>
+                <div class="top-info">
+                    <div class="top-info-item">
+                        <div class="icon-circle">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div class="info-text">
+                            St. Karmanitsky Lane, 10<br>
+                            <a href="#">Show on map</a>
+                        </div>
+                    </div>
+                    <div class="top-info-item">
+                        <div class="icon-circle">
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <div class="info-text">
+                            <strong>1200+</strong> live reviews for<br>5 years of work
+                        </div>
+                    </div>
+                    <div class="top-info-item">
+                        <div class="icon-circle">
+                            <i class="bi bi-chat-dots-fill"></i>
+                        </div>
+                        <div class="info-text">
+                            We respond promptly,<br>within <strong>30 minutes</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="top-phone">
+                    <a href="tel:+371 2931804">+371 2931-80-4</a>
+                    <span>Available Mon-Sun 12:00 - 23:00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-inner">
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#artists">Artists</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="hamburger" onclick="toggleMobileMenu()">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        <a href="#home" onclick="toggleMobileMenu()">Home</a>
+        <a href="#services" onclick="toggleMobileMenu()">Services</a>
+        <a href="#portfolio" onclick="toggleMobileMenu()">Portfolio</a>
+        <a href="#artists" onclick="toggleMobileMenu()">Artists</a>
+        <a href="#reviews" onclick="toggleMobileMenu()">Reviews</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title fade-up">
+                    TATTOO <span class="highlight">IN ANY STYLE</span><br>
+                    FROM THE BEST<br>
+                    ARTISTS IN RIGA
+                </h1>
+                <p class="hero-subtitle fade-up">
+                    <i class="bi bi-infinity" style="color: var(--blue-accent); margin-right: 8px;"></i>
+                    We will provide <strong>free consultation</strong> on your tattoo, calculate its cost, and also individually select a master according to your wishes and budget
+                </p>
+                <div class="hero-buttons fade-up">
+                    <a href="#contact" class="btn-primary-custom">FIND OUT PRICE</a>
+                    <a href="#" class="btn-outline-custom" onclick="openModal(); return false;">BOOK A CALL WITH US</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item fade-up">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-label">Years of Experience</span>
+                </div>
+                <div class="stat-item fade-up">
+                    <span class="stat-number">1200+</span>
+                    <span class="stat-label">Happy Clients</span>
+                </div>
+                <div class="stat-item fade-up">
+                    <span class="stat-number">15</span>
+                    <span class="stat-label">Professional Artists</span>
+                </div>
+                <div class="stat-item fade-up">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Tattoo Styles</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fade-up">OUR <span class="highlight">SERVICES</span></h2>
+                <p class="section-subtitle mx-auto fade-up">We offer a wide range of tattoo services, from custom designs to cover-ups, all performed by skilled professionals</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <i class="bi bi-palette-fill"></i>
+                    </div>
+                    <h3>Custom Design</h3>
+                    <p>Unique tattoo designs created specifically for you. Our artists work closely with you to bring your vision to life with precision and artistry.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <i class="bi bi-brush-fill"></i>
+                    </div>
+                    <h3>Realistic Tattoos</h3>
+                    <p>Photorealistic portraits and images that look like photographs on skin. Our specialists master the art of shading and detail work.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <i class="bi bi-droplet-fill"></i>
+                    </div>
+                    <h3>Watercolor Style</h3>
+                    <p>Vibrant, artistic tattoos that mimic watercolor paintings. Perfect for those who want a colorful, expressive piece of body art.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
+                    <h3>Cover-Up</h3>
+                    <p>Transform old or unwanted tattoos into beautiful new artwork. Our experts specialize in creative cover-up solutions.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    <h3>Geometric & Dotwork</h3>
+                    <p>Precise geometric patterns and intricate dotwork designs. Perfect symmetry and mathematical beauty on your skin.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h3>Laser Removal</h3>
+                    <p>Safe and effective tattoo removal using modern laser technology. Consult with our specialists for the best removal plan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="section" id="portfolio" style="background: var(--dark-card);">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fade-up">OUR <span class="highlight">PORTFOLIO</span></h2>
+                <p class="section-subtitle mx-auto fade-up">Browse through our latest works and get inspired for your next tattoo</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item fade-up">
+                    <img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=400&h=400&fit=crop" alt="Tattoo Work 1">
+                    <div class="portfolio-overlay"><span>Realistic Portrait</span></div>
+                </div>
+                <div class="portfolio-item fade-up">
+                    <img src="https://www.davanusala.lv/105825-thickbox_default/podarochnaya-karta-tatu-salona-tattoo-imanta.jpg" alt="Tattoo Work 2">
+                    <div class="portfolio-overlay"><span>Geometric Design</span></div>
+                </div>
+                <div class="portfolio-item fade-up">
+                    <img src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=400&h=400&fit=crop" alt="Tattoo Work 3">
+                    <div class="portfolio-overlay"><span>Black & Grey</span></div>
+                </div>
+                <div class="portfolio-item fade-up">
+                    <img src="https://images.unsplash.com/photo-1562962230-16e4623d36e6?w=400&h=400&fit=crop" alt="Tattoo Work 4">
+                    <div class="portfolio-overlay"><span>Watercolor</span></div>
+                </div>
+                <div class="portfolio-item fade-up">
+                    <img src="https://kulturologia.ru/files/u18046/andylopo4.jpg" alt="Tattoo Work 5">
+                    <div class="portfolio-overlay"><span>Traditional</span></div>
+                </div>
+                <div class="portfolio-item fade-up">
+                    <img src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?w=400&h=400&fit=crop" alt="Tattoo Work 6">
+                    <div class="portfolio-overlay"><span>Japanese Style</span></div>
+                </div>
+                <div class="portfolio-item fade-up">
+                    <img src="https://www.davanusala.lv/105825-thickbox_default/podarochnaya-karta-tatu-salona-tattoo-imanta.jpg" alt="Tattoo Work 7">
+                    <div class="portfolio-overlay"><span>Minimalist</span></div>
+                </div>
+                <div class="portfolio-item fade-up">
+                    <img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=400&h=400&fit=crop" alt="Tattoo Work 8">
+                    <div class="portfolio-overlay"><span>Neo-Traditional</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artists Section -->
+    <section class="section" id="artists">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fade-up">MEET OUR <span class="highlight">ARTISTS</span></h2>
+                <p class="section-subtitle mx-auto fade-up">Our team of talented tattoo artists brings years of experience and passion to every piece</p>
+            </div>
+            <div class="artists-grid">
+                <div class="artist-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=450&fit=crop&crop=face" alt="Artist" class="artist-img">
+                    <div class="artist-info">
+                        <h3>Alexander Volkov</h3>
+                        <p class="style">Realism & Portraits</p>
+                        <p>8 years of experience. Specializes in photorealistic portraits and black & grey work.</p>
+                    </div>
+                </div>
+                <div class="artist-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=450&fit=crop&crop=face" alt="Artist" class="artist-img">
+                    <div class="artist-info">
+                        <h3>Maria Sokolova</h3>
+                        <p class="style">Watercolor & Fine Line</p>
+                        <p>6 years of experience. Known for delicate, colorful watercolor designs and intricate details.</p>
+                    </div>
+                </div>
+                <div class="artist-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=450&fit=crop&crop=face" alt="Artist" class="artist-img">
+                    <div class="artist-info">
+                        <h3>Dmitri Kozlov</h3>
+                        <p class="style">Geometric & Dotwork</p>
+                        <p>10 years of experience. Master of precise geometric patterns and sacred geometry tattoos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section" id="reviews" style="background: var(--dark-card);">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fade-up">CLIENT <span class="highlight">REVIEWS</span></h2>
+                <p class="section-subtitle mx-auto fade-up">What our clients say about their experience at АРИСТОКРАТ</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-up">
+                    <div class="quote-icon"><i class="bi bi-quote"></i></div>
+                    <p>"Amazing experience! The artist understood exactly what I wanted and created a stunning piece. The studio is clean, professional, and the atmosphere is very welcoming."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AK</div>
+                        <div>
+                            <div class="testimonial-name">Anna Kuznetsova</div>
+                            <div class="testimonial-stars">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-up">
+                    <div class="quote-icon"><i class="bi bi-quote"></i></div>
+                    <p>"I've been to many tattoo studios in Moscow, but АРИСТОКРАТ is by far the best. The attention to detail and the quality of work is outstanding. Highly recommend!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">IP</div>
+                        <div>
+                            <div class="testimonial-name">Ivan Petrov</div>
+                            <div class="testimonial-stars">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-up">
+                    <div class="quote-icon"><i class="bi bi-quote"></i></div>
+                    <p>"Got my first tattoo here and couldn't be happier. The consultation was thorough, the artist was patient, and the result exceeded my expectations. Will definitely come back!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">ES</div>
+                        <div>
+                            <div class="testimonial-name">Elena Smirnova</div>
+                            <div class="testimonial-stars">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="section-title fade-up">READY TO GET YOUR <span class="highlight">DREAM TATTOO</span>?</h2>
+            <p class="section-subtitle fade-up">Book a free consultation today and let our artists bring your vision to life</p>
+            <div class="hero-buttons fade-up" style="justify-content: center;">
+                <a href="#contact" class="btn-primary-custom">FIND OUT PRICE</a>
+                <a href="#" class="btn-outline-custom" onclick="openModal(); return false;">BOOK A CALL WITH US</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fade-up">GET IN <span class="highlight">TOUCH</span></h2>
+                <p class="section-subtitle mx-auto fade-up">Have questions? Reach out to us and we'll get back to you within 30 minutes</p>
+            </div>
+            <div class="contact-grid">
+                <form class="contact-form fade-up" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" placeholder="+371 ___-__-__" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tattoo Style</label>
+                        <select>
+                            <option value="">Select a style</option>
+                            <option>Realism</option>
+                            <option>Watercolor</option>
+                            <option>Geometric</option>
+                            <option>Traditional</option>
+                            <option>Black & Grey</option>
+                            <option>Japanese</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea placeholder="Describe your tattoo idea..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary-custom" style="border: none; cursor: pointer; font-family: 'Inter', sans-serif;">
+                        SEND MESSAGE <i class="bi bi-arrow-right ms-2"></i>
+                    </button>
+                </form>
+                <div class="contact-info-list fade-up">
+                    <div class="contact-info-item">
+                        <div class="ci-icon">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div>
+                            <h4>Our Location</h4>
+                            <p>St. Karmanitsky Lane, 10<br>Riga, Latvia</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="ci-icon">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p><a href="tel:+3712931804">+371 931-80-48</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="ci-icon">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p><a href="mailto:info@aristokrat-tattoo.ru">info@aristokrat-tattoo.ru</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="ci-icon">
+                            <i class="bi bi-clock-fill"></i>
+                        </div>
+                        <div>
+                            <h4>Working Hours</h4>
+                            <p>Monday - Sunday: 12:00 - 23:00</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="ci-icon">
+                            <i class="bi bi-whatsapp"></i>
+                        </div>
+                        <div>
+                            <h4>Messengers</h4>
+                            <p>
+                                <a href="#"><i class="bi bi-whatsapp me-2"></i>WhatsApp</a> &nbsp;
+                                <a href="#"><i class="bi bi-telegram me-2"></i>Telegram</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo-main">АРИСТОКРАТ</a>
+                    <span class="logo-sub">Riga Tattoo Studio</span>
+                    <p>Premium tattoo studio in the heart of Riga. We create unique body art that tells your story. Over 5 years of experience and 1200+ happy clients.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-telegram"></i></a>
+                        <a href="#"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                        <a href="#"><i class="bi bi-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#artists">Artists</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Custom Design</a></li>
+                        <li><a href="#">Realistic Tattoos</a></li>
+                        <li><a href="#">Watercolor</a></li>
+                        <li><a href="#">Cover-Up</a></li>
+                        <li><a href="#">Laser Removal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">St. Karmanitsky Lane, 10</a></li>
+                        <li><a href="tel:+3712931804">+371 2931-80-48</a></li>
+                        <li><a href="mailto:info@aristokrat-tattoo.ru">info@aristokrat-tattoo.ru</a></li>
+                        <li><a href="#">Mon-Sun: 12:00 - 23:00</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 АРИСТОКРАТ. All rights reserved.</p>
+                <p>
+                    <a href="#" style="color: var(--text-muted); text-decoration: none;">Privacy Policy</a> &nbsp;|&nbsp;
+                    <a href="#" style="color: var(--text-muted); text-decoration: none;">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="bi bi-chevron-up"></i>
+    </button>
+
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            <h3>Book a <span style="color: var(--blue-accent);">Call</span></h3>
+            <p>Leave your details and we'll call you back within 30 minutes</p>
+            <form onsubmit="handleBooking(event)">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" placeholder="+371 ___-__-__" required>
+                </div>
+                <div class="form-group">
+                    <label>Preferred Time</label>
+                    <select>
+                        <option>Morning (12:00 - 15:00)</option>
+                        <option>Afternoon (15:00 - 18:00)</option>
+                        <option>Evening (18:00 - 21:00)</option>
+                        <option>Night (21:00 - 23:00)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary-custom" style="border: none; cursor: pointer; font-family: 'Inter', sans-serif;">
+                    BOOK NOW <i class="bi bi-telephone-fill ms-2"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Modal
+        function openModal() {
+            document.getElementById('bookingModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Scroll to Top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', function() {
+            const scrollBtn = document.getElementById('scrollTop');
+            if (window.scrollY > 500) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
+
+        // Form Handlers
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Thank you! We will contact you within 30 minutes.');
+            e.target.reset();
+        }
+
+        function handleBooking(e) {
+            e.preventDefault();
+            alert('Call booked successfully! We will call you back shortly.');
+            closeModal();
+            e.target.reset();
+        }
+
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+
+        // Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const text = counter.textContent;
+                const num = parseInt(text);
+                if (isNaN(num)) return;
+                
+                let current = 0;
+                const increment = num / 50;
+                const suffix = text.replace(/[0-9]/g, '');
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= num) {
+                        counter.textContent = text;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + suffix;
+                    }
+                }, 30);
+            });
+        }
+
+        const statsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsBar = document.querySelector('.stats-bar');
+        if (statsBar) statsObserver.observe(statsBar);
+    </script>
+</body>
+</html>
