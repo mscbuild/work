@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spicy Food - Special Food Restaurant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+       :root {
+    --primary-yellow: #f4c430;
+    --dark-bg: #1a1a1a;
+    --text-white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-white);
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+}
+
+.bebas-font {
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+/* =========================
+   Navigation
+========================= */
+
+.navbar {
+    background-color: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--primary-yellow) !important;
+    letter-spacing: 2px;
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-white) !important;
+    font-weight: 600;
+    margin: 0 1rem;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-yellow) !important;
+}
+
+.navbar-toggler {
+    border-color: var(--primary-yellow);
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.15rem rgba(244, 196, 48, 0.25);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(244, 196, 48, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* =========================
+   Hero Section
+========================= */
+
+.hero-section {
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #1a1a1a 0%,
+        #2d2d2d 100%
+    );
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(
+            circle at 20% 50%,
+            rgba(244, 196, 48, 0.05) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 80% 50%,
+            rgba(244, 196, 48, 0.05) 0%,
+            transparent 50%
+        );
+    pointer-events: none;
+}
+
+.hero-section .container,
+.hero-section .row,
+.hero-section .col-lg-6 {
+    max-width: 100%;
+}
+
+.special-food-text {
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.spicy-text {
+    font-size: 15rem;
+    color: var(--primary-yellow);
+    line-height: 0.9;
+    margin-bottom: 0;
+}
+
+.food-text {
+    font-size: 15rem;
+    color: var(--text-white);
+    line-height: 0.9;
+    margin-bottom: 2rem;
+}
+
+/* =========================
+   Website Button
+========================= */
+
+.website-btn {
+    background-color: var(--primary-yellow);
+    color: var(--dark-bg);
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    border: 2px solid var(--primary-yellow);
+
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.website-btn:hover {
+    background-color: transparent;
+    color: var(--primary-yellow);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   Hero Image
+========================= */
+
+.hero-image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+}
+
+.food-bowl {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    position: relative;
+    z-index: 2;
+}
+
+.tasty-text {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    max-width: 150px;
+
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.4;
+    text-align: left;
+
+    z-index: 3;
+}
+
+/* =========================
+   Price Circle
+========================= */
+
+.price-circle {
+    position: absolute;
+    bottom: 10%;
+    right: -5%;
+
+    width: 120px;
+    height: 120px;
+
+    background-color: var(--primary-yellow);
+    border-radius: 50%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 3;
+
+    box-shadow: 0 10px 30px rgba(244, 196, 48, 0.3);
+}
+
+.price-only {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark-bg);
+}
+
+.price-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--dark-bg);
+    line-height: 1;
+}
+
+/* =========================
+   Leaves
+========================= */
+
+.leaf-decoration {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    opacity: 0.8;
+}
+
+.leaf-1 {
+    top: 10%;
+    left: 45%;
+    transform: rotate(-30deg);
+}
+
+.leaf-2 {
+    bottom: 20%;
+    left: 40%;
+    transform: rotate(45deg);
+}
+
+.leaf-3 {
+    top: 30%;
+    right: 10%;
+    transform: rotate(-60deg);
+}
+
+/* =========================
+   Arrow
+========================= */
+
+.arrow-to-dish {
+    position: absolute;
+    bottom: 25%;
+    right: 10%;
+
+    width: 120px;
+    height: 120px;
+
+    z-index: 4;
+    pointer-events: none;
+}
+
+.arrow-to-dish path {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.arrow-to-dish polygon {
+    fill: #ffffff;
+}
+
+/* =========================
+   General Sections
+========================= */
+
+section {
+    padding: 100px 0;
+}
+
+.section-title {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.section-subtitle {
+    color: var(--primary-yellow);
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+/* =========================
+   About Section
+========================= */
+
+.about-section {
+    background-color: #222;
+}
+
+.about-image {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.about-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ccc;
+}
+
+/* =========================
+   Feature Boxes
+========================= */
+
+.feature-box {
+    background-color: rgba(244, 196, 48, 0.1);
+    border: 2px solid var(--primary-yellow);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.feature-box:hover {
+    transform: translateY(-10px);
+    background-color: rgba(244, 196, 48, 0.2);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: var(--primary-yellow);
+    margin-bottom: 1rem;
+}
+
+/* Text inside feature boxes */
+.feature-box p {
+    color: #ccc !important;
+    margin-bottom: 0;
+}
+
+.feature-box h3 {
+    color: var(--text-white);
+}
+
+/* =========================
+   Menu Section
+========================= */
+
+.menu-section {
+    background-color: var(--dark-bg);
+}
+
+.menu-card {
+    background-color: #2a2a2a;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+    border: 2px solid transparent;
+}
+
+.menu-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-yellow);
+    box-shadow: 0 20px 40px rgba(244, 196, 48, 0.2);
+}
+
+.menu-card-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.menu-card-body {
+    padding: 1.5rem;
+}
+
+.menu-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.menu-card-price {
+    color: var(--primary-yellow);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.menu-card-desc {
+    color: #aaa;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+}
+
+/* =========================
+   Order Section
+========================= */
+
+.order-section {
+    background: linear-gradient(
+        135deg,
+        #2d2d2d 0%,
+        #1a1a1a 100%
+    );
+}
+
+.order-form {
+    background-color: #2a2a2a;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.form-control {
+    background-color: #1a1a1a;
+    border: 2px solid #333;
+    color: var(--text-white);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.form-control:focus {
+    background-color: #1a1a1a;
+    border-color: var(--primary-yellow);
+    color: var(--text-white);
+    box-shadow: 0 0 0 0.2rem rgba(244, 196, 48, 0.25);
+}
+
+.form-control::placeholder {
+    color: #666;
+}
+
+select.form-control {
+    color: #fff;
+}
+
+select.form-control option {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+/* =========================
+   Order Button
+========================= */
+
+.btn-order {
+    background-color: var(--primary-yellow);
+    color: var(--dark-bg);
+    padding: 1rem 3rem;
+    border: 2px solid var(--primary-yellow);
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-order:hover {
+    background-color: transparent;
+    color: var(--primary-yellow);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   Contact Section
+========================= */
+
+.contact-section {
+    background-color: #222;
+}
+
+.contact-info-box {
+    background-color: #2a2a2a;
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.contact-info-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(244, 196, 48, 0.2);
+}
+
+.contact-icon {
+    font-size: 2.5rem;
+    color: var(--primary-yellow);
+    margin-bottom: 1rem;
+}
+
+.contact-text {
+    color: #ccc;
+    font-size: 1rem;
+}
+
+/* =========================
+   Social Links
+========================= */
+
+.social-links a {
+    color: var(--text-white);
+    font-size: 1.5rem;
+    margin: 0 1rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-yellow);
+}
+
+/* =========================
+   Footer
+========================= */
+
+footer {
+    background-color: #111;
+    padding: 2rem 0;
+    text-align: center;
+    border-top: 2px solid var(--primary-yellow);
+}
+
+.footer-text {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Footer links */
+.footer-link {
+    color: #666 !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--primary-yellow) !important;
+}
+
+/* =========================
+   Scroll Animation
+========================= */
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================
+   Responsive - Tablet
+========================= */
+
+@media (max-width: 991px) {
+    .navbar-nav .nav-link {
+        margin: 0.5rem 0;
+    }
+
+    .spicy-text,
+    .food-text {
+        font-size: 6rem;
+    }
+
+    .hero-image-container {
+        margin-top: 40px;
+    }
+
+    .tasty-text {
+        right: 5%;
+    }
+
+    .price-circle {
+        right: 0;
+    }
+}
+
+/* =========================
+   Responsive - Mobile
+========================= */
+
+@media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    section {
+        padding: 70px 0;
+    }
+
+    /* Navigation */
+
+    .navbar {
+        padding: 0.75rem 0;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    /* Hero */
+
+    .hero-section {
+        min-height: auto;
+        padding: 100px 15px 60px;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .hero-section .container {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .hero-section .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .hero-section .col-lg-6 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .special-food-text {
+        font-size: 0.9rem;
+        letter-spacing: 3px;
+        margin-bottom: 0.75rem;
+    }
+
+    .spicy-text,
+    .food-text {
+        font-size: 4rem;
+    }
+
+    .food-text {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Website button */
+
+    .website-btn {
+        display: inline-block;
+        max-width: 100%;
+        width: auto;
+
+        padding: 10px 18px;
+
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    /* Hero image */
+
+    .hero-image-container {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 30px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .food-bowl {
+        width: 100%;
+        max-width: 350px;
+        height: auto;
+    }
+
+    /* Tasty text */
+
+    .tasty-text {
+        position: static;
+
+        width: 100%;
+        max-width: 100%;
+
+        margin: 20px auto 0;
+
+        text-align: center;
+
+        font-size: 0.85rem;
+        line-height: 1.5;
+        letter-spacing: 1.5px;
+    }
+
+    /* Price */
+
+    .price-circle {
+        position: static;
+
+        width: 100px;
+        height: 100px;
+
+        margin: 20px auto 0;
+    }
+
+    .price-only {
+        font-size: 0.85rem;
+    }
+
+    .price-amount {
+        font-size: 2rem;
+    }
+
+    /* Hide decorative elements */
+
+    .leaf-decoration {
+        display: none;
+    }
+
+    .arrow-to-dish {
+        display: none;
+    }
+
+    /* Sections */
+
+    .section-title {
+        font-size: 2.5rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+    }
+
+    /* About */
+
+    .about-image {
+        margin-bottom: 30px;
+    }
+
+    .about-text {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    /* Feature boxes */
+
+    .feature-box {
+        padding: 1.5rem;
+    }
+
+    /* Menu */
+
+    .menu-card-image {
+        height: 220px;
+    }
+
+    /* Order */
+
+    .order-form {
+        padding: 1.5rem;
+    }
+
+    /* Contact */
+
+    .contact-info-box {
+        padding: 1.5rem;
+    }
+
+    /* Footer */
+
+    footer {
+        padding: 1.5rem 15px;
+    }
+
+    .footer-text {
+        font-size: 0.8rem;
+        line-height: 1.8;
+    }
+}
+
+/* =========================
+   Responsive - Small Phones
+========================= */
+
+@media (max-width: 400px) {
+
+    .spicy-text,
+    .food-text {
+        font-size: 3.5rem;
+    }
+
+    .special-food-text {
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+    }
+
+    .website-btn {
+        font-size: 0.68rem;
+        padding: 9px 14px;
+        letter-spacing: 0.3px;
+    }
+
+    .tasty-text {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    .food-bowl {
+        max-width: 300px;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+    }
+
+    .order-form {
+        padding: 1.2rem;
+    }
+}
+ </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">SPICY FOOD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#menu">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#order">Order</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="special-food-text">SPECIAL FOOD</div>
+                    <h1 class="bebas-font spicy-text">SPICY</h1>
+                    <h1 class="bebas-font food-text">FOOD</h1>
+                    <a href="https://www.reallygreatsite.com" class="website-btn">WWW.REALLYGREATSITE.COM</a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image-container">
+                        <svg class="leaf-decoration leaf-1" viewBox="0 0 100 100">
+                            <path d="M50 10 Q70 30 50 90 Q30 30 50 10" fill="#4a7c2e"/>
+                        </svg>
+                        <svg class="leaf-decoration leaf-2" viewBox="0 0 100 100">
+                            <path d="M50 10 Q70 30 50 90 Q30 30 50 10" fill="#5a8c3e"/>
+                        </svg>
+                        <svg class="leaf-decoration leaf-3" viewBox="0 0 100 100">
+                            <path d="M50 10 Q70 30 50 90 Q30 30 50 10" fill="#4a7c2e"/>
+                        </svg>
+                        
+                        <div class="tasty-text">
+                            TASTY WITH<br>
+                            BBQ SAUCE &<br>
+                            CHICKEN
+                        </div>
+                        
+                        <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&h=500&fit=crop" 
+                             alt="Spicy Food Bowl" 
+                             class="food-bowl rounded-circle">
+                        
+                        <!-- White curved arrow from price circle to dish -->
+                        <svg class="arrow-to-dish" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#ffffff" />
+                                </marker>
+                            </defs>
+                            <path d="M 120 130 Q 80 100 50 60" 
+                                  stroke="#ffffff" 
+                                  stroke-width="3" 
+                                  fill="none" 
+                                  stroke-linecap="round"
+                                  marker-end="url(#arrowhead)"/>
+                        </svg>
+                        
+                        <div class="price-circle">
+                            <span class="price-only">ONLY</span>
+                            <span class="price-amount">$12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6 fade-in">
+                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&h=400&fit=crop" 
+                         alt="About Us" 
+                         class="about-image">
+                </div>
+                <div class="col-lg-6 fade-in">
+                    <div class="section-subtitle">About Us</div>
+                    <h2 class="section-title bebas-font">OUR STORY</h2>
+                    <p class="about-text">
+                        Welcome to Spicy Food, where passion meets flavor! For over 10 years, we've been serving 
+                        the most delicious and authentic spicy dishes that will tantalize your taste buds. Our 
+                        chefs use only the freshest ingredients and traditional recipes passed down through generations.
+                    </p>
+                    <p class="about-text">
+                        Every dish is crafted with love and attention to detail, ensuring you get the perfect 
+                        balance of heat and flavor. Join us on a culinary journey that will leave you craving more!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-4 mb-4 fade-in">
+                    <div class="feature-box">
+                        <i class="bi bi-fire feature-icon"></i>
+                        <h3 class="bebas-font">Authentic Spices</h3>
+                        <p class="about-text">We use only the finest and most authentic spices from around the world</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 fade-in">
+                    <div class="feature-box">
+                        <i class="bi bi-heart-fill feature-icon"></i>
+                        <h3 class="bebas-font">Made with Love</h3>
+                        <p class="about-text">Every dish is prepared with passion and care by our expert chefs</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 fade-in">
+                    <div class="feature-box">
+                        <i class="bi bi-truck feature-icon"></i>
+                        <h3 class="bebas-font">Fast Delivery</h3>
+                        <p class="about-text">Get your favorite spicy food delivered hot and fresh to your door</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <div class="text-center mb-5 fade-in">
+                <div class="section-subtitle">Our Menu</div>
+                <h2 class="section-title bebas-font">POPULAR DISHES</h2>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="menu-card">
+                        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop" 
+                             alt="Spicy Chicken" 
+                             class="menu-card-image">
+                        <div class="menu-card-body">
+                            <h3 class="menu-card-title">Spicy Chicken</h3>
+                            <div class="menu-card-price">$12.99</div>
+                            <p class="menu-card-desc">Tender chicken pieces in our signature spicy sauce with herbs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="menu-card">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&h=300&fit=crop" 
+                             alt="BBQ Meatballs" 
+                             class="menu-card-image">
+                        <div class="menu-card-body">
+                            <h3 class="menu-card-title">BBQ Meatballs</h3>
+                            <div class="menu-card-price">$14.99</div>
+                            <p class="menu-card-desc">Juicy meatballs glazed with our special BBQ sauce</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="menu-card">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop" 
+                             alt="Spicy Pizza" 
+                             class="menu-card-image">
+                        <div class="menu-card-body">
+                            <h3 class="menu-card-title">Spicy Pizza</h3>
+                            <div class="menu-card-price">$16.99</div>
+                            <p class="menu-card-desc">Wood-fired pizza topped with spicy pepperoni and fresh herbs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="menu-card">
+                        <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=400&h=300&fit=crop" 
+                             alt="Grilled Steak" 
+                             class="menu-card-image">
+                        <div class="menu-card-body">
+                            <h3 class="menu-card-title">Grilled Steak</h3>
+                            <div class="menu-card-price">$24.99</div>
+                            <p class="menu-card-desc">Premium cut steak grilled to perfection with spicy marinade</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="menu-card">
+                        <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop" 
+                             alt="Spicy Pasta" 
+                             class="menu-card-image">
+                        <div class="menu-card-body">
+                            <h3 class="menu-card-title">Spicy Pasta</h3>
+                            <div class="menu-card-price">$13.99</div>
+                            <p class="menu-card-desc">Al dente pasta with spicy tomato sauce and fresh basil</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="menu-card">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop" 
+                             alt="Chicken Wings" 
+                             class="menu-card-image">
+                        <div class="menu-card-body">
+                            <h3 class="menu-card-title">Chicken Wings</h3>
+                            <div class="menu-card-price">$11.99</div>
+                            <p class="menu-card-desc">Crispy wings tossed in our famous spicy buffalo sauce</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Section -->
+    <section id="order" class="order-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center mb-5 fade-in">
+                        <div class="section-subtitle">Order Now</div>
+                        <h2 class="section-title bebas-font">PLACE YOUR ORDER</h2>
+                        <p class="text-muted">Fill out the form below and we'll prepare your delicious meal</p>
+                    </div>
+
+                    <form class="order-form fade-in" id="orderForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" placeholder="Your Email" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="tel" class="form-control" placeholder="Phone Number" required>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control" required>
+                                    <option value="">Select Dish</option>
+                                    <option value="spicy-chicken">Spicy Chicken - $12.99</option>
+                                    <option value="bbq-meatballs">BBQ Meatballs - $14.99</option>
+                                    <option value="spicy-pizza">Spicy Pizza - $16.99</option>
+                                    <option value="grilled-steak">Grilled Steak - $24.99</option>
+                                    <option value="spicy-pasta">Spicy Pasta - $13.99</option>
+                                    <option value="chicken-wings">Chicken Wings - $11.99</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" placeholder="Quantity" min="1" value="1" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Delivery Address" required>
+                            </div>
+                        </div>
+                        <textarea class="form-control" rows="4" placeholder="Special Instructions (Optional)"></textarea>
+                        <button type="submit" class="btn-order">
+                            <i class="bi bi-cart-fill me-2"></i>Place Order
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="text-center mb-5 fade-in">
+                <div class="section-subtitle">Get in Touch</div>
+                <h2 class="section-title bebas-font">CONTACT US</h2>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 fade-in">
+                    <div class="contact-info-box text-center">
+                        <i class="bi bi-geo-alt-fill contact-icon"></i>
+                        <h4 class="bebas-font mb-3">LOCATION</h4>
+                        <p class="contact-text">123 Spicy Street<br>Food City, FC 12345</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 fade-in">
+                    <div class="contact-info-box text-center">
+                        <i class="bi bi-telephone-fill contact-icon"></i>
+                        <h4 class="bebas-font mb-3">PHONE</h4>
+                        <p class="contact-text">+1 (555) 123-4567<br>+1 (555) 987-6543</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 fade-in">
+                    <div class="contact-info-box text-center">
+                        <i class="bi bi-envelope-fill contact-icon"></i>
+                        <h4 class="bebas-font mb-3">EMAIL</h4>
+                        <p class="contact-text">info@spicyfood.com<br>orders@spicyfood.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6 fade-in">
+                    <div class="contact-info-box">
+                        <h4 class="bebas-font mb-3"><i class="bi bi-clock-fill me-2"></i>OPENING HOURS</h4>
+                        <p class="contact-text mb-1">Monday - Friday: 10:00 AM - 10:00 PM</p>
+                        <p class="contact-text mb-1">Saturday - Sunday: 12:00 AM - 9:00 PM</p>
+                   </div>
+                </div>
+
+                <div class="col-md-6 fade-in">
+                    <div class="contact-info-box text-center">
+                        <h4 class="bebas-font mb-3">FOLLOW US</h4>
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-twitter"></i></a>
+                            <a href="#"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-text mb-0">
+                <i class="text-danger"></i> 
+                &copy; 2024 Spicy Food. All Rights Reserved. | 
+               <a href="#" class="footer-link">Privacy Policy</a> | 
+               <a href="#" class="footer-link">Terms of Service</a>
+
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Close mobile menu after clicking
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse.classList.contains('show')) {
+                    navbarCollapse.classList.remove('show');
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = 'rgba(26, 26, 26, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.5)';
+            } else {
+                navbar.style.backgroundColor = 'rgba(26, 26, 26, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Create success message
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success alert-dismissible fade show mt-3';
+            alertDiv.innerHTML = `
+                <i class="bi bi-check-circle-fill me-2"></i>
+                Order placed successfully! We'll contact you shortly.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            this.parentNode.insertBefore(alertDiv, this.nextSibling);
+            
+            // Reset form
+            this.reset();
+            
+            // Remove alert after 5 seconds
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
