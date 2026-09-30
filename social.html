@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextPulse — Social Media Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/index.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/orbitron@5.0.8/index.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --neon-cyan: #00f0ff;
+            --neon-magenta: #ff00e5;
+            --neon-purple: #b000ff;
+            --neon-green: #00ff88;
+            --neon-orange: #ff6b00;
+            --neon-pink: #ff2d7b;
+            --neon-yellow: #ffe600;
+            --bg-dark: #0a0a1a;
+            --bg-card: rgba(15, 15, 40, 0.85);
+            --bg-card-hover: rgba(25, 25, 60, 0.95);
+            --text-primary: #e0e0ff;
+            --text-secondary: #8888aa;
+            --border-glow: rgba(0, 240, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background animated grid */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(0deg); }
+            100% { transform: perspective(500px) rotateX(0deg) translateY(60px); }
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 8s ease-in-out infinite alternate;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--neon-cyan); top: -100px; right: -100px; }
+        .orb-2 { width: 350px; height: 350px; background: var(--neon-magenta); bottom: -80px; left: -80px; animation-delay: -3s; }
+        .orb-3 { width: 250px; height: 250px; background: var(--neon-purple); top: 50%; left: 50%; animation-delay: -5s; }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -30px) scale(1.1); }
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 260px;
+            height: 100vh;
+            background: rgba(8, 8, 25, 0.95);
+            border-right: 1px solid var(--border-glow);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 24px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(0,240,255,0.3), 0 0 40px rgba(255,0,229,0.15);
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0,240,255,0.3), 0 0 40px rgba(255,0,229,0.15); }
+            50% { box-shadow: 0 0 30px rgba(0,240,255,0.5), 0 0 60px rgba(255,0,229,0.3); }
+        }
+
+        .sidebar-logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-nav { padding: 16px 12px; flex: 1; }
+
+        .nav-section-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            padding: 12px 12px 8px;
+            font-weight: 600;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-bottom: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-item i { font-size: 18px; width: 22px; text-align: center; }
+
+        .nav-item:hover {
+            color: var(--neon-cyan);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .nav-item.active {
+            color: var(--neon-cyan);
+            background: rgba(0, 240, 255, 0.08);
+            box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.05);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 50%;
+            transform: translateY(-50%);
+            width: 3px; height: 60%;
+            background: var(--neon-cyan);
+            border-radius: 0 3px 3px 0;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: linear-gradient(135deg, var(--neon-magenta), var(--neon-purple));
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .sidebar-profile {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-glow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-avatar {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .profile-info { flex: 1; }
+        .profile-info .name { font-size: 13px; font-weight: 600; }
+        .profile-info .role { font-size: 11px; color: var(--text-secondary); }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--border-glow);
+            color: var(--neon-cyan);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .mobile-toggle:hover { background: rgba(0,240,255,0.1); }
+
+        .header-title {
+            flex: 1;
+        }
+        .header-title h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+        .header-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .header-search {
+            position: relative;
+            width: 280px;
+        }
+        .header-search input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-glow);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 13px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .header-search input::placeholder { color: var(--text-secondary); }
+        .header-search input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0,240,255,0.1);
+        }
+        .header-search i {
+            position: absolute;
+            left: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-btn {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-glow);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .header-btn:hover {
+            color: var(--neon-cyan);
+            border-color: rgba(0,240,255,0.3);
+            background: rgba(0,240,255,0.05);
+        }
+        .header-btn .notif-dot {
+            position: absolute;
+            top: 8px; right: 8px;
+            width: 8px; height: 8px;
+            background: var(--neon-magenta);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--neon-magenta);
+        }
+
+        /* ===== DASHBOARD CONTENT ===== */
+        .dashboard {
+            padding: 28px 32px;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 22px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            perspective: 800px;
+            cursor: pointer;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, transparent 40%, rgba(0,240,255,0.03));
+            pointer-events: none;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
+            border-color: rgba(0,240,255,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(0,240,255,0.08);
+        }
+
+        .stat-card .stat-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .stat-card .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 6px 0;
+            letter-spacing: 1px;
+        }
+
+        .stat-card .stat-change {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .stat-change.up { color: var(--neon-green); }
+        .stat-change.down { color: var(--neon-pink); }
+
+        .stat-card .stat-sparkline {
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 120px; height: 50px;
+            opacity: 0.3;
+        }
+
+        .stat-card.cyan .stat-icon { background: rgba(0,240,255,0.1); color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0,240,255,0.1); }
+        .stat-card.cyan .stat-value { color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0,240,255,0.3); }
+        .stat-card.cyan:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 40px rgba(0,240,255,0.12); }
+
+        .stat-card.magenta .stat-icon { background: rgba(255,0,229,0.1); color: var(--neon-magenta); box-shadow: 0 0 20px rgba(255,0,229,0.1); }
+        .stat-card.magenta .stat-value { color: var(--neon-magenta); text-shadow: 0 0 20px rgba(255,0,229,0.3); }
+        .stat-card.magenta:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 40px rgba(255,0,229,0.12); }
+
+        .stat-card.purple .stat-icon { background: rgba(176,0,255,0.1); color: var(--neon-purple); box-shadow: 0 0 20px rgba(176,0,255,0.1); }
+        .stat-card.purple .stat-value { color: var(--neon-purple); text-shadow: 0 0 20px rgba(176,0,255,0.3); }
+        .stat-card.purple:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 40px rgba(176,0,255,0.12); }
+
+        .stat-card.green .stat-icon { background: rgba(0,255,136,0.1); color: var(--neon-green); box-shadow: 0 0 20px rgba(0,255,136,0.1); }
+        .stat-card.green .stat-value { color: var(--neon-green); text-shadow: 0 0 20px rgba(0,255,136,0.3); }
+        .stat-card.green:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 40px rgba(0,255,136,0.12); }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+        .card:hover {
+            border-color: rgba(0,240,255,0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .card-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .card-header .card-actions {
+            display: flex; gap: 6px;
+        }
+        .card-header .card-actions button {
+            padding: 5px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-glow);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .card-header .card-actions button.active,
+        .card-header .card-actions button:hover {
+            color: var(--neon-cyan);
+            border-color: rgba(0,240,255,0.3);
+            background: rgba(0,240,255,0.05);
+        }
+
+        /* Chart Area */
+        .chart-container {
+            height: 260px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            padding: 0 4px;
+        }
+
+        .chart-bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chart-bars {
+            display: flex;
+            gap: 3px;
+            align-items: flex-end;
+            height: 220px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .chart-bar {
+            width: 14px;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+        }
+        .chart-bar:hover {
+            filter: brightness(1.3);
+            box-shadow: 0 0 15px currentColor;
+        }
+        .chart-bar.bar-cyan { background: linear-gradient(to top, rgba(0,240,255,0.3), var(--neon-cyan)); color: var(--neon-cyan); }
+        .chart-bar.bar-magenta { background: linear-gradient(to top, rgba(255,0,229,0.3), var(--neon-magenta)); color: var(--neon-magenta); }
+
+        .chart-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .chart-y-axis {
+            position: absolute;
+            left: 0; top: 0;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .chart-y-axis span {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        /* Social Platforms */
+        .platform-list { display: flex; flex-direction: column; gap: 12px; }
+
+        .platform-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .platform-item:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: var(--border-glow);
+            transform: translateX(4px);
+        }
+
+        .platform-icon {
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+        }
+
+        .platform-info { flex: 1; }
+        .platform-info .platform-name { font-size: 14px; font-weight: 600; }
+        .platform-info .platform-handle { font-size: 11px; color: var(--text-secondary); }
+
+        .platform-stats { text-align: right; }
+        .platform-stats .count { font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 700; }
+        .platform-stats .change { font-size: 11px; }
+
+        .platform-bar {
+            height: 3px;
+            border-radius: 3px;
+            margin-top: 8px;
+            background: rgba(255,255,255,0.05);
+            overflow: hidden;
+        }
+        .platform-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        /* Bottom Grid */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        /* Activity Feed */
+        .activity-list { display: flex; flex-direction: column; gap: 14px; }
+
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .activity-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            margin-top: 5px;
+            flex-shrink: 0;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        .activity-content { flex: 1; }
+        .activity-content p { font-size: 13px; line-height: 1.5; }
+        .activity-content .time { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+        /* Donut Chart */
+        .donut-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .donut-chart {
+            width: 160px; height: 160px;
+            position: relative;
+        }
+
+        .donut-chart svg {
+            width: 100%; height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .donut-chart circle {
+            fill: none;
+            stroke-width: 12;
+            stroke-linecap: round;
+        }
+
+        .donut-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .donut-center .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px rgba(0,240,255,0.3);
+        }
+        .donut-center .label { font-size: 10px; color: var(--text-secondary); }
+
+        .donut-legend { display: flex; flex-direction: column; gap: 10px; }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+        .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+        /* Top Posts */
+        .post-list { display: flex; flex-direction: column; gap: 12px; }
+
+        .post-item {
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .post-item:hover {
+            border-color: var(--border-glow);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .post-item .post-title {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 14px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .post-meta span { display: flex; align-items: center; gap: 4px; }
+
+        /* ===== RESPONSIVE ===== */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 99;
+            backdrop-filter: blur(4px);
+        }
+        .overlay.active { display: block; }
+
+        @media (max-width: 1200px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .bottom-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 992px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .header-search { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content { margin-left: 0; }
+            .mobile-toggle { display: flex; }
+            .dashboard { padding: 20px 16px; }
+            .header { padding: 12px 16px; }
+            .stats-row { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .bottom-grid { grid-template-columns: 1fr; }
+            .stat-card .stat-value { font-size: 22px; }
+            .donut-container { flex-direction: column; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: 1fr; }
+            .header-title h2 { font-size: 16px; }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+
+        /* Neon line separator */
+        .neon-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-magenta), transparent);
+            margin: 0 0 28px;
+            opacity: 0.3;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.2); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0,240,255,0.4); }
+
+        /* Tooltip */
+        .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9);
+            color: var(--neon-cyan);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-family: 'Orbitron', sans-serif;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            border: 1px solid rgba(0,240,255,0.2);
+        }
+        .chart-bar:hover::after { opacity: 1; }
+
+        /* Live indicator */
+        .live-dot {
+            width: 8px; height: 8px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--neon-green);
+            animation: livePulse 1.5s ease-in-out infinite;
+        }
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .status-live {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--neon-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon"><i class="bi bi-broadcast"></i></div>
+            <h1>NEXTPULSE</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Main</div>
+            <a class="nav-item active" href="#">
+                <i class="bi bi-grid-1x2-fill"></i> Dashboard
+            </a>
+            <a class="nav-item" href="#">
+                <i class="bi bi-bar-chart-line-fill"></i> Analytics
+                <span class="nav-badge">New</span>
+            </a>
+            <a class="nav-item" href="#">
+                <i class="bi bi-chat-dots-fill"></i> Messages
+                <span class="nav-badge">12</span>
+            </a>
+            <a class="nav-item" href="#">
+                <i class="bi bi-people-fill"></i> Audience
+            </a>
+            <a class="nav-item" href="#">
+                <i class="bi bi-calendar-event-fill"></i> Scheduler
+            </a>
+
+            <div class="nav-section-title">Platforms</div>
+            <a class="nav-item" href="#">
+                <i class="bi bi-instagram"></i> Instagram
+            </a>
+            <a class="nav-item" href="#">
+                <i class="bi bi-twitter-x"></i> Twitter / X
+            </a>
+            <a class="nav-item" href="#">
+                <i class="bi bi-tiktok"></i> TikTok
+            </a>
+            <a class="nav-item" href="#">
+                <i class="bi bi-youtube"></i> YouTube
+            </a>
+            <a class="nav-item" href="#">
+                <i class="bi bi-linkedin"></i> LinkedIn
+            </a>
+
+            <div class="nav-section-title">Settings</div>
+            <a class="nav-item" href="#">
+                <i class="bi bi-gear-fill"></i> Settings
+            </a>
+            <a class="nav-item" href="#">
+                <i class="bi bi-question-circle-fill"></i> Help Center
+            </a>
+        </nav>
+        <div class="sidebar-profile">
+            <div class="profile-avatar">JD</div>
+            <div class="profile-info">
+                <div class="name">Jane Doe</div>
+                <div class="role">Pro Account</div>
+            </div>
+            <i class="bi bi-three-dots-vertical" style="color: var(--text-secondary); cursor: pointer;"></i>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="mobile-toggle" id="menuToggle">
+                <i class="bi bi-list"></i>
+            </button>
+            <div class="header-title">
+                <h2>Dashboard</h2>
+                <p><span class="live-dot"></span> Live overview of your social performance</p>
+            </div>
+            <div class="header-search">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Search metrics, posts, audiences...">
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" title="Notifications">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="notif-dot"></span>
+                </button>
+                <button class="header-btn" title="Settings">
+                    <i class="bi bi-gear-fill"></i>
+                </button>
+                <button class="header-btn" title="Export">
+                    <i class="bi bi-download"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <div class="neon-line"></div>
+
+            <!-- Stats Row -->
+            <div class="stats-row">
+                <div class="stat-card cyan animate-in delay-1">
+                    <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+                    <div class="stat-label">Total Followers</div>
+                    <div class="stat-value" id="counter1">248.5K</div>
+                    <div class="stat-change up">
+                        <i class="bi bi-arrow-up-right"></i> +12.5% this month
+                    </div>
+                    <svg class="stat-sparkline" viewBox="0 0 120 50">
+                        <polyline fill="none" stroke="rgba(0,240,255,0.4)" stroke-width="2"
+                            points="0,40 15,35 30,38 45,25 60,28 75,15 90,18 105,8 120,10"/>
+                    </svg>
+                </div>
+                <div class="stat-card magenta animate-in delay-2">
+                    <div class="stat-icon"><i class="bi bi-heart-fill"></i></div>
+                    <div class="stat-label">Engagement Rate</div>
+                    <div class="stat-value">8.7%</div>
+                    <div class="stat-change up">
+                        <i class="bi bi-arrow-up-right"></i> +3.2% this week
+                    </div>
+                    <svg class="stat-sparkline" viewBox="0 0 120 50">
+                        <polyline fill="none" stroke="rgba(255,0,229,0.4)" stroke-width="2"
+                            points="0,30 15,28 30,32 45,20 60,22 75,12 90,15 105,8 120,5"/>
+                    </svg>
+                </div>
+                <div class="stat-card purple animate-in delay-3">
+                    <div class="stat-icon"><i class="bi bi-eye-fill"></i></div>
+                    <div class="stat-label">Total Impressions</div>
+                    <div class="stat-value">1.2M</div>
+                    <div class="stat-change up">
+                        <i class="bi bi-arrow-up-right"></i> +24.8% this month
+                    </div>
+                    <svg class="stat-sparkline" viewBox="0 0 120 50">
+                        <polyline fill="none" stroke="rgba(176,0,255,0.4)" stroke-width="2"
+                            points="0,45 15,40 30,42 45,30 60,25 75,20 90,10 105,12 120,5"/>
+                    </svg>
+                </div>
+                <div class="stat-card green animate-in delay-4">
+                    <div class="stat-icon"><i class="bi bi-currency-dollar"></i></div>
+                    <div class="stat-label">Revenue</div>
+                    <div class="stat-value">$32.4K</div>
+                    <div class="stat-change down">
+                        <i class="bi bi-arrow-down-right"></i> -2.1% this week
+                    </div>
+                    <svg class="stat-sparkline" viewBox="0 0 120 50">
+                        <polyline fill="none" stroke="rgba(0,255,136,0.4)" stroke-width="2"
+                            points="0,15 15,20 30,12 45,25 60,18 75,30 90,22 105,28 120,35"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="main-grid">
+                <!-- Chart Card -->
+                <div class="card animate-in delay-3">
+                    <div class="card-header">
+                        <h3><i class="bi bi-graph-up" style="color: var(--neon-cyan); margin-right: 8px;"></i>Performance Overview</h3>
+                        <div class="card-actions">
+                            <button class="active">Week</button>
+                            <button>Month</button>
+                            <button>Year</button>
+                        </div>
+                    </div>
+                    <div class="chart-container" id="barChart">
+                        <!-- Bars generated by JS -->
+                    </div>
+                    <div style="display: flex; gap: 20px; margin-top: 16px; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary);">
+                            <div style="width: 12px; height: 12px; border-radius: 3px; background: var(--neon-cyan);"></div>
+                            Likes
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary);">
+                            <div style="width: 12px; height: 12px; border-radius: 3px; background: var(--neon-magenta);"></div>
+                            Shares
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Platforms Card -->
+                <div class="card animate-in delay-4">
+                    <div class="card-header">
+                        <h3><i class="bi bi-phone-fill" style="color: var(--neon-magenta); margin-right: 8px;"></i>Platforms</h3>
+                        <div class="card-actions">
+                            <button class="active">All</button>
+                        </div>
+                    </div>
+                    <div class="platform-list">
+                        <div class="platform-item">
+                            <div class="platform-icon" style="background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff;">
+                                <i class="bi bi-instagram"></i>
+                            </div>
+                            <div class="platform-info">
+                                <div class="platform-name">Instagram</div>
+                                <div class="platform-handle">@janedoe</div>
+                                <div class="platform-bar"><div class="platform-bar-fill" style="width: 85%; background: linear-gradient(90deg, #f09433, #dc2743);"></div></div>
+                            </div>
+                            <div class="platform-stats">
+                                <div class="count" style="color: #dc2743;">98.2K</div>
+                                <div class="change" style="color: var(--neon-green);">+5.2%</div>
+                            </div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-icon" style="background: rgba(29,161,242,0.15); color: #1da1f2;">
+                                <i class="bi bi-twitter-x"></i>
+                            </div>
+                            <div class="platform-info">
+                                <div class="platform-name">Twitter / X</div>
+                                <div class="platform-handle">@janedoe_x</div>
+                                <div class="platform-bar"><div class="platform-bar-fill" style="width: 65%; background: #1da1f2;"></div></div>
+                            </div>
+                            <div class="platform-stats">
+                                <div class="count" style="color: #1da1f2;">64.8K</div>
+                                <div class="change" style="color: var(--neon-green);">+3.8%</div>
+                            </div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-icon" style="background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.1);">
+                                <i class="bi bi-tiktok"></i>
+                            </div>
+                            <div class="platform-info">
+                                <div class="platform-name">TikTok</div>
+                                <div class="platform-handle">@janedoe_tt</div>
+                                <div class="platform-bar"><div class="platform-bar-fill" style="width: 72%; background: linear-gradient(90deg, #25f4ee, #fe2c55);"></div></div>
+                            </div>
+                            <div class="platform-stats">
+                                <div class="count" style="color: #fe2c55;">52.1K</div>
+                                <div class="change" style="color: var(--neon-green);">+18.4%</div>
+                            </div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-icon" style="background: rgba(255,0,0,0.12); color: #ff0000;">
+                                <i class="bi bi-youtube"></i>
+                            </div>
+                            <div class="platform-info">
+                                <div class="platform-name">YouTube</div>
+                                <div class="platform-handle">JaneDoeChannel</div>
+                                <div class="platform-bar"><div class="platform-bar-fill" style="width: 55%; background: #ff0000;"></div></div>
+                            </div>
+                            <div class="platform-stats">
+                                <div class="count" style="color: #ff0000;">28.4K</div>
+                                <div class="change" style="color: var(--neon-green);">+7.1%</div>
+                            </div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-icon" style="background: rgba(10,102,194,0.15); color: #0a66c2;">
+                                <i class="bi bi-linkedin"></i>
+                            </div>
+                            <div class="platform-info">
+                                <div class="platform-name">LinkedIn</div>
+                                <div class="platform-handle">Jane Doe</div>
+                                <div class="platform-bar"><div class="platform-bar-fill" style="width: 40%; background: #0a66c2;"></div></div>
+                            </div>
+                            <div class="platform-stats">
+                                <div class="count" style="color: #0a66c2;">5.0K</div>
+                                <div class="change" style="color: var(--neon-pink);">-1.2%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Grid -->
+            <div class="bottom-grid">
+                <!-- Activity Feed -->
+                <div class="card animate-in delay-4">
+                    <div class="card-header">
+                        <h3><i class="bi bi-activity" style="color: var(--neon-green); margin-right: 8px;"></i>Recent Activity</h3>
+                        <div class="status-live"><span class="live-dot"></span> Live</div>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: var(--neon-cyan); color: var(--neon-cyan);"></div>
+                            <div class="activity-content">
+                                <p><strong>New milestone!</strong> You reached 100K followers on Instagram 🎉</p>
+                                <div class="time">2 minutes ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: var(--neon-magenta); color: var(--neon-magenta);"></div>
+                            <div class="activity-content">
+                                <p><strong>Viral post</strong> — Your reel got 50K views in 3 hours</p>
+                                <div class="time">18 minutes ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: var(--neon-purple); color: var(--neon-purple);"></div>
+                            <div class="activity-content">
+                                <p><strong>Brand collab</strong> — Nike sent a partnership request</p>
+                                <div class="time">1 hour ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: var(--neon-green); color: var(--neon-green);"></div>
+                            <div class="activity-content">
+                                <p><strong>Scheduled post</strong> published successfully on Twitter</p>
+                                <div class="time">3 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: var(--neon-orange); color: var(--neon-orange);"></div>
+                            <div class="activity-content">
+                                <p><strong>Comment alert</strong> — 250 new comments on latest YouTube video</p>
+                                <div class="time">5 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donut Chart -->
+                <div class="card animate-in delay-5">
+                    <div class="card-header">
+                        <h3><i class="bi bi-pie-chart-fill" style="color: var(--neon-purple); margin-right: 8px;"></i>Engagement Split</h3>
+                        <div class="card-actions">
+                            <button class="active">7 Days</button>
+                        </div>
+                    </div>
+                    <div class="donut-container">
+                        <div class="donut-chart">
+                            <svg viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="48" stroke="rgba(255,255,255,0.05)" />
+                                <circle cx="60" cy="60" r="48" stroke="var(--neon-cyan)"
+                                    stroke-dasharray="120 301.6" stroke-dashoffset="0"
+                                    style="filter: drop-shadow(0 0 6px var(--neon-cyan));" />
+                                <circle cx="60" cy="60" r="48" stroke="var(--neon-magenta)"
+                                    stroke-dasharray="90 301.6" stroke-dashoffset="-120"
+                                    style="filter: drop-shadow(0 0 6px var(--neon-magenta));" />
+                                <circle cx="60" cy="60" r="48" stroke="var(--neon-purple)"
+                                    stroke-dasharray="55 301.6" stroke-dashoffset="-210"
+                                    style="filter: drop-shadow(0 0 6px var(--neon-purple));" />
+                                <circle cx="60" cy="60" r="48" stroke="var(--neon-green)"
+                                    stroke-dasharray="36.6 301.6" stroke-dashoffset="-265"
+                                    style="filter: drop-shadow(0 0 6px var(--neon-green));" />
+                            </svg>
+                            <div class="donut-center">
+                                <div class="value">8.7%</div>
+                                <div class="label">Avg Rate</div>
+                            </div>
+                        </div>
+                        <div class="donut-legend">
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--neon-cyan);"></div>
+                                <span>Likes — 40%</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--neon-magenta);"></div>
+                                <span>Comments — 30%</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--neon-purple);"></div>
+                                <span>Shares — 18%</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--neon-green);"></div>
+                                <span>Saves — 12%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Posts -->
+                <div class="card animate-in delay-6">
+                    <div class="card-header">
+                        <h3><i class="bi bi-trophy-fill" style="color: var(--neon-yellow); margin-right: 8px;"></i>Top Posts</h3>
+                        <div class="card-actions">
+                            <button class="active">This Week</button>
+                        </div>
+                    </div>
+                    <div class="post-list">
+                        <div class="post-item">
+                            <div class="post-title">🚀 "10 Tips to Grow Your Brand in 2026" — Our highest-performing carousel this quarter</div>
+                            <div class="post-meta">
+                                <span><i class="bi bi-instagram" style="color: #dc2743;"></i> Instagram</span>
+                                <span><i class="bi bi-heart-fill" style="color: var(--neon-pink);"></i> 24.5K</span>
+                                <span><i class="bi bi-chat-fill" style="color: var(--neon-cyan);"></i> 1.2K</span>
+                                <span><i class="bi bi-share-fill" style="color: var(--neon-purple);"></i> 8.3K</span>
+                            </div>
+                        </div>
+                        <div class="post-item">
+                            <div class="post-title">🎬 Behind the scenes of our product launch event — Full recap video</div>
+                            <div class="post-meta">
+                                <span><i class="bi bi-youtube" style="color: #ff0000;"></i> YouTube</span>
+                                <span><i class="bi bi-eye-fill" style="color: var(--neon-cyan);"></i> 182K</span>
+                                <span><i class="bi bi-hand-thumbs-up-fill" style="color: var(--neon-green);"></i> 12.8K</span>
+                            </div>
+                        </div>
+                        <div class="post-item">
+                            <div class="post-title">💡 Thread: Why authenticity wins over perfection on social media</div>
+                            <div class="post-meta">
+                                <span><i class="bi bi-twitter-x"></i> Twitter</span>
+                                <span><i class="bi bi-heart-fill" style="color: var(--neon-pink);"></i> 9.7K</span>
+                                <span><i class="bi bi-repeat"></i> 4.1K</span>
+                            </div>
+                        </div>
+                        <div class="post-item">
+                            <div class="post-title">🎵 Day in my life as a content creator — Trending audio challenge</div>
+                            <div class="post-meta">
+                                <span><i class="bi bi-tiktok"></i> TikTok</span>
+                                <span><i class="bi bi-play-fill"></i> 450K</span>
+                                <span><i class="bi bi-heart-fill" style="color: var(--neon-pink);"></i> 38.2K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.className = sidebar.classList.contains('open') ? 'bi bi-x-lg' : 'bi bi-list';
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            menuToggle.querySelector('i').className = 'bi bi-list';
+        });
+
+        // Nav item click
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                if (window.innerWidth < 768) {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                    menuToggle.querySelector('i').className = 'bi bi-list';
+                }
+            });
+        });
+
+        // Card action buttons
+        document.querySelectorAll('.card-actions').forEach(group => {
+            group.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+        });
+
+        // Generate Bar Chart
+        const chartData = [
+            { label: 'Mon', likes: 65, shares: 40 },
+            { label: 'Tue', likes: 80, shares: 55 },
+            { label: 'Wed', likes: 45, shares: 30 },
+            { label: 'Thu', likes: 90, shares: 60 },
+            { label: 'Fri', likes: 75, shares: 50 },
+            { label: 'Sat', likes: 95, shares: 70 },
+            { label: 'Sun', likes: 60, shares: 35 },
+        ];
+
+        const barChart = document.getElementById('barChart');
+
+        chartData.forEach((data, index) => {
+            const group = document.createElement('div');
+            group.className = 'chart-bar-group';
+
+            const bars = document.createElement('div');
+            bars.className = 'chart-bars';
+
+            const likeBar = document.createElement('div');
+            likeBar.className = 'chart-bar bar-cyan';
+            likeBar.setAttribute('data-value', data.likes + 'K');
+            likeBar.style.height = '0px';
+            setTimeout(() => {
+                likeBar.style.height = (data.likes / 100 * 200) + 'px';
+            }, 300 + index * 100);
+
+            const shareBar = document.createElement('div');
+            shareBar.className = 'chart-bar bar-magenta';
+            shareBar.setAttribute('data-value', data.shares + 'K');
+            shareBar.style.height = '0px';
+            setTimeout(() => {
+                shareBar.style.height = (data.shares / 100 * 200) + 'px';
+            }, 400 + index * 100);
+
+            bars.appendChild(likeBar);
+            bars.appendChild(shareBar);
+
+            const label = document.createElement('div');
+            label.className = 'chart-label';
+            label.textContent = data.label;
+
+            group.appendChild(bars);
+            group.appendChild(label);
+            barChart.appendChild(group);
+        });
+
+        // 3D tilt effect on stat cards
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 12;
+                const rotateY = (centerX - x) / 12;
+                card.style.transform = `translateY(-6px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Animate counters
+        function animateValue(element, start, end, duration, suffix = '') {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = start + (end - start) * eased;
+
+                if (suffix === 'K') {
+                    element.textContent = current.toFixed(1) + 'K';
+                } else if (suffix === 'M') {
+                    element.textContent = current.toFixed(1) + 'M';
+                } else if (suffix === '$K') {
+                    element.textContent = '$' + current.toFixed(1) + 'K';
+                } else if (suffix === '%') {
+                    element.textContent = current.toFixed(1) + '%';
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            };
+            requestAnimationFrame(step);
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Platform bar animation
+        setTimeout(() => {
+            document.querySelectorAll('.platform-bar-fill').forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => { bar.style.width = width; }, 100);
+            });
+        }, 500);
+
+        // Keyboard shortcut for search
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                document.querySelector('.header-search input')?.focus();
+            }
+        });
+    </script>
+</body>
+</html>

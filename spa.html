@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jurmala</title>
+<!--fonts-->
+<link rel="stylesheet" href="https://bootstraptema.ru/portfolio/2017/interient/css/lightbox.css" type="text/css" media="all" />
+<!--owl-css-->
+<link href="https://bootstraptema.ru/portfolio/2017/interient/css/owl.carousel.css" rel="stylesheet">
+<!--bootstrap-->
+<link href="https://bootstraptema.ru/portfolio/2017/interient/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<!--coustom css-->
+<link href="https://bootstraptema.ru/portfolio/2017/interient/css/style.css" rel="stylesheet" type="text/css"/>
+<!--font-awesome 5 (supports all icons used)-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<!--default-js-->
+<script src="https://bootstraptema.ru/portfolio/2017/interient/js/jquery-2.1.4.min.js"></script>
+<!--bootstrap-js-->
+<script src="https://bootstraptema.ru/portfolio/2017/interient/js/bootstrap.min.js"></script>
+<!--script-->
+<script type="text/javascript" src="https://bootstraptema.ru/portfolio/2017/interient/js/move-top.js"></script>
+<script type="text/javascript" src="https://bootstraptema.ru/portfolio/2017/interient/js/easing.js"></script>
+<!--Stripe.js-->
+<script src="https://js.stripe.com/v3/"></script>
+<!--PayPal SDK-->
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
+
+<style>
+/* ===== GLOBAL STYLES ===== */
+* { box-sizing: border-box; }
+body { font-family: 'Open Sans', sans-serif; color: #333; }
+.section-padding { padding: 80px 0; }
+.section-title { text-align: center; margin-bottom: 60px; }
+.section-title h2 { font-size: 36px; font-weight: 700; color: #2c3e50; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+.section-title p { font-size: 16px; color: #777; max-width: 600px; margin: 0 auto; line-height: 1.8; }
+.section-title .divider { width: 60px; height: 3px; background: #c9a96e; margin: 15px auto; }
+
+/* ===== NAVBAR ALIGNMENT FIX ===== */
+.nav-dflt-setin {
+    margin-bottom: 0;
+    border: none;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.nav-dflt-setin .navbar-brand {
+    padding: 15px 15px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #c9a96e !important;
+    letter-spacing: 2px;
+}
+.nav-dflt-setin .navbar-brand:hover,
+.nav-dflt-setin .navbar-brand:focus {
+    color: #b8944f !important;
+}
+.nav-dflt-setin .navbar-nav {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+.nav-dflt-setin .navbar-nav > li > a {
+    padding: 20px 18px;
+    color: #2c3e50 !important;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+.nav-dflt-setin .navbar-nav > li > a:hover,
+.nav-dflt-setin .navbar-nav > li > a:focus {
+    color: #c9a96e !important;
+    background: transparent !important;
+}
+.nav-dflt-setin .navbar-nav > li > a span.active {
+    color: #c9a96e;
+}
+.nav-dflt-setin .navbar-collapse {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+}
+@media (min-width: 768px) {
+    .nav-dflt-setin .navbar-collapse {
+        display: flex !important;
+    }
+    .nav-dflt-setin .navbar-nav.nav-max-wid {
+        justify-content: center;
+        flex: 1;
+    }
+}
+.nav-dflt-setin .navbar-toggle {
+    margin-top: 12px;
+    border-color: #c9a96e;
+}
+.nav-dflt-setin .navbar-toggle .icon-bar {
+    background-color: #c9a96e;
+}
+
+/* ===== ROOMS SECTION - ALIGNED GRID ===== */
+#rooms { background: #f9f9f9; }
+.rooms-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+.room-col {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+    padding: 0 15px;
+    margin-bottom: 30px;
+    display: flex;
+}
+.room-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.room-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+.room-card .room-img { width: 100%; height: 230px; object-fit: cover; display: block; }
+.room-card .room-body {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.room-card .room-body h3 { font-size: 20px; font-weight: 600; color: #2c3e50; margin-bottom: 10px; }
+.room-card .room-body p { color: #777; font-size: 14px; line-height: 1.7; margin-bottom: 15px; flex: 1; }
+.room-card .room-price { font-size: 22px; font-weight: 700; color: #c9a96e; margin-bottom: 15px; }
+.room-card .room-price span { font-size: 13px; font-weight: 400; color: #999; }
+.room-card .room-amenities { list-style: none; padding: 0; margin: 0 0 15px; }
+.room-card .room-amenities li { display: inline-block; margin-right: 10px; font-size: 13px; color: #888; margin-bottom: 4px; }
+.room-card .room-amenities li i { color: #c9a96e; margin-right: 4px; }
+.btn-book-room { background: #c9a96e; color: #fff; border: none; padding: 10px 25px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s; cursor: pointer; align-self: flex-start; }
+.btn-book-room:hover { background: #b8944f; color: #fff; }
+
+@media (max-width: 991px) {
+    .room-col { flex: 0 0 50%; max-width: 50%; }
+}
+@media (max-width: 600px) {
+    .room-col { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* ===== BOOKING SECTION ===== */
+#booking { background: #fff; }
+.booking-form { background: #f8f8f8; padding: 40px; border-radius: 8px; box-shadow: 0 3px 15px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto; }
+.booking-form .form-group { margin-bottom: 20px; }
+.booking-form label { font-weight: 600; color: #2c3e50; margin-bottom: 8px; display: block; }
+.booking-form .form-control { border: 1px solid #ddd; border-radius: 4px; padding: 12px 15px; font-size: 14px; transition: border-color 0.3s; }
+.booking-form .form-control:focus { border-color: #c9a96e; box-shadow: 0 0 0 2px rgba(201,169,110,0.2); }
+.btn-submit-booking { background: #2c3e50; color: #fff; border: none; padding: 14px 40px; border-radius: 4px; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; width: 100%; transition: background 0.3s; cursor: pointer; margin-top: 10px; }
+.btn-submit-booking:hover { background: #c9a96e; }
+
+/* ===== PAYMENT SECTION ===== */
+#payment { background: #f4f4f4; }
+.payment-container { max-width: 900px; margin: 0 auto; }
+.payment-methods { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+.payment-box { background: #fff; border-radius: 8px; padding: 35px; box-shadow: 0 3px 15px rgba(0,0,0,0.05); flex: 1; min-width: 300px; max-width: 420px; }
+.payment-box h3 { font-size: 20px; font-weight: 700; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.payment-box h3 .pay-icon { font-size: 28px; }
+.stripe-logo { color: #635bff; }
+.paypal-logo { color: #003087; }
+.payment-box .form-group { margin-bottom: 15px; }
+.payment-box label { font-weight: 600; font-size: 13px; color: #555; margin-bottom: 5px; display: block; }
+.payment-box .form-control { border: 1px solid #e0e0e0; border-radius: 4px; padding: 10px 12px; font-size: 14px; }
+.payment-box .form-control:focus { border-color: #c9a96e; box-shadow: 0 0 0 2px rgba(201,169,110,0.15); }
+.btn-stripe-pay { background: #635bff; color: #fff; border: none; padding: 12px 30px; border-radius: 4px; font-weight: 600; width: 100%; margin-top: 10px; cursor: pointer; transition: background 0.3s; }
+.btn-stripe-pay:hover { background: #4b44c4; }
+#paypal-button-container { margin-top: 15px; }
+.payment-secure { text-align: center; margin-top: 30px; color: #999; font-size: 13px; }
+.payment-secure i { color: #27ae60; margin-right: 5px; }
+
+/* ===== REVIEWS SECTION ===== */
+#reviews { background: #fff; }
+.review-card { background: #f9f9f9; border-radius: 8px; padding: 30px; margin-bottom: 30px; position: relative; border-left: 4px solid #c9a96e; }
+.review-card .review-stars { color: #f1c40f; margin-bottom: 12px; font-size: 16px; }
+.review-card .review-text { font-style: italic; color: #555; line-height: 1.8; margin-bottom: 20px; font-size: 15px; }
+.review-card .review-author { display: flex; align-items: center; gap: 15px; }
+.review-card .review-avatar { width: 50px; height: 50px; border-radius: 50%; background: #c9a96e; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 20px; }
+.review-card .review-name { font-weight: 600; color: #2c3e50; }
+.review-card .review-date { font-size: 12px; color: #999; }
+.review-card .quote-icon { position: absolute; top: 20px; right: 25px; font-size: 40px; color: #e0e0e0; }
+
+/* ===== CONTACT SECTION ===== */
+#contact { background: #2c3e50; color: #fff; }
+#contact .section-title h2 { color: #fff; }
+#contact .section-title p { color: #bbb; }
+.contact-info { margin-bottom: 40px; }
+.contact-info-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
+.contact-info-item .contact-icon { width: 45px; height: 45px; background: #c9a96e; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; flex-shrink: 0; }
+.contact-info-item h4 { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+.contact-info-item p { color: #bbb; font-size: 14px; margin: 0; }
+.contact-form .form-control { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 4px; padding: 12px 15px; margin-bottom: 15px; }
+.contact-form .form-control::placeholder { color: rgba(255,255,255,0.5); }
+.contact-form textarea { min-height: 120px; resize: vertical; }
+.btn-send-msg { background: #c9a96e; color: #fff; border: none; padding: 12px 35px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s; cursor: pointer; }
+.btn-send-msg:hover { background: #b8944f; }
+
+/* ===== SERVICES SECTION ===== */
+#services { background: #f9f9f9; }
+.services-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+.service-col {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 0 15px;
+    margin-bottom: 30px;
+}
+.service-item { text-align: center; padding: 30px 20px; transition: transform 0.3s; background: #fff; border-radius: 8px; height: 100%; box-shadow: 0 3px 10px rgba(0,0,0,0.04); }
+.service-item:hover { transform: translateY(-5px); }
+.service-item .service-icon { width: 80px; height: 80px; background: #f0e6d3; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; color: #c9a96e; transition: background 0.3s, color 0.3s; }
+.service-item:hover .service-icon { background: #c9a96e; color: #fff; }
+.service-item h4 { font-size: 18px; font-weight: 600; color: #2c3e50; margin-bottom: 10px; }
+.service-item p { color: #777; font-size: 14px; line-height: 1.7; }
+
+@media (max-width: 991px) {
+    .service-col { flex: 0 0 50%; max-width: 50%; }
+}
+@media (max-width: 600px) {
+    .service-col { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* ===== FOOTER ===== */
+.footer-section { background: #1a252f; color: #aaa; padding: 50px 0 20px; }
+.footer-section h4 { color: #fff; font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+.footer-section p { font-size: 14px; line-height: 1.8; }
+.footer-section ul { list-style: none; padding: 0; }
+.footer-section ul li { margin-bottom: 10px; }
+.footer-section ul li a { color: #aaa; text-decoration: none; font-size: 14px; transition: color 0.3s; }
+.footer-section ul li a:hover { color: #c9a96e; }
+.footer-bottom { text-align: center; padding-top: 30px; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); }
+.footer-bottom p { font-size: 13px; color: #777; }
+.footer-social { margin-top: 15px; }
+.footer-social a { display: inline-block; width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 50%; text-align: center; line-height: 36px; color: #aaa; margin: 0 5px; transition: background 0.3s, color 0.3s; text-decoration: none; }
+.footer-social a:hover { background: #c9a96e; color: #fff; }
+
+/* ===== MAP ===== */
+.map-container { width: 100%; height: 300px; border-radius: 8px; overflow: hidden; margin-top: 30px; background: #34495e; display: flex; align-items: center; justify-content: center; color: #bbb; font-size: 14px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .section-padding { padding: 50px 0; }
+    .section-title h2 { font-size: 26px; }
+    .payment-methods { flex-direction: column; align-items: center; }
+    .payment-box { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!--head-starts-->
+<div class="header" id="home">
+    <div class="header-top">
+        <nav class="navbar navbar-default nav-dflt-setin">
+            <div class="container">
+                <div class="navbar-header nav-min-wid">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#home">Jurmala</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav nav-max-wid cl-effect-5" id="cl-effect-5">
+                        <li><a href="#home"><class="active">Home</span></a></li>
+                        <li><a href="#about">About</span></a></li>
+                        <li><a href="#rooms">Rooms</span></a></li>
+                        <li><a href="#services">Services</span></a></li>
+                        <li><a href="#booking">Booking</span></a></li>
+                        <li><a href="#payment">Payment</span></a></li>
+                        <li><a href="#reviews">Reviews</span></a></li>
+                        <li><a href="#contact">Contact</span></a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </nav>
+    </div>
+    <div class="header-bottom">
+        <div id="mycarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#mycarousel" data-slide-to="1"></li>
+                <li data-target="#mycarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <img src="https://bootstraptema.ru/portfolio/2017/interient/images/ban.jpg" alt="banner" class="banner-wid">
+                    <div class="carousel-caption">
+                        <h3>We are pleased to announce that from now our guests will have access to 31 newly renovated rooms on the 9th floor of the hotel.</h3>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="https://bootstraptema.ru/portfolio/2017/interient/images/ban1.jpg" alt="banner" class="banner-wid">
+                    <div class="carousel-caption">
+                        <h3>We are very delighted that you chose Jūrmala Spa Hotel for your stay in the resort town Jūrmala.</h3>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="https://bootstraptema.ru/portfolio/2017/interient/images/ban2.jpg" alt="banner" class="banner-wid">
+                    <div class="carousel-caption">
+                        <h3>All rooms have been decorated using only natural materials – wood and stone - to create a restful and relaxing atmosphere.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--head-ends-->
+
+<!-- ===== ABOUT SECTION ===== -->
+<section id="about" class="section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>Welcome to Jūrmala Spa Hotel</h2>
+            <div class="divider"></div>
+            <p>Located in the heart of Latvia's most beloved seaside resort, our hotel offers a perfect blend of luxury, nature, and relaxation. Experience the finest hospitality on the shores of the Baltic Sea.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h4>Prime Location</h4>
+                    <p>Situated just 200 meters from the pristine white sand beaches of Jūrmala, surrounded by pine forests.</p>
+                </div>
+            </div>
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-star"></i></div>
+                    <h4>5-Star Service</h4>
+                    <p>Our dedicated team ensures every moment of your stay is exceptional, from arrival to departure.</p>
+                </div>
+            </div>
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-leaf"></i></div>
+                    <h4>Natural Wellness</h4>
+                    <p>Immerse yourself in our spa treatments using natural Baltic ingredients for complete rejuvenation.</p>
+                </div>
+            </div>
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-award"></i></div>
+                    <h4>Award Winning</h4>
+                    <p>Recognized as one of the top seaside hotels in the Baltic region for three consecutive years.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== LUXURY ROOMS SECTION ===== -->
+<section id="rooms" class="section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Luxury Rooms</h2>
+            <div class="divider"></div>
+            <p>Each room is thoughtfully designed with natural materials – wood and stone – to create a restful and relaxing atmosphere inspired by the seaside nature.</p>
+        </div>
+        <div class="rooms-grid">
+            <div class="room-col">
+                <div class="room-card">
+                    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&h=400&fit=crop" alt="Deluxe Room" class="room-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22><rect fill=%22%23c9a96e%22 width=%22600%22 height=%22400%22/><text fill=%22%23fff%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22>Deluxe Room</text></svg>'">
+                    <div class="room-body">
+                        <h3>Deluxe Sea View</h3>
+                        <ul class="room-amenities">
+                            <li><i class="fas fa-wifi"></i> WiFi</li>
+                            <li><i class="fas fa-tv"></i> Smart TV</li>
+                            <li><i class="fas fa-snowflake"></i> A/C</li>
+                            <li><i class="fas fa-bath"></i> Bath</li>
+                        </ul>
+                        <p>Elegant room with panoramic sea views, king-size bed, and private balcony overlooking the Baltic Sea.</p>
+                        <div class="room-price">€189 <span>/ night</span></div>
+                        <button class="btn-book-room" onclick="scrollToBooking('Deluxe Sea View')">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="room-col">
+                <div class="room-card">
+                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=400&fit=crop" alt="Premium Suite" class="room-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22><rect fill=%22%232c3e50%22 width=%22600%22 height=%22400%22/><text fill=%22%23fff%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22>Premium Suite</text></svg>'">
+                    <div class="room-body">
+                        <h3>Premium Suite</h3>
+                        <ul class="room-amenities">
+                            <li><i class="fas fa-wifi"></i> WiFi</li>
+                            <li><i class="fas fa-tv"></i> Smart TV</li>
+                            <li><i class="fas fa-glass-martini-alt"></i> Mini Bar</li>
+                            <li><i class="fas fa-bed"></i> King Bed</li>
+                        </ul>
+                        <p>Spacious suite with separate living area, premium furnishings, and luxurious marble bathroom with rain shower.</p>
+                        <div class="room-price">€289 <span>/ night</span></div>
+                        <button class="btn-book-room" onclick="scrollToBooking('Premium Suite')">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="room-col">
+                <div class="room-card">
+                    <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&h=400&fit=crop" alt="Royal Penthouse" class="room-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22><rect fill=%22%23b8944f%22 width=%22600%22 height=%22400%22/><text fill=%22%23fff%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22>Royal Penthouse</text></svg>'">
+                    <div class="room-body">
+                        <h3>Royal Penthouse</h3>
+                        <ul class="room-amenities">
+                            <li><i class="fas fa-wifi"></i> WiFi</li>
+                            <li><i class="fas fa-utensils"></i> Kitchen</li>
+                            <li><i class="fas fa-hot-tub"></i> Jacuzzi</li>
+                            <li><i class="fas fa-sun"></i> Terrace</li>
+                        </ul>
+                        <p>The ultimate luxury experience with private terrace, jacuzzi, full kitchen, and 360° views of the resort.</p>
+                        <div class="room-price">€459 <span>/ night</span></div>
+                        <button class="btn-book-room" onclick="scrollToBooking('Royal Penthouse')">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="room-col">
+                <div class="room-card">
+                    <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&h=400&fit=crop" alt="Standard Room" class="room-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22><rect fill=%22%2334495e%22 width=%22600%22 height=%22400%22/><text fill=%22%23fff%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22>Standard Room</text></svg>'">
+                    <div class="room-body">
+                        <h3>Standard Garden View</h3>
+                        <ul class="room-amenities">
+                            <li><i class="fas fa-wifi"></i> WiFi</li>
+                            <li><i class="fas fa-tv"></i> TV</li>
+                            <li><i class="fas fa-snowflake"></i> A/C</li>
+                            <li><i class="fas fa-coffee"></i> Breakfast</li>
+                        </ul>
+                        <p>Comfortable room overlooking our beautiful gardens, perfect for a peaceful retreat with all essential amenities.</p>
+                        <div class="room-price">€119 <span>/ night</span></div>
+                        <button class="btn-book-room" onclick="scrollToBooking('Standard Garden View')">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="room-col">
+                <div class="room-card">
+                    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=400&fit=crop" alt="Family Room" class="room-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22><rect fill=%22%238e6f3e%22 width=%22600%22 height=%22400%22/><text fill=%22%23fff%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22>Family Room</text></svg>'">
+                    <div class="room-body">
+                        <h3>Family Room</h3>
+                        <ul class="room-amenities">
+                            <li><i class="fas fa-wifi"></i> WiFi</li>
+                            <li><i class="fas fa-child"></i> Kids Area</li>
+                            <li><i class="fas fa-bed"></i> 2 Beds</li>
+                            <li><i class="fas fa-gamepad"></i> Games</li>
+                        </ul>
+                        <p>Spacious family-friendly room with separate children's area, two queen beds, and family entertainment options.</p>
+                        <div class="room-price">€199 <span>/ night</span></div>
+                        <button class="btn-book-room" onclick="scrollToBooking('Family Room')">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="room-col">
+                <div class="room-card">
+                    <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600&h=400&fit=crop" alt="Spa Suite" class="room-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22><rect fill=%22%235d4e37%22 width=%22600%22 height=%22400%22/><text fill=%22%23fff%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22>Spa Suite</text></svg>'">
+                    <div class="room-body">
+                        <h3>Spa Wellness Suite</h3>
+                        <ul class="room-amenities">
+                            <li><i class="fas fa-wifi"></i> WiFi</li>
+                            <li><i class="fas fa-heart"></i> Spa Access</li>
+                            <li><i class="fas fa-fire"></i> Sauna</li>
+                            <li><i class="fas fa-glass-cheers"></i> Champagne</li>
+                        </ul>
+                        <p>Indulge in our spa suite with private sauna, in-room massage options, and complimentary spa treatments.</p>
+                        <div class="room-price">€349 <span>/ night</span></div>
+                        <button class="btn-book-room" onclick="scrollToBooking('Spa Wellness Suite')">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SERVICES SECTION ===== -->
+<section id="services" class="section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Services</h2>
+            <div class="divider"></div>
+            <p>Experience world-class amenities and personalized services designed to make your stay unforgettable.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-spa"></i></div>
+                    <h4>Spa & Wellness</h4>
+                    <p>Full-service spa with sauna, steam room, and professional massage therapies.</p>
+                </div>
+            </div>
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-utensils"></i></div>
+                    <h4>Fine Dining</h4>
+                    <p>Award-winning restaurant serving Baltic and international cuisine with sea views.</p>
+                </div>
+            </div>
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-swimming-pool"></i></div>
+                    <h4>Indoor Pool</h4>
+                    <p>Heated infinity pool with panoramic windows overlooking the Baltic coastline.</p>
+                </div>
+            </div>
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-car"></i></div>
+                    <h4>Airport Transfer</h4>
+                    <p>Complimentary luxury transfers from Riga International Airport for all guests.</p>
+                </div>
+            </div>
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-biking"></i></div>
+                    <h4>Bike Rentals</h4>
+                    <p>Explore the beautiful coastal paths and pine forests with our premium bicycle fleet.</p>
+                </div>
+            </div>
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-concierge-bell"></i></div>
+                    <h4>24/7 Concierge</h4>
+                    <p>Our multilingual concierge team is available around the clock for any request.</p>
+                </div>
+            </div>
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-glass-cheers"></i></div>
+                    <h4>Bar & Lounge</h4>
+                    <p>Relax with craft cocktails and live music in our elegant seaside lounge bar.</p>
+                </div>
+            </div>
+            <div class="service-col">
+                <div class="service-item">
+                    <div class="service-icon"><i class="fas fa-dumbbell"></i></div>
+                    <h4>Fitness Center</h4>
+                    <p>State-of-the-art gym with personal trainers and yoga classes available daily.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== BOOKING SECTION ===== -->
+<section id="booking" class="section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>Reserve Your Room</h2>
+            <div class="divider"></div>
+            <p>Fill in the form below to book your perfect stay at Jūrmala Spa Hotel. We'll confirm your reservation within 24 hours.</p>
+        </div>
+        <div class="booking-form">
+            <form id="bookingForm" onsubmit="handleBooking(event)">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" class="form-control" id="bookName" placeholder="Enter your full name" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Email Address *</label>
+                            <input type="email" class="form-control" id="bookEmail" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" class="form-control" id="bookPhone" placeholder="+371 XXXX XXXX">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Room Type *</label>
+                            <select class="form-control" id="bookRoom" required>
+                                <option value="">Select a room</option>
+                                <option value="Deluxe Sea View">Deluxe Sea View - €189/night</option>
+                                <option value="Premium Suite">Premium Suite - €289/night</option>
+                                <option value="Royal Penthouse">Royal Penthouse - €459/night</option>
+                                <option value="Standard Garden View">Standard Garden View - €119/night</option>
+                                <option value="Family Room">Family Room - €199/night</option>
+                                <option value="Spa Wellness Suite">Spa Wellness Suite - €349/night</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Check-in Date *</label>
+                            <input type="date" class="form-control" id="bookCheckin" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Check-out Date *</label>
+                            <input type="date" class="form-control" id="bookCheckout" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Guests *</label>
+                            <select class="form-control" id="bookGuests" required>
+                                <option value="1">1 Guest</option>
+                                <option value="2" selected>2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                                <option value="5">5+ Guests</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Special Requests</label>
+                    <textarea class="form-control" id="bookRequests" rows="3" placeholder="Any special requirements or preferences..."></textarea>
+                </div>
+                <div id="bookingTotal" style="text-align:center; margin-bottom:20px; font-size:18px; font-weight:600; color:#c9a96e; display:none;">
+                    Estimated Total: €<span id="totalAmount">0</span>
+                </div>
+                <button type="submit" class="btn-submit-booking">Proceed to Payment <i class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PAYMENT SECTION ===== -->
+<section id="payment" class="section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>Secure Payment</h2>
+            <div class="divider"></div>
+            <p>Choose your preferred payment method. All transactions are encrypted and secure.</p>
+        </div>
+        <div class="payment-container">
+            <div class="payment-methods">
+                <!-- Stripe Payment -->
+                <div class="payment-box">
+                    <h3><span class="pay-icon stripe-logo"><i class="fas fa-credit-card"></i></span> Pay with Stripe</h3>
+                    <form id="stripeForm" onsubmit="handleStripePayment(event)">
+                        <div class="form-group">
+                            <label>Cardholder Name</label>
+                            <input type="text" class="form-control" id="stripeName" placeholder="Name on card" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Card Number</label>
+                            <input type="text" class="form-control" id="stripeCard" placeholder="1234 5678 9012 3456" maxlength="19" required oninput="formatCardNumber(this)">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label>Expiry Date</label>
+                                    <input type="text" class="form-control" id="stripeExpiry" placeholder="MM/YY" maxlength="5" required oninput="formatExpiry(this)">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label>CVC</label>
+                                    <input type="text" class="form-control" id="stripeCVC" placeholder="123" maxlength="4" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount (EUR)</label>
+                            <input type="text" class="form-control" id="stripeAmount" placeholder="0.00" value="189.00" required>
+                        </div>
+                        <button type="submit" class="btn-stripe-pay"><i class="fas fa-lock"></i> Pay with Stripe</button>
+                    </form>
+                </div>
+
+                <!-- PayPal Payment -->
+                <div class="payment-box">
+                    <h3><span class="pay-icon paypal-logo"><i class="fab fa-paypal"></i></span> Pay with PayPal</h3>
+                    <p style="color:#777; font-size:14px; margin-bottom:20px;">Fast, safe and easy payment through your PayPal account. No need to share your financial details.</p>
+                    <div class="form-group">
+                        <label>PayPal Email (optional)</label>
+                        <input type="email" class="form-control" id="paypalEmail" placeholder="your@paypal.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (EUR)</label>
+                        <input type="text" class="form-control" id="paypalAmount" placeholder="0.00" value="189.00">
+                    </div>
+                    <div id="paypal-button-container"></div>
+                    <div style="text-align:center; margin-top:15px;">
+                        <button class="btn-stripe-pay" style="background:#0070ba;" onclick="handlePayPalClick()"><i class="fab fa-paypal"></i> Pay with PayPal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="payment-secure">
+                <p><i class="fas fa-shield-alt"></i> Your payment information is encrypted with 256-bit SSL security</p>
+                <p style="margin-top:8px;"><i class="fas fa-lock"></i> We accept Visa, Mastercard, American Express, and PayPal</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== REVIEWS SECTION ===== -->
+<section id="reviews" class="section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>Guest Reviews</h2>
+            <div class="divider"></div>
+            <p>See what our guests have to say about their experience at Jūrmala Spa Hotel.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="review-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"An absolutely stunning hotel! The rooms are beautifully designed with natural materials, and the sea view from our balcony was breathtaking. The spa treatments were world-class. We'll definitely be coming back!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">E</div>
+                        <div>
+                            <div class="review-name">Elena Kowalski</div>
+                            <div class="review-date">August 2026 · Warsaw, Poland</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="review-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Perfect getaway! The staff went above and beyond to make our anniversary special. The Royal Penthouse was incredible – private jacuzzi, amazing views, and the complimentary champagne was a lovely touch."</p>
+                    <div class="review-author">
+                        <div class="review-avatar">M</div>
+                        <div>
+                            <div class="review-name">Marcus & Anna Berg</div>
+                            <div class="review-date">July 2026 · Stockholm, Sweden</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="review-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">"Great location, just minutes from the beach. The breakfast buffet had excellent variety with local Latvian specialties. The indoor pool area is very relaxing. Only wish the stay could have been longer!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">J</div>
+                        <div>
+                            <div class="review-name">James Richardson</div>
+                            <div class="review-date">June 2026 · London, UK</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="review-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"We brought our two kids and the Family Room was perfect. The children's activities kept them entertained while we enjoyed the spa. The hotel's proximity to the beach and pine forest trails was ideal for family walks."</p>
+                    <div class="review-author">
+                        <div class="review-avatar">S</div>
+                        <div>
+                            <div class="review-name">Sophie Müller</div>
+                            <div class="review-date">May 2026 · Berlin, Germany</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Overall Rating -->
+        <div style="text-align:center; margin-top:40px; padding:30px; background:#f9f9f9; border-radius:8px;">
+            <h3 style="color:#2c3e50; margin-bottom:10px;">Overall Guest Rating</h3>
+            <div style="font-size:48px; font-weight:700; color:#c9a96e;">4.8<span style="font-size:20px; color:#999;">/5</span></div>
+            <div style="color:#f1c40f; font-size:24px; margin:10px 0;">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+            </div>
+            <p style="color:#777;">Based on 1,247 verified reviews</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CONTACT SECTION ===== -->
+<section id="contact" class="section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>Contact Us</h2>
+            <div class="divider"></div>
+            <p>Have questions or need assistance? Our team is here to help you plan your perfect stay.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>Address</h4>
+                            <p>Jomas Street 45/47<br>Jūrmala, LV-2015, Latvia</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+371 6776 8100<br>+371 2912 3456 (WhatsApp)</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>reservations@jurmala-hotel.lv<br>info@jurmala-hotel.lv</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h4>Reception Hours</h4>
+                            <p>24/7 – Always available<br>Check-in: 15:00 | Check-out: 11:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <form class="contact-form" onsubmit="handleContact(event)">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" placeholder="Your Name *" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="email" class="form-control" placeholder="Your Email *" required>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Subject">
+                    <textarea class="form-control" placeholder="Your Message *" required></textarea>
+                    <button type="submit" class="btn-send-msg"><i class="fas fa-paper-plane"></i> Send Message</button>
+                </form>
+            </div>
+        </div>
+        <!-- Map Placeholder -->
+        <div class="map-container">
+            <div style="text-align:center;">
+                <i class="fas fa-map-marker-alt" style="font-size:40px; color:#c9a96e; margin-bottom:10px; display:block;"></i>
+                <p>Jūrmala Spa Hotel · Jomas Street 45/47, Jūrmala, Latvia</p>
+                <p style="font-size:12px; margin-top:5px; color:#888;">56.9681° N, 23.7707° E</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Jūrmala Spa Hotel</h4>
+                <p>A luxury seaside retreat in the heart of Latvia's most beloved resort town. Experience world-class hospitality surrounded by the natural beauty of the Baltic coast.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-4">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#rooms">Rooms</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#booking">Booking</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <h4>Our Services</h4>
+                <ul>
+                    <li><a href="#">Spa & Wellness</a></li>
+                    <li><a href="#">Fine Dining</a></li>
+                    <li><a href="#">Indoor Pool</a></li>
+                    <li><a href="#">Fitness Center</a></li>
+                    <li><a href="#">Airport Transfer</a></li>
+                    <li><a href="#">Event Spaces</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <h4>Newsletter</h4>
+                <p>Subscribe for exclusive offers and updates.</p>
+                <form onsubmit="handleNewsletter(event)" style="margin-top:15px;">
+                    <input type="email" class="form-control" placeholder="Your email" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:4px; padding:10px; margin-bottom:10px;" required>
+                    <button type="submit" style="background:#c9a96e; color:#fff; border:none; padding:10px 20px; border-radius:4px; width:100%; font-weight:600; cursor:pointer;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Jūrmala Spa Hotel. All Rights Reserved. | <a href="#" style="color:#c9a96e;">Privacy Policy</a> | <a href="#" style="color:#c9a96e;">Terms of Service</a></p>
+        </div>
+    </div>
+</footer>
+
+<!-- ===== BOOKING CONFIRMATION MODAL ===== -->
+<div class="modal fade" id="bookingModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius:8px; overflow:hidden;">
+            <div class="modal-header" style="background:#c9a96e; color:#fff; border:none; padding:20px 25px;">
+                <button type="button" class="close" data-dismiss="modal" style="color:#fff; opacity:1;">&times;</button>
+                <h4 class="modal-title"><i class="fas fa-check-circle"></i> Reservation Confirmed!</h4>
+            </div>
+            <div class="modal-body" style="padding:30px;">
+                <div id="bookingDetails"></div>
+                <p style="color:#777; margin-top:15px; font-size:14px;">A confirmation email has been sent. Please proceed to payment to secure your reservation.</p>
+            </div>
+            <div class="modal-footer" style="border:none; padding:15px 25px;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn-book-room" onclick="$('#bookingModal').modal('hide'); document.getElementById('payment').scrollIntoView({behavior:'smooth'});">Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== PAYMENT SUCCESS MODAL ===== -->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius:8px; overflow:hidden;">
+            <div class="modal-header" style="background:#27ae60; color:#fff; border:none; padding:20px 25px;">
+                <button type="button" class="close" data-dismiss="modal" style="color:#fff; opacity:1;">&times;</button>
+                <h4 class="modal-title"><i class="fas fa-check-circle"></i> Payment Successful!</h4>
+            </div>
+            <div class="modal-body" style="padding:30px; text-align:center;">
+                <i class="fas fa-check-circle" style="font-size:60px; color:#27ae60; margin-bottom:15px;"></i>
+                <h3 style="color:#2c3e50;">Thank you for your payment!</h3>
+                <p style="color:#777;" id="paymentDetails">Your transaction has been completed successfully.</p>
+                <p style="color:#777; font-size:14px;">A receipt has been sent to your email address.</p>
+            </div>
+            <div class="modal-footer" style="border:none; padding:15px 25px; text-align:center;">
+                <button type="button" class="btn-book-room" data-dismiss="modal">Done</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== SMOOTH SCROLL =====
+$(document).ready(function() {
+    $('a[href^="#"]').on('click', function(e) {
+        e.preventDefault();
+        var target = $(this.getAttribute('href'));
+        if(target.length) {
+            $('html, body').animate({ scrollTop: target.offset().top - 70 }, 800);
+        }
+    });
+
+    // Set minimum dates for booking
+    var today = new Date().toISOString().split('T')[0];
+    $('#bookCheckin').attr('min', today);
+    $('#bookCheckout').attr('min', today);
+
+    // Update checkout min when checkin changes
+    $('#bookCheckin').on('change', function() {
+        var checkin = new Date(this.value);
+        checkin.setDate(checkin.getDate() + 1);
+        $('#bookCheckout').attr('min', checkin.toISOString().split('T')[0]);
+    });
+
+    // Calculate total on date/room change
+    $('#bookCheckin, #bookCheckout, #bookRoom').on('change', calculateTotal);
+
+    // Initialize PayPal
+    initPayPal();
+
+    // Carousel
+    $('.carousel').carousel({ interval: 5000, pause: 'hover' });
+});
+
+// ===== ROOM PRICES =====
+var roomPrices = {
+    'Deluxe Sea View': 189,
+    'Premium Suite': 289,
+    'Royal Penthouse': 459,
+    'Standard Garden View': 119,
+    'Family Room': 199,
+    'Spa Wellness Suite': 349
+};
+
+// ===== SCROLL TO BOOKING =====
+function scrollToBooking(roomType) {
+    document.getElementById('bookRoom').value = roomType;
+    calculateTotal();
+    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== CALCULATE TOTAL =====
+function calculateTotal() {
+    var room = document.getElementById('bookRoom').value;
+    var checkin = document.getElementById('bookCheckin').value;
+    var checkout = document.getElementById('bookCheckout').value;
+    
+    if (room && checkin && checkout) {
+        var nights = Math.ceil((new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24));
+        if (nights > 0) {
+            var total = nights * roomPrices[room];
+            document.getElementById('totalAmount').textContent = total.toFixed(2);
+            document.getElementById('bookingTotal').style.display = 'block';
+            document.getElementById('stripeAmount').value = total.toFixed(2);
+            document.getElementById('paypalAmount').value = total.toFixed(2);
+        }
+    }
+}
+
+// ===== HANDLE BOOKING =====
+function handleBooking(e) {
+    e.preventDefault();
+    var name = document.getElementById('bookName').value;
+    var email = document.getElementById('bookEmail').value;
+    var room = document.getElementById('bookRoom').value;
+    var checkin = document.getElementById('bookCheckin').value;
+    var checkout = document.getElementById('bookCheckout').value;
+    var guests = document.getElementById('bookGuests').value;
+    var total = document.getElementById('totalAmount').textContent;
+
+    var nights = Math.ceil((new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24));
+
+    document.getElementById('bookingDetails').innerHTML = 
+        '<table style="width:100%; font-size:14px;">' +
+        '<tr><td style="padding:8px 0; color:#777;">Guest:</td><td style="padding:8px 0; font-weight:600;">' + name + '</td></tr>' +
+        '<tr><td style="padding:8px 0; color:#777;">Email:</td><td style="padding:8px 0;">' + email + '</td></tr>' +
+        '<tr><td style="padding:8px 0; color:#777;">Room:</td><td style="padding:8px 0; font-weight:600;">' + room + '</td></tr>' +
+        '<tr><td style="padding:8px 0; color:#777;">Check-in:</td><td style="padding:8px 0;">' + formatDate(checkin) + '</td></tr>' +
+        '<tr><td style="padding:8px 0; color:#777;">Check-out:</td><td style="padding:8px 0;">' + formatDate(checkout) + '</td></tr>' +
+        '<tr><td style="padding:8px 0; color:#777;">Nights:</td><td style="padding:8px 0;">' + nights + '</td></tr>' +
+        '<tr><td style="padding:8px 0; color:#777;">Guests:</td><td style="padding:8px 0;">' + guests + '</td></tr>' +
+        '<tr style="border-top:2px solid #eee;"><td style="padding:12px 0; color:#2c3e50; font-weight:700;">Total:</td><td style="padding:12px 0; font-size:20px; font-weight:700; color:#c9a96e;">€' + total + '</td></tr>' +
+        '</table>';
+
+    $('#bookingModal').modal('show');
+}
+
+// ===== HANDLE STRIPE PAYMENT =====
+function handleStripePayment(e) {
+    e.preventDefault();
+    var amount = document.getElementById('stripeAmount').value;
+    var btn = e.target.querySelector('button[type="submit"]');
+    var originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    btn.disabled = true;
+
+    setTimeout(function() {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        document.getElementById('paymentDetails').innerHTML = 
+            'Amount: <strong>€' + amount + '</strong><br>' +
+            'Method: <strong>Stripe (Credit Card)</strong><br>' +
+            'Transaction ID: <strong>TXN-' + Math.random().toString(36).substr(2, 9).toUpperCase() + '</strong>';
+        $('#paymentModal').modal('show');
+    }, 2000);
+}
+
+// ===== HANDLE PAYPAL =====
+function handlePayPalClick() {
+    var amount = document.getElementById('paypalAmount').value;
+    var email = document.getElementById('paypalEmail').value;
+    
+    setTimeout(function() {
+        document.getElementById('paymentDetails').innerHTML = 
+            'Amount: <strong>€' + amount + '</strong><br>' +
+            'Method: <strong>PayPal</strong>' +
+            (email ? '<br>PayPal: <strong>' + email + '</strong>' : '') +
+            '<br>Transaction ID: <strong>PP-' + Math.random().toString(36).substr(2, 9).toUpperCase() + '</strong>';
+        $('#paymentModal').modal('show');
+    }, 1500);
+}
+
+// ===== INIT PAYPAL BUTTONS =====
+function initPayPal() {
+    if (typeof paypal !== 'undefined') {
+        try {
+            paypal.Buttons({
+                style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+                createOrder: function(data, actions) {
+                    var amount = document.getElementById('paypalAmount').value || '189.00';
+                    return actions.order.create({
+                        purchase_units: [{ amount: { value: amount, currency_code: 'EUR' } }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        document.getElementById('paymentDetails').innerHTML = 
+                            'Amount: <strong>€' + document.getElementById('paypalAmount').value + '</strong><br>' +
+                            'Method: <strong>PayPal</strong><br>' +
+                            'Payer: <strong>' + details.payer.name.given_name + ' ' + details.payer.name.surname + '</strong><br>' +
+                            'Transaction ID: <strong>' + details.id + '</strong>';
+                        $('#paymentModal').modal('show');
+                    });
+                },
+                onError: function(err) {
+                    alert('Payment error. Please try again or use another method.');
+                }
+            }).render('#paypal-button-container');
+        } catch(e) {
+            console.log('PayPal buttons initialization skipped (sandbox mode)');
+        }
+    }
+}
+
+// ===== HANDLE CONTACT FORM =====
+function handleContact(e) {
+    e.preventDefault();
+    var btn = e.target.querySelector('button[type="submit"]');
+    var originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    btn.disabled = true;
+
+    setTimeout(function() {
+        btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+        btn.style.background = '#27ae60';
+        e.target.reset();
+        setTimeout(function() {
+            btn.innerHTML = originalText;
+            btn.style.background = '#c9a96e';
+            btn.disabled = false;
+        }, 3000);
+    }, 1500);
+}
+
+// ===== HANDLE NEWSLETTER =====
+function handleNewsletter(e) {
+    e.preventDefault();
+    var btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = '✓ Subscribed!';
+    btn.style.background = '#27ae60';
+    e.target.reset();
+    setTimeout(function() {
+        btn.textContent = 'Subscribe';
+        btn.style.background = '#c9a96e';
+    }, 3000);
+}
+
+// ===== FORMAT CARD NUMBER =====
+function formatCardNumber(input) {
+    var value = input.value.replace(/\s/g, '').replace(/[^0-9]/g, '');
+    var formatted = value.match(/.{1,4}/g);
+    input.value = formatted ? formatted.join(' ') : '';
+}
+
+// ===== FORMAT EXPIRY =====
+function formatExpiry(input) {
+    var value = input.value.replace(/[^0-9]/g, '');
+    if (value.length >= 2) {
+        input.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    } else {
+        input.value = value;
+    }
+}
+
+// ===== FORMAT DATE =====
+function formatDate(dateStr) {
+    var options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateStr).toLocaleDateString('en-US', options);
+}
+</script>
+
+</body>
+</html>
