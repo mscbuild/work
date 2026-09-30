@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NOVA SHOP — Premium Tech & Lifestyle</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/index.min.css" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
+  :root{
+    --bg:#0a0d14;
+    --bg-2:#11151f;
+    --card:#151a26;
+    --card-border:rgba(255,255,255,0.08);
+    --text:#ffffff;
+    --muted:#8a94a6;
+    --accent:#3b82f6;
+    --accent-glow:rgba(59,130,246,0.5);
+    --btn-bg:linear-gradient(180deg,#e5e7eb 0%,#9ca3af 100%);
+  }
+  html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+  body{
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.05) 0%, transparent 50%),
+      var(--bg);
+  }
+
+  /* Container */
+  .app{
+    max-width:1280px;margin:0 auto;padding:24px;
+    background:linear-gradient(180deg,#0d1119 0%,#0a0d14 100%);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:20px;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,0.8),0 0 0 1px rgba(255,255,255,0.03);
+    overflow:hidden;
+  }
+
+  /* Nav */
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 32px;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+  }
+  .nav-links{display:flex;gap:36px;align-items:center}
+  .nav-link{
+    color:var(--muted);text-decoration:none;font-size:15px;font-weight:500;
+    position:relative;padding:8px 0;transition:color .3s;cursor:pointer;
+  }
+  .nav-link:hover{color:var(--text)}
+  .nav-link.active{color:var(--text)}
+  .nav-link.active::after{
+    content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;
+    background:var(--accent);
+    box-shadow:0 0 12px var(--accent-glow),0 0 24px var(--accent-glow);
+    border-radius:2px;
+  }
+  .nav-right{display:flex;align-items:center;gap:16px}
+
+  /* Toggle */
+  .toggle{
+    width:48px;height:24px;background:rgba(255,255,255,0.1);
+    border-radius:12px;position:relative;cursor:pointer;
+    border:1px solid rgba(255,255,255,0.1);
+    transition:background .3s;
+  }
+  .toggle::before{
+    content:'';position:absolute;top:2px;left:2px;
+    width:18px;height:18px;border-radius:50%;
+    background:linear-gradient(135deg,#fff,#cbd5e1);
+    transition:transform .3s;
+    box-shadow:0 2px 4px rgba(0,0,0,0.3);
+  }
+  .toggle.on{background:var(--accent)}
+  .toggle.on::before{transform:translateX(24px)}
+
+  /* Hero */
+  .hero{
+    position:relative;
+    padding:40px 32px 60px;
+    display:flex;align-items:center;justify-content:center;
+    min-height:420px;
+  }
+  .hero-img-wrap{
+    position:relative;
+    max-width:900px;width:100%;
+    border-radius:16px;overflow:hidden;
+  }
+  .hero-img{
+    width:100%;height:auto;display:block;
+    filter:drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+  }
+  .hero-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:44px;height:44px;border-radius:50%;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.1);
+    color:var(--muted);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:all .3s;
+    backdrop-filter:blur(10px);
+  }
+  .hero-arrow:hover{
+    background:rgba(255,255,255,0.08);color:var(--text);
+    border-color:rgba(255,255,255,0.2);
+  }
+  .hero-arrow.left{left:12px}
+  .hero-arrow.right{right:12px}
+
+  /* Products grid */
+  .products{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:20px;padding:0 32px 40px;
+  }
+  .product-card{
+    background:linear-gradient(180deg,rgba(30,35,48,0.8) 0%,rgba(20,24,34,0.9) 100%);
+    border:1px solid var(--card-border);
+    border-radius:16px;
+    padding:24px;
+    transition:all .4s cubic-bezier(.2,.8,.2,1);
+    position:relative;overflow:hidden;
+  }
+  .product-card::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 0%,rgba(59,130,246,0.08),transparent 60%);
+    opacity:0;transition:opacity .4s;pointer-events:none;
+  }
+  .product-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(59,130,246,0.3);
+    box-shadow:0 20px 40px -10px rgba(0,0,0,0.5),0 0 0 1px rgba(59,130,246,0.1);
+  }
+  .product-card:hover::before{opacity:1}
+  .product-img-wrap{
+    height:180px;display:flex;align-items:center;justify-content:center;
+    margin-bottom:16px;position:relative;
+  }
+  .product-img{
+    max-height:100%;max-width:100%;object-fit:contain;
+    transition:transform .5s;
+    filter:drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+  }
+  .product-card:hover .product-img{transform:scale(1.08) rotate(-2deg)}
+  .product-title{
+    font-size:15px;font-weight:500;color:var(--text);
+    margin-bottom:12px;line-height:1.4;
+  }
+  .product-price{
+    font-size:22px;font-weight:700;color:var(--text);
+    margin-bottom:16px;
+  }
+  .add-btn{
+    width:100%;padding:12px;
+    background:var(--btn-bg);
+    color:#1a1d24;
+    border:none;border-radius:10px;
+    font-size:14px;font-weight:600;
+    cursor:pointer;transition:all .3s;
+    font-family:inherit;
+  }
+  .add-btn:hover{
+    background:linear-gradient(180deg,#fff 0%,#d1d5db 100%);
+    transform:translateY(-1px);
+    box-shadow:0 6px 16px -4px rgba(255,255,255,0.2);
+  }
+  .add-btn:active{transform:translateY(0)}
+  .add-btn.added{
+    background:linear-gradient(180deg,#10b981 0%,#059669 100%);
+    color:#fff;
+  }
+
+  /* Footer */
+  footer{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    padding:24px 32px;
+    border-top:1px solid rgba(255,255,255,0.05);
+    color:var(--muted);font-size:12px;
+  }
+  .logo-icon{
+    width:20px;height:20px;
+    background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+    clip-path:polygon(50% 0%,100% 100%,0% 100%);
+  }
+
+  /* Cart badge */
+  .cart-wrap{position:relative}
+  .cart-badge{
+    position:absolute;top:-6px;right:-10px;
+    background:var(--accent);color:#fff;
+    font-size:10px;font-weight:700;
+    width:18px;height:18px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transform:scale(0);transition:all .3s;
+  }
+  .cart-badge.show{opacity:1;transform:scale(1)}
+
+  /* Toast */
+  .toast{
+    position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);
+    background:rgba(20,24,34,0.95);
+    border:1px solid rgba(59,130,246,0.3);
+    backdrop-filter:blur(20px);
+    padding:14px 24px;border-radius:12px;
+    display:flex;align-items:center;gap:10px;
+    font-size:14px;font-weight:500;
+    opacity:0;transition:all .4s cubic-bezier(.2,.8,.2,1);
+    z-index:100;
+    box-shadow:0 20px 40px -10px rgba(0,0,0,0.5);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast i{color:var(--accent)}
+
+  /* Responsive */
+  @media(max-width:900px){
+    .products{grid-template-columns:repeat(2,1fr)}
+    .nav-links{gap:20px}
+  }
+  @media(max-width:600px){
+    .app{padding:12px;border-radius:12px}
+    nav{padding:16px;flex-wrap:wrap;gap:12px}
+    .nav-links{gap:16px;font-size:13px}
+    .hero{padding:20px 12px 40px;min-height:280px}
+    .products{grid-template-columns:1fr;padding:0 16px 32px;gap:14px}
+    .product-img-wrap{height:160px}
+    .hero-arrow{width:36px;height:36px}
+  }
+
+  /* Floating animation for hero */
+  @keyframes floaty{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-8px)}
+  }
+  .hero-img-wrap{animation:floaty 6s ease-in-out infinite}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-links">
+      <a class="nav-link" data-page="home">Home</a>
+      <a class="nav-link active" data-page="shop">Shop</a>
+      <a class="nav-link" data-page="categories">Categories</a>
+      <a class="nav-link cart-wrap" data-page="cart">
+        <i class="bi bi-cart3"></i> Cart
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+    </div>
+    <div class="nav-right">
+      <div class="toggle" id="themeToggle" title="Toggle accent"></div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <button class="hero-arrow left" id="prevBtn"><i class="bi bi-chevron-left"></i></button>
+    <div class="hero-img-wrap">
+      <img class="hero-img" id="heroImg" src="https://image.qwenlm.ai/public_source/cd64a8a1-0cae-4ed2-aec8-7195af841c76/190632c6f-2d9b-4721-81b5-be2e27d7829a.png" alt="Featured products"/>
+    </div>
+    <button class="hero-arrow right" id="nextBtn"><i class="bi bi-chevron-right"></i></button>
+  </section>
+
+  <!-- Products -->
+  <section class="products" id="productsGrid">
+    <div class="product-card" data-id="1">
+      <div class="product-img-wrap">
+        <img class="product-img" src="https://image.qwenlm.ai/public_source/cd64a8a1-0cae-4ed2-aec8-7195af841c76/1e67320fe-eb4d-46b1-9256-06e278b7ff66.png" alt="UltraFit Pro"/>
+      </div>
+      <div class="product-title">UltraFit Pro Wireless Earbuds</div>
+      <div class="product-price">¥899</div>
+      <button class="add-btn"><i class="bi bi-bag-plus"></i> Add to Cart</button>
+    </div>
+    <div class="product-card" data-id="2">
+      <div class="product-img-wrap">
+        <img class="product-img" src="https://image.qwenlm.ai/public_source/cd64a8a1-0cae-4ed2-aec8-7195af841c76/1970af45c-0b60-49af-9c54-f79c4650165d.png" alt="UltraFit Pro"/>
+      </div>
+      <div class="product-title">UltraFit Pro Wireless Earbuds</div>
+      <div class="product-price">¥899</div>
+      <button class="add-btn"><i class="bi bi-bag-plus"></i> Add to Cart</button>
+    </div>
+    <div class="product-card" data-id="3">
+      <div class="product-img-wrap">
+        <img class="product-img" src="https://image.qwenlm.ai/public_source/cd64a8a1-0cae-4ed2-aec8-7195af841c76/1f3af917b-72cf-4a34-85ab-307513ec3e64.png" alt="UltraFit Pro"/>
+      </div>
+      <div class="product-title">UltraFit Pro Wireless Earbuds</div>
+      <div class="product-price">¥899</div>
+      <button class="add-btn"><i class="bi bi-bag-plus"></i> Add to Cart</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="logo-icon"></div>
+    <span>© 2024 NOVA SHOP</span>
+  </footer>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="bi bi-check-circle-fill"></i>
+  <span id="toastMsg">Added to cart</span>
+</div>
+
+<script>
+  // Nav switching
+  document.querySelectorAll('.nav-link').forEach(link=>{
+    link.addEventListener('click',()=>{
+      document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  // Toggle
+  const toggle = document.getElementById('themeToggle');
+  toggle.addEventListener('click',()=>toggle.classList.toggle('on'));
+
+  // Hero carousel
+  const heroImages = [
+    'https://image.qwenlm.ai/public_source/cd64a8a1-0cae-4ed2-aec8-7195af841c76/190632c6f-2d9b-4721-81b5-be2e27d7829a.png',
+    'https://image.qwenlm.ai/public_source/cd64a8a1-0cae-4ed2-aec8-7195af841c76/1e67320fe-eb4d-46b1-9256-06e278b7ff66.png',
+    'https://image.qwenlm.ai/public_source/cd64a8a1-0cae-4ed2-aec8-7195af841c76/1970af45c-0b60-49af-9c54-f79c4650165d.png'
+  ];
+  let heroIdx = 0;
+  const heroImg = document.getElementById('heroImg');
+  document.getElementById('prevBtn').addEventListener('click',()=>{
+    heroIdx = (heroIdx - 1 + heroImages.length) % heroImages.length;
+    heroImg.style.opacity = 0;
+    setTimeout(()=>{heroImg.src = heroImages[heroIdx];heroImg.style.opacity = 1},200);
+  });
+  document.getElementById('nextBtn').addEventListener('click',()=>{
+    heroIdx = (heroIdx + 1) % heroImages.length;
+    heroImg.style.opacity = 0;
+    setTimeout(()=>{heroImg.src = heroImages[heroIdx];heroImg.style.opacity = 1},200);
+  });
+  heroImg.style.transition = 'opacity .3s';
+
+  // Cart
+  let cartCount = 0;
+  const badge = document.getElementById('cartBadge');
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMsg');
+
+  function showToast(msg){
+    toastMsg.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'),2200);
+  }
+
+  document.querySelectorAll('.add-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      if(btn.classList.contains('added'))return;
+      cartCount++;
+      badge.textContent = cartCount;
+      badge.classList.add('show');
+      btn.classList.add('added');
+      btn.innerHTML = '<i class="bi bi-check-lg"></i> Added';
+      showToast('UltraFit Pro added to cart');
+      setTimeout(()=>{
+        btn.classList.remove('added');
+        btn.innerHTML = '<i class="bi bi-bag-plus"></i> Add to Cart';
+      },1800);
+    });
+  });
+
+  // Subtle parallax on hero
+  document.addEventListener('mousemove',(e)=>{
+    const x = (e.clientX / window.innerWidth - 0.5) * 10;
+    const y = (e.clientY / window.innerHeight - 0.5) * 10;
+    heroImg.style.transform = `translate(${x}px,${y}px)`;
+  });
+</script>
+</body>
+</html>
+
