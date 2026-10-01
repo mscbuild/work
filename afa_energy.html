@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>AFA ENERGY — Variety Pack</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/montserrat@latest/latin-400-normal.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/montserrat@latest/latin-600-normal.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/montserrat@latest/latin-700-normal.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/montserrat@latest/latin-800-normal.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/montserrat@latest/latin-900-normal.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/michroma@latest/latin-400-normal.css"/>
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:'Montserrat',sans-serif;
+    background:#050508;
+    color:#fff;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:#fff;text-decoration:none}
+  button{font-family:inherit}
+  [hidden]{display:none !important}
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    background:#000;
+    text-align:center;
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.16em;
+    color:#a9a9b4;
+    padding:7px 12px;
+    text-transform:uppercase;
+  }
+
+  /* ---------- HEADER ---------- */
+  .site-header{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 30px;
+    background:#000;
+    z-index:5;
+  }
+  .nav-left,.nav-right{display:flex;align-items:center;gap:26px}
+  .site-header nav a,.site-header .nav-right a{
+    font-size:10px;font-weight:700;letter-spacing:.2em;transition:color .2s;
+  }
+  .site-header a:hover{color:#ff4d4d}
+  .logo{
+    position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    font-family:'Michroma',sans-serif;
+    font-size:15px;letter-spacing:.38em;
+    color:transparent;
+    -webkit-text-stroke:1px #ececf4;
+    white-space:nowrap;
+  }
+  .cart-btn{
+    background:none;border:0;cursor:pointer;position:relative;padding:4px;color:#fff;
+  }
+  .cart-btn svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:1.6;display:block}
+  .cart-btn:hover svg{stroke:#ff4d4d}
+  .cart-count{
+    position:absolute;top:-7px;right:-9px;
+    background:#ff2b2b;color:#fff;
+    font-size:9px;font-weight:800;
+    min-width:15px;height:15px;border-radius:999px;
+    display:flex;align-items:center;justify-content:center;padding:0 3px;
+    opacity:0;transform:scale(.4);transition:.25s;
+  }
+  .cart-count.show{opacity:1;transform:scale(1)}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(52% 72% at 30% 62%, rgba(128,32,190,.55), transparent 62%),
+      radial-gradient(34% 46% at 6% 42%, rgba(0,178,190,.22), transparent 60%),
+      radial-gradient(46% 58% at 52% 78%, rgba(255,45,120,.26), transparent 62%),
+      radial-gradient(40% 50% at 78% 30%, rgba(64,20,110,.35), transparent 65%),
+      #060609;
+  }
+  .hero-inner{
+    max-width:1180px;margin:0 auto;
+    display:grid;
+    grid-template-columns:1.35fr .9fr;
+    gap:36px;
+    align-items:center;
+    padding:36px 44px 96px;
+  }
+  .hero-media{margin:0;position:relative}
+  .hero-media svg{width:100%;height:auto;display:block;transition:filter .6s ease}
+
+  .hero-panel h1{
+    margin:0;
+    font-size:42px;
+    font-weight:900;
+    letter-spacing:.02em;
+    line-height:1.05;
+  }
+  .variety{
+    font-size:46px;
+    font-weight:900;
+    letter-spacing:.14em;
+    color:transparent;
+    -webkit-text-stroke:1.2px rgba(255,255,255,.92);
+    margin:2px 0 16px;
+  }
+  .flavors-copy{
+    margin:0 0 18px;
+    max-width:330px;
+    font-size:12px;
+    font-weight:500;
+    line-height:1.7;
+    color:#c9c9d6;
+  }
+  .flavor-dots{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  .flavor-dots span{
+    width:15px;height:15px;border-radius:50%;
+    background:var(--c);
+    box-shadow:0 0 12px var(--c);
+    transition:transform .2s;
+    cursor:pointer;
+  }
+  .flavor-dots span:hover{transform:scale(1.3)}
+  .price-row{display:flex;align-items:baseline;gap:12px}
+  .price-old{color:#84848f;font-size:15px;font-weight:600;text-decoration:line-through}
+  .price-new{font-size:32px;font-weight:900;letter-spacing:.01em}
+  .pack-note{margin:5px 0 24px;font-size:11px;font-weight:600;letter-spacing:.05em;color:#9a9aa8}
+  .buy-btn{
+    background:#ff2b2b;color:#fff;
+    border:0;border-radius:999px;
+    padding:15px 50px;
+    font-size:12px;font-weight:800;letter-spacing:.16em;
+    cursor:pointer;
+    box-shadow:0 10px 32px rgba(255,43,43,.45);
+    transition:transform .2s, box-shadow .2s;
+  }
+  .buy-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,43,43,.62)}
+  .buy-btn:active{transform:scale(.95)}
+  .buy-btn.wide{width:100%;padding:14px 20px}
+
+  .slide-counter{
+    position:absolute;left:44px;bottom:28px;
+    font-size:10px;font-weight:600;letter-spacing:.24em;color:#84848f;
+  }
+  .carousel-dots{position:absolute;right:44px;bottom:30px;display:flex;gap:9px}
+  .carousel-dots button{
+    width:7px;height:7px;border-radius:50%;
+    border:0;padding:0;background:#3c3c46;cursor:pointer;transition:.25s;
+  }
+  .carousel-dots button:hover{background:#6a6a78}
+  .carousel-dots button.active{background:#5ee7e0;box-shadow:0 0 10px rgba(94,231,224,.85)}
+
+  /* ---------- WHY ---------- */
+  .why{background:#0b0b10;padding:92px 24px 84px;text-align:center}
+  .why h2{margin:0 0 14px;font-size:36px;font-weight:900;letter-spacing:.02em}
+  .why h2 .accent{
+    background:linear-gradient(90deg,#7b2ff7,#d63fdc);
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent;
+  }
+  .why-sub{max-width:540px;margin:0 auto 52px;font-size:12px;line-height:1.7;color:#9a9aa8}
+  .why-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:22px;max-width:1020px;margin:0 auto;
+  }
+  .card{
+    background:#12121a;border:1px solid #23232e;border-radius:18px;
+    padding:34px 28px;text-align:left;transition:transform .3s,border-color .3s;
+  }
+  .card:hover{transform:translateY(-6px);border-color:#432b62}
+  .card .icon{
+    width:44px;height:44px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#7b2ff7,#d63fdc);
+    box-shadow:0 8px 22px rgba(123,47,247,.35);
+    margin-bottom:18px;
+  }
+  .card .icon svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .card h3{margin:0 0 8px;font-size:14px;font-weight:800;letter-spacing:.1em}
+  .card p{margin:0;font-size:12px;line-height:1.7;color:#9a9aa8}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:#000;border-top:1px solid #17171d;
+    padding:26px 44px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+  }
+  .foot-logo{
+    font-family:'Michroma',sans-serif;font-size:12px;letter-spacing:.3em;
+    color:transparent;-webkit-text-stroke:1px #cfcfd8;
+  }
+  .foot-copy{font-size:10px;color:#6f6f7c;letter-spacing:.08em}
+  .foot-links{display:flex;gap:20px}
+  .foot-links a{font-size:10px;color:#6f6f7c;letter-spacing:.1em;transition:color .2s}
+  .foot-links a:hover{color:#fff}
+
+  /* ---------- TOAST ---------- */
+  .toast{
+    position:fixed;left:50%;bottom:26px;
+    transform:translate(-50%,20px);
+    background:#15151c;border:1px solid #2c2c38;border-left:3px solid #ff2b2b;
+    color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em;
+    padding:12px 22px;border-radius:10px;
+    opacity:0;pointer-events:none;transition:.35s;z-index:190;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  /* ---------- MODALS ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:120;
+    background:rgba(3,3,8,.74);
+    backdrop-filter:blur(7px);
+    -webkit-backdrop-filter:blur(7px);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+    opacity:0;pointer-events:none;transition:opacity .3s;
+  }
+  .modal-overlay.open{opacity:1;pointer-events:auto}
+  .modal{
+    width:min(430px,94vw);
+    max-height:88vh;overflow-y:auto;
+    background:#101018;
+    border:1px solid #26263a;
+    border-radius:18px;
+    padding:32px 28px 28px;
+    position:relative;
+    box-shadow:0 30px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(123,47,247,.08);
+    transform:translateY(18px) scale(.97);
+    transition:transform .3s;
+  }
+  .modal-overlay.open .modal{transform:none}
+  .modal-close{
+    position:absolute;top:12px;right:14px;
+    background:none;border:0;color:#8a8a98;
+    font-size:20px;line-height:1;cursor:pointer;padding:4px;transition:color .2s;
+  }
+  .modal-close:hover{color:#ff4d4d}
+  .modal-brand{
+    font-family:'Michroma',sans-serif;font-size:10px;letter-spacing:.3em;
+    color:transparent;-webkit-text-stroke:1px #8a5cff;
+    display:block;margin-bottom:12px;
+  }
+  .modal h3{margin:0 0 5px;font-size:19px;font-weight:900;letter-spacing:.05em}
+  .modal-sub{margin:0 0 20px;font-size:11px;line-height:1.6;color:#9a9aa8}
+  .banner{
+    background:rgba(255,43,43,.12);
+    border:1px solid rgba(255,43,43,.4);
+    color:#ffb4b4;font-size:10.5px;font-weight:600;line-height:1.5;
+    border-radius:10px;padding:10px 12px;margin-bottom:16px;
+  }
+  .tab-row{display:flex;gap:8px;margin-bottom:18px}
+  .tab{
+    flex:1;padding:10px 6px;border-radius:999px;
+    border:1px solid #2a2a3e;background:transparent;
+    color:#9a9aa8;font-size:10px;font-weight:800;letter-spacing:.16em;
+    cursor:pointer;transition:.25s;
+  }
+  .tab:hover{color:#fff;border-color:#4a4a66}
+  .tab.active{background:#ff2b2b;border-color:#ff2b2b;color:#fff;box-shadow:0 6px 18px rgba(255,43,43,.35)}
+  #accountModal.mode-signin .reg-only{display:none}
+  .field{
+    width:100%;
+    background:#171722;
+    border:1px solid #2a2a3e;
+    border-radius:10px;
+    padding:12px 13px;
+    color:#fff;font-size:12px;font-weight:500;
+    margin-bottom:12px;outline:none;transition:border-color .2s, box-shadow .2s;
+  }
+  .field::placeholder{color:#6d6d80}
+  .field:focus{border-color:#7b2ff7;box-shadow:0 0 0 3px rgba(123,47,247,.18)}
+  .form-err{
+    background:rgba(255,43,43,.1);border:1px solid rgba(255,43,43,.35);
+    color:#ff9d9d;font-size:10.5px;font-weight:600;
+    border-radius:8px;padding:8px 10px;margin-bottom:12px;
+  }
+  .success-ic{
+    width:56px;height:56px;border-radius:50%;
+    background:linear-gradient(135deg,#7b2ff7,#d63fdc);
+    display:flex;align-items:center;justify-content:center;
+    margin:6px auto 16px;box-shadow:0 10px 30px rgba(123,47,247,.45);
+  }
+  .success-ic svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .center{text-align:center}
+
+  /* cart modal */
+  .cart-line{
+    display:flex;align-items:center;gap:12px;
+    background:#15151f;border:1px solid #23232e;border-radius:12px;
+    padding:12px;margin-bottom:10px;
+  }
+  .cart-thumb{width:38px;flex:none}
+  .cart-thumb svg{width:100%;height:auto;display:block}
+  .cart-info{flex:1;min-width:0}
+  .cart-info strong{display:block;font-size:11px;font-weight:800;letter-spacing:.06em}
+  .cart-info span{font-size:10px;color:#8a8a98}
+  .qty-box{display:flex;align-items:center;gap:8px}
+  .qty-box button{
+    width:22px;height:22px;border-radius:6px;
+    border:1px solid #2a2a3e;background:#1b1b28;color:#fff;
+    font-size:13px;line-height:1;cursor:pointer;transition:.2s;
+  }
+  .qty-box button:hover{border-color:#ff2b2b;color:#ff6b6b}
+  .qty-box span{font-size:12px;font-weight:800;min-width:14px;text-align:center}
+  .line-price{font-size:12px;font-weight:800;min-width:56px;text-align:right}
+  .cart-totals{border-top:1px dashed #2a2a3e;margin:14px 0 18px;padding-top:12px}
+  .tot-row{display:flex;justify-content:space-between;font-size:11px;color:#9a9aa8;margin-bottom:8px;font-weight:600}
+  .tot-row.green{color:#5ee7a0}
+  .tot-row.grand{color:#fff;font-size:14px;font-weight:900;margin-bottom:0}
+  .cart-empty{text-align:center;padding:26px 0 14px}
+  .cart-empty svg{width:42px;height:42px;stroke:#3c3c4c;fill:none;stroke-width:1.5;margin-bottom:12px}
+  .cart-empty p{margin:0 0 18px;font-size:11px;color:#8a8a98;font-weight:600;letter-spacing:.06em}
+  .ghost-btn{
+    background:transparent;border:1px solid #3a3a52;border-radius:999px;
+    color:#c9c9d6;font-size:10px;font-weight:800;letter-spacing:.14em;
+    padding:11px 26px;cursor:pointer;transition:.25s;
+  }
+  .ghost-btn:hover{border-color:#7b2ff7;color:#fff}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:940px){
+    .site-header{flex-wrap:wrap;gap:14px}
+    .logo{position:static;transform:none;order:3;flex-basis:100%;text-align:center;margin-top:4px}
+    .hero-inner{grid-template-columns:1fr;padding:26px 22px 100px;text-align:center}
+    .hero-panel{display:flex;flex-direction:column;align-items:center}
+    .flavors-copy{margin-left:auto;margin-right:auto}
+    .price-row{justify-content:center}
+    .slide-counter{left:22px;bottom:24px}
+    .carousel-dots{right:22px;bottom:26px}
+    .why-grid{grid-template-columns:1fr;max-width:420px}
+    .why h2{font-size:28px}
+    .hero-panel h1{font-size:34px}
+    .variety{font-size:36px}
+    footer{justify-content:center;text-align:center}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">Free Shipping on All Orders Over $100</div>
+
+<header class="site-header">
+  <nav class="nav-left">
+    <a href="#shop">SHOP</a>
+    <a href="#why">BLOG</a>
+    <a href="#why">CONTACT</a>
+  </nav>
+  <a class="logo" href="#shop">AFA ENERGY</a>
+  <div class="nav-right">
+    <a href="#account" id="accountLink">ACCOUNT</a>
+    <button class="cart-btn" id="cartBtn" aria-label="Open cart">
+      <svg viewBox="0 0 24 24"><path d="M6 7h12l1 14H5L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<section class="hero" id="shop">
+  <div class="hero-inner">
+
+    <figure class="hero-media">
+      <svg id="bottleSvg" viewBox="0 0 880 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AFA ENERGY variety bottles with AFA logo">
+        <defs>
+          <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0"   stop-color="#150822"/>
+            <stop offset=".28" stop-color="#3a1560"/>
+            <stop offset=".5"  stop-color="#5a2384"/>
+            <stop offset=".72" stop-color="#2c1045"/>
+            <stop offset="1"   stop-color="#0e0619"/>
+          </linearGradient>
+          <linearGradient id="capGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#05050a"/>
+            <stop offset=".5" stop-color="#2b2b34"/>
+            <stop offset="1" stop-color="#05050a"/>
+          </linearGradient>
+          <linearGradient id="fadeGrad" x1="0" y1="460" x2="0" y2="620" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#ffffff"/>
+            <stop offset="1" stop-color="#000000"/>
+          </linearGradient>
+          <mask id="reflMask">
+            <rect x="0" y="460" width="880" height="160" fill="url(#fadeGrad)"/>
+          </mask>
+          <linearGradient id="floorGrad" x1="0" y1="460" x2="0" y2="620" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#0b0b14"/>
+            <stop offset="1" stop-color="#050508"/>
+          </linearGradient>
+
+          <!-- reusable bottle shell with AFA logo (local coords: body 0,0 -> 90,284) -->
+          <g id="btlShell">
+            <rect x="29" y="-30" width="32" height="26" rx="5" fill="url(#capGrad)"/>
+            <rect x="31" y="-7" width="28" height="9" fill="#0d0d13"/>
+            <path d="M0,26 Q0,0 26,0 L64,0 Q90,0 90,26 L90,258 Q90,284 64,284 L26,284 Q0,284 0,258 Z" fill="url(#bodyGrad)"/>
+            <ellipse cx="19" cy="130" rx="8" ry="95" fill="#ffffff" opacity=".08"/>
+            <rect x="83" y="14" width="4" height="252" rx="2" fill="#b06cff" opacity=".28"/>
+            <rect x="8" y="70" width="74" height="164" rx="9" fill="#ffffff" opacity=".045"/>
+            <!-- AFA LOGO -->
+            <text x="45" y="92" text-anchor="middle" font-family="'Michroma',sans-serif" font-size="13" fill="#ffffff" opacity=".96" style="letter-spacing:3px">AFA</text>
+            <rect x="33" y="97" width="24" height="1.3" rx=".65" fill="#ffffff" opacity=".45"/>
+            <rect x="20" y="242" width="50" height="3" rx="1.5" fill="#ffffff" opacity=".22"/>
+            <rect x="26" y="250" width="38" height="2.4" rx="1.2" fill="#ffffff" opacity=".14"/>
+          </g>
+        </defs>
+
+       <!-- bottles -->
+        <g id="bottleRow">
+          <g transform="translate(30,176)">
+            <use href="#btlShell"/>
+            <path transform="translate(0,16)" d="M20,108 C28,86 34,124 44,100 C50,86 54,116 62,98 C68,86 72,104 76,94" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".92"/>
+            <path transform="translate(0,16)" d="M22,122 C40,128 58,118 74,126" fill="none" stroke="#fff" stroke-width="1.3" opacity=".6"/>
+            <circle cx="26" cy="152" r="5.5" fill="#ff5fa2"/><circle cx="26" cy="174" r="5.5" fill="#ff2d78"/>
+            <circle cx="26" cy="196" r="5.5" fill="#c93dfc"/><circle cx="26" cy="218" r="5.5" fill="#ff8fb1"/>
+          </g>
+          <g transform="translate(170,176)">
+            <use href="#btlShell"/>
+            <path transform="translate(0,16)" d="M18,100 C26,116 34,84 42,106 C48,120 56,88 64,104 C70,114 74,96 78,102" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".92"/>
+            <path transform="translate(0,16)" d="M22,122 C40,128 58,118 74,126" fill="none" stroke="#fff" stroke-width="1.3" opacity=".6"/>
+            <circle cx="26" cy="152" r="5.5" fill="#7cf29c"/><circle cx="26" cy="174" r="5.5" fill="#35d46f"/>
+            <circle cx="26" cy="196" r="5.5" fill="#ff5fa2"/><circle cx="26" cy="218" r="5.5" fill="#ffd166"/>
+          </g>
+          <g transform="translate(300,162) scale(1.05)">
+            <use href="#btlShell"/>
+            <path transform="translate(0,16)" d="M20,104 C30,90 36,112 46,94 C54,80 58,110 66,96 C72,88 76,100 78,92" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".92"/>
+            <path transform="translate(0,16)" d="M22,122 C40,128 58,118 74,126" fill="none" stroke="#fff" stroke-width="1.3" opacity=".6"/>
+            <circle cx="26" cy="152" r="5.5" fill="#ffd166"/><circle cx="26" cy="174" r="5.5" fill="#ff9f1c"/>
+            <circle cx="26" cy="196" r="5.5" fill="#ff5fa2"/><circle cx="26" cy="218" r="5.5" fill="#7cf29c"/>
+          </g>
+          <g transform="translate(440,162) scale(1.05)">
+            <use href="#btlShell"/>
+            <path transform="translate(0,16)" d="M18,106 C24,92 32,118 40,98 C46,84 52,112 60,94 C66,84 72,106 78,96" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".92"/>
+            <path transform="translate(0,16)" d="M22,122 C40,128 58,118 74,126" fill="none" stroke="#fff" stroke-width="1.3" opacity=".6"/>
+            <circle cx="26" cy="152" r="5.5" fill="#c93dfc"/><circle cx="26" cy="174" r="5.5" fill="#8a5cff"/>
+            <circle cx="26" cy="196" r="5.5" fill="#ff5fa2"/><circle cx="26" cy="218" r="5.5" fill="#ffd166"/>
+          </g>
+          <g transform="translate(580,176)">
+            <use href="#btlShell"/>
+            <path transform="translate(0,16)" d="M20,98 C28,112 36,86 44,104 C50,116 58,90 66,102 C72,110 76,94 78,100" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".92"/>
+            <path transform="translate(0,16)" d="M22,122 C40,128 58,118 74,126" fill="none" stroke="#fff" stroke-width="1.3" opacity=".6"/>
+            <circle cx="26" cy="152" r="5.5" fill="#35d46f"/><circle cx="26" cy="174" r="5.5" fill="#a4e845"/>
+            <circle cx="26" cy="196" r="5.5" fill="#ffd166"/><circle cx="26" cy="218" r="5.5" fill="#ff9f1c"/>
+          </g>
+          <g transform="translate(715,176)">
+            <use href="#btlShell"/>
+            <path transform="translate(0,16)" d="M18,102 C26,88 34,114 42,96 C50,82 56,108 64,94 C70,86 74,102 78,90" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".92"/>
+            <path transform="translate(0,16)" d="M22,122 C40,128 58,118 74,126" fill="none" stroke="#fff" stroke-width="1.3" opacity=".6"/>
+            <circle cx="26" cy="152" r="5.5" fill="#ff9f1c"/><circle cx="26" cy="174" r="5.5" fill="#ff5722"/>
+            <circle cx="26" cy="196" r="5.5" fill="#ff2d78"/><circle cx="26" cy="218" r="5.5" fill="#c93dfc"/>
+          </g>
+        </g>
+
+        <!-- reflection -->
+        <use href="#bottleRow" transform="translate(0,920) scale(1,-1)" opacity=".16" mask="url(#reflMask)"/>
+      </svg>
+    </figure>
+
+    <div class="hero-panel">
+      <h1>AFA ENERGY</h1>
+      <div class="variety">VARIETY</div>
+      <p class="flavors-copy">Current flavors: Grape, Raspberry, Dragonfruit, Lime, Lemon, Orange, Passion Fruit, Blueberry &amp; 3 mystery flavors!</p>
+      <div class="flavor-dots" aria-label="Available flavors">
+        <span style="--c:#b48ae0"></span>
+        <span style="--c:#f48fb1"></span>
+        <span style="--c:#e91e63"></span>
+        <span style="--c:#4caf50"></span>
+        <span style="--c:#cddc39"></span>
+        <span style="--c:#ffc107"></span>
+        <span style="--c:#ff9800"></span>
+        <span style="--c:#f44336"></span>
+      </div>
+      <div class="price-row">
+        <span class="price-old">$29.00</span>
+        <span class="price-new">$19.50</span>
+      </div>
+      <div class="pack-note">5 Pack - 50% Discount</div>
+      <button class="buy-btn" id="buyBtn">BUY NOW</button>
+    </div>
+  </div>
+
+  <div class="slide-counter" id="slideCounter">01 / 07</div>
+  <div class="carousel-dots" id="carouselDots"></div>
+</section>
+
+<footer>
+  <span class="foot-logo">AFA ENERGY</span>
+  <span class="foot-copy">© 2026 AFA Energy. All rights reserved.</span>
+  <div class="foot-links">
+    <a href="#privacy">Privacy</a>
+    <a href="#terms">Terms</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- ========== ACCOUNT MODAL ========== -->
+<div class="modal-overlay" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="modal" id="accountModalBox">
+    <button class="modal-close" data-close="accountModal" aria-label="Close">×</button>
+    <span class="modal-brand">AFA </span>
+
+    <div id="authWrap">
+      <h3 id="authTitle">CREATE ACCOUNT</h3>
+      <p class="modal-sub" id="authSub">Join AFA ENERGY for exclusive drops, member pricing and early flavor votes.</p>
+      <div class="banner" id="checkoutBanner" hidden>Please sign in or create an account to complete your checkout.</div>
+
+      <div class="tab-row">
+        <button class="tab" id="tabSignIn" type="button">SIGN IN</button>
+        <button class="tab active" id="tabRegister" type="button">REGISTER</button>
+      </div>
+
+      <form id="authForm" novalidate>
+        <input class="field reg-only" id="fName" type="text" placeholder="Full name" autocomplete="name"/>
+        <input class="field" id="fEmail" type="email" placeholder="Email address" autocomplete="email"/>
+        <input class="field" id="fPass" type="password" placeholder="Password" autocomplete="new-password"/>
+        <input class="field reg-only" id="fConfirm" type="password" placeholder="Confirm password" autocomplete="new-password"/>
+        <div class="form-err" id="formErr" hidden></div>
+        <button class="buy-btn wide" type="submit" id="authSubmit">CREATE ACCOUNT</button>
+      </form>
+    </div>
+
+    <div id="authSuccess" class="center" hidden>
+      <div class="success-ic">
+        <svg viewBox="0 0 24 24"><path d="M4 12.5 10 18.5 20 6.5"/></svg>
+      </div>
+      <h3 id="successTitle">WELCOME ABOARD!</h3>
+      <p class="modal-sub" id="successMsg">Your AFA account is ready.</p>
+      <button class="buy-btn wide" id="successClose" type="button">CONTINUE</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CART MODAL ========== -->
+<div class="modal-overlay" id="cartModal" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+  <div class="modal">
+    <button class="modal-close" data-close="cartModal" aria-label="Close">×</button>
+    <span class="modal-brand">AFA</span>
+    <h3 id="cartTitle">YOUR CART</h3>
+    <p class="modal-sub">Review your items before checkout. Free shipping over $100.</p>
+    <div id="cartBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Added to cart — Variety 6 Pack</div>
+
+<script>
+  (function(){
+    /* ---------- elements ---------- */
+    var dotsWrap    = document.getElementById('carouselDots');
+    var counterEl   = document.getElementById('slideCounter');
+    var bottleSvg   = document.getElementById('bottleSvg');
+    var buyBtn      = document.getElementById('buyBtn');
+    var cartCountEl = document.getElementById('cartCount');
+    var toastEl     = document.getElementById('toast');
+    var cartBtn     = document.getElementById('cartBtn');
+    var accountLink = document.getElementById('accountLink');
+    var accountModal= document.getElementById('accountModal');
+    var cartModal   = document.getElementById('cartModal');
+    var cartBody    = document.getElementById('cartBody');
+    var authWrap    = document.getElementById('authWrap');
+    var authSuccess = document.getElementById('authSuccess');
+    var authTitle   = document.getElementById('authTitle');
+    var authSub     = document.getElementById('authSub');
+    var authForm    = document.getElementById('authForm');
+    var authSubmit  = document.getElementById('authSubmit');
+    var tabSignIn   = document.getElementById('tabSignIn');
+    var tabRegister = document.getElementById('tabRegister');
+    var fName   = document.getElementById('fName');
+    var fEmail  = document.getElementById('fEmail');
+    var fPass   = document.getElementById('fPass');
+    var fConfirm= document.getElementById('fConfirm');
+    var formErr = document.getElementById('formErr');
+    var checkoutBanner = document.getElementById('checkoutBanner');
+    var successTitle = document.getElementById('successTitle');
+    var successMsg   = document.getElementById('successMsg');
+    var successClose = document.getElementById('successClose');
+
+    /* ---------- state ---------- */
+    var PRODUCT = { name:'VISO ENERGY VARIETY', pack:'6 Pack · 50% off', unit:29.50, oldUnit:39.00 };
+    var cartQty = 0;
+    var loggedIn = false;
+    var userName = '';
+    var pendingCheckout = false;
+    var authMode = 'register';
+    var toastTimer = null;
+
+    function money(v){ return '$' + v.toFixed(2); }
+
+    /* ---------- carousel ---------- */
+    for (var ci = 0; ci < 7; ci++) {
+      var dotBtn = document.createElement('button');
+      dotBtn.setAttribute('aria-label', 'Slide ' + (ci + 1));
+      dotBtn.dataset.index = ci;
+      if (ci === 0) dotBtn.classList.add('active');
+      dotBtn.addEventListener('click', function(){
+        var idx = parseInt(this.dataset.index, 10);
+        var allDots = dotsWrap.querySelectorAll('button');
+        for (var k = 0; k < allDots.length; k++) allDots[k].classList.remove('active');
+        this.classList.add('active');
+        counterEl.textContent = ('0' + (idx + 1)).slice(-2) + ' / 07';
+        bottleSvg.style.filter = 'hue-rotate(' + (idx * 18) + 'deg) saturate(1.05)';
+      });
+      dotsWrap.appendChild(dotBtn);
+    }
+
+    /* ---------- toast ---------- */
+    function showToast(msg){
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1900);
+    }
+
+    /* ---------- modal helpers ---------- */
+    function openModal(ov){ ov.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeModal(ov){
+      ov.classList.remove('open');
+      document.body.style.overflow = '';
+      if (ov === accountModal) checkoutBanner.hidden = true;
+    }
+    var overlays = [accountModal, cartModal];
+    overlays.forEach(function(ov){
+      ov.addEventListener('click', function(e){ if (e.target === ov) closeModal(ov); });
+      var cls = ov.querySelectorAll('[data-close]');
+      for (var q = 0; q < cls.length; q++) {
+        cls[q].addEventListener('click', function(){ closeModal(document.getElementById(this.dataset.close)); });
+      }
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') overlays.forEach(function(ov){ if (ov.classList.contains('open')) closeModal(ov); });
+    });
+
+    /* ---------- cart ---------- */
+    function updateBadge(){
+      cartCountEl.textContent = cartQty;
+      cartCountEl.classList.toggle('show', cartQty > 0);
+    }
+    function thumbSvg(){
+      return '<svg viewBox="0 0 40 66" xmlns="http://www.w3.org/2000/svg">' +
+        '<rect x="14" y="1" width="12" height="8" rx="2" fill="#2b2b34"/>' +
+        '<path d="M6,16 Q6,9 13,9 L27,9 Q34,9 34,16 L34,56 Q34,64 27,64 L13,64 Q6,64 6,56 Z" fill="url(#bodyGrad)"/>' +
+        '<text x="20" y="26" text-anchor="middle" font-family="Michroma,sans-serif" font-size="7" fill="#fff" style="letter-spacing:1.5px">AFA</text>' +
+        '<circle cx="14" cy="36" r="2.6" fill="#ff5fa2"/><circle cx="14" cy="43" r="2.6" fill="#7cf29c"/><circle cx="14" cy="50" r="2.6" fill="#ffd166"/>' +
+        '</svg>';
+    }
+    function renderCart(){
+      if (cartQty <= 0) {
+        cartBody.innerHTML =
+          '<div class="cart-empty">' +
+            '<svg viewBox="0 0 24 24"><path d="M6 7h12l1 14H5L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>' +
+            '<p>YOUR CART IS EMPTY</p>' +
+            '<button class="ghost-btn" id="goShop" type="button">BROWSE FLAVORS</button>' +
+          '</div>';
+        return;
+      }
+      var subtotal = PRODUCT.oldUnit * cartQty;
+      var total    = PRODUCT.unit * cartQty;
+      var discount = subtotal - total;
+      cartBody.innerHTML =
+        '<div class="cart-line">' +
+          '<div class="cart-thumb">' + thumbSvg() + '</div>' +
+          '<div class="cart-info"><strong>' + PRODUCT.name + '</strong><span>' + PRODUCT.pack + ' · ' + money(PRODUCT.unit) + ' each</span></div>' +
+          '<div class="qty-box"><button type="button" data-q="-1" aria-label="Decrease">−</button><span>' + cartQty + '</span><button type="button" data-q="1" aria-label="Increase">+</button></div>' +
+          '<div class="line-price">' + money(total) + '</div>' +
+        '</div>' +
+        '<div class="cart-totals">' +
+          '<div class="tot-row"><span>Subtotal</span><span>' + money(subtotal) + '</span></div>' +
+          '<div class="tot-row green"><span>Discount (50%)</span><span>−' + money(discount) + '</span></div>' +
+          '<div class="tot-row green"><span>Shipping</span><span>FREE</span></div>' +
+          '<div class="tot-row grand"><span>Total</span><span>' + money(total) + '</span></div>' +
+        '</div>' +
+        '<button class="buy-btn wide" id="checkoutBtn" type="button">CHECKOUT</button>';
+    }
+
+    cartBody.addEventListener('click', function(e){
+      var qBtn = e.target.closest('[data-q]');
+      if (qBtn) {
+        cartQty = Math.max(0, cartQty + parseInt(qBtn.dataset.q, 10));
+        updateBadge();
+        renderCart();
+        return;
+      }
+      if (e.target.closest('#goShop')) {
+        closeModal(cartModal);
+        document.getElementById('shop').scrollIntoView({ behavior:'smooth' });
+        return;
+      }
+      if (e.target.closest('#checkoutBtn')) {
+        if (!loggedIn) {
+          pendingCheckout = true;
+          closeModal(cartModal);
+          openModal(accountModal);
+          checkoutBanner.hidden = false;
+        } else {
+          cartBody.innerHTML =
+            '<div class="center">' +
+              '<div class="success-ic"><svg viewBox="0 0 24 24"><path d="M4 12.5 10 18.5 20 6.5"/></svg></div>' +
+              '<h3>ORDER PLACED!</h3>' +
+              '<p class="modal-sub">Thanks ' + userName + '! Your AFA variety pack is on its way.</p>' +
+              '<button class="buy-btn wide" id="orderDone" type="button">CONTINUE SHOPPING</button>' +
+            '</div>';
+          cartQty = 0;
+          updateBadge();
+        }
+        return;
+      }
+      if (e.target.closest('#orderDone')) { closeModal(cartModal); renderCart(); }
+    });
+
+    buyBtn.addEventListener('click', function(){
+      cartQty += 1;
+      updateBadge();
+      showToast('Added to cart — Variety 6 Pack');
+    });
+    cartBtn.addEventListener('click', function(){ renderCart(); openModal(cartModal); });
+
+    /* ---------- account modal ---------- */
+    function setAuthMode(mode){
+      authMode = mode;
+      var signin = (mode === 'signin');
+      accountModal.classList.toggle('mode-signin', signin);
+      tabSignIn.classList.toggle('active', signin);
+      tabRegister.classList.toggle('active', !signin);
+      authTitle.textContent = signin ? 'WELCOME BACK' : 'CREATE ACCOUNT';
+      authSub.textContent = signin
+        ? 'Sign in to your AFA account to track orders and member perks.'
+        : 'Join AFA ENERGY for exclusive drops, member pricing and early flavor votes.';
+      authSubmit.textContent = signin ? 'SIGN IN' : 'CREATE ACCOUNT';
+      formErr.hidden = true;
+    }
+    tabSignIn.addEventListener('click', function(){ setAuthMode('signin'); });
+    tabRegister.addEventListener('click', function(){ setAuthMode('register'); });
+
+    accountLink.addEventListener('click', function(e){
+      e.preventDefault();
+      if (loggedIn) {
+        authWrap.hidden = true;
+        authSuccess.hidden = false;
+        successTitle.textContent = 'HEY, ' + userName.toUpperCase() + '!';
+        successMsg.textContent = 'You are signed in to your AFA  account. Member pricing is active on all packs.';
+        successClose.textContent = 'CLOSE';
+      } else {
+        authWrap.hidden = false;
+        authSuccess.hidden = true;
+        setAuthMode('register');
+      }
+      openModal(accountModal);
+    });
+
+    authForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var errs = [];
+      var email = fEmail.value.trim();
+      var pass  = fPass.value;
+      if (authMode === 'register' && fName.value.trim().length < 2) errs.push('Please enter your full name.');
+      if (email.indexOf('@') < 1 || email.indexOf('.') < 0) errs.push('Please enter a valid email address.');
+      if (pass.length < 6) errs.push('Password must be at least 6 characters.');
+      if (authMode === 'register' && fConfirm.value !== pass) errs.push('Passwords do not match.');
+      if (errs.length) {
+        formErr.textContent = errs.join(' ');
+        formErr.hidden = false;
+        return;
+      }
+      formErr.hidden = true;
+      loggedIn = true;
+      userName = (authMode === 'register' ? fName.value.trim() : email.split('@')[0]) || 'Rider';
+      accountLink.textContent = 'HI, ' + userName.toUpperCase();
+      authWrap.hidden = true;
+      authSuccess.hidden = false;
+      successTitle.textContent = (authMode === 'register' ? 'WELCOME ABOARD, ' : 'WELCOME BACK, ') + userName.toUpperCase() + '!';
+      successMsg.textContent = pendingCheckout
+        ? 'Account ready — returning to your cart to finish checkout.'
+        : 'Your AFA × VISO account is ready. Member pricing unlocked.';
+      successClose.textContent = 'CONTINUE';
+      authForm.reset();
+    });
+
+    successClose.addEventListener('click', function(){
+      var goCart = pendingCheckout;
+      pendingCheckout = false;
+      closeModal(accountModal);
+      authWrap.hidden = false;
+      authSuccess.hidden = true;
+      if (goCart) { renderCart(); openModal(cartModal); }
+    });
+
+    /* init */
+    updateBadge();
+    renderCart();
+  })();
+</script>
+</body>
+</html>
