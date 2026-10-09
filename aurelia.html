@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurelia — Exceptional Living</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/playfair-display@5.0.16/index.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/cormorant-garamond@5.0.17/index.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.16/index.css" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --gold-light: #d4b87a;
+            --dark: #0a0a0a;
+            --dark-2: #111111;
+            --dark-3: #1a1a1a;
+            --dark-4: #222222;
+            --text-light: #e8e8e8;
+            --text-muted: #999999;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar-aurelia {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        .navbar-aurelia.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 60px;
+            box-shadow: 0 2px 30px rgba(0,0,0,0.3);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-logo:hover {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-search {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-search:hover {
+            color: var(--gold);
+        }
+
+        .btn-contact {
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 10px 24px;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s;
+            background: transparent;
+        }
+
+        .btn-contact:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(201, 169, 110, 0.1);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            overflow: hidden;
+        }
+
+        .hero-slider {
+            position: absolute;
+            inset: 0;
+        }
+
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(0,0,0,0.7) 0%,
+                rgba(0,0,0,0.3) 40%,
+                rgba(0,0,0,0.1) 60%,
+                rgba(0,0,0,0.4) 100%
+            );
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 60px;
+            transform: translateY(-50%);
+            z-index: 10;
+            max-width: 600px;
+        }
+
+        .hero-label {
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.2rem;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            font-style: italic;
+            color: var(--gold);
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.7;
+            margin-bottom: 35px;
+            max-width: 450px;
+        }
+
+        .btn-explore {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid var(--gold);
+            color: #fff;
+            padding: 14px 32px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.4s;
+            background: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-explore:hover {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        .btn-explore i {
+            transition: transform 0.3s;
+        }
+
+        .btn-explore:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Hero Property Info */
+        .hero-property-info {
+            position: absolute;
+            bottom: 120px;
+            right: 60px;
+            z-index: 10;
+            text-align: right;
+        }
+
+        .hero-property-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .hero-property-location {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 15px;
+        }
+
+        .hero-slider-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        .hero-slider-nav button {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .hero-slider-nav button:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .hero-slider-counter {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .hero-slider-counter span {
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--dark-2);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 40px 60px;
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            color: var(--gold);
+            opacity: 0.8;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 60px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            color: #fff;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .section-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 500px;
+        }
+
+        /* Featured Properties */
+        .properties-section {
+            background: var(--dark);
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .property-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            group: true;
+        }
+
+        .property-card-img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .property-card:hover .property-card-img {
+            transform: scale(1.05);
+        }
+
+        .property-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+            transition: background 0.4s;
+        }
+
+        .property-card:hover .property-card-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 60%);
+        }
+
+        .property-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+        }
+
+        .property-card-tag {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .property-card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .property-card-location {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 15px;
+        }
+
+        .property-card-details {
+            display: flex;
+            gap: 20px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .property-card-details span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .property-card-arrow {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s;
+        }
+
+        .property-card:hover .property-card-arrow {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Experiences Section */
+        .experiences-section {
+            background: var(--dark-2);
+        }
+
+        .experiences-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .experience-card {
+            position: relative;
+            overflow: hidden;
+            height: 350px;
+            cursor: pointer;
+        }
+
+        .experience-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .experience-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .experience-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+        }
+
+        .experience-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 35px;
+        }
+
+        .experience-card-tag {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .experience-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .experience-card-desc {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about-section {
+            background: var(--dark);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .about-image {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-image-accent {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 200px;
+            height: 200px;
+            border: 1px solid var(--gold);
+            opacity: 0.3;
+        }
+
+        .about-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: #fff;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .about-text p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 35px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .about-feature i {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        .about-feature span {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Journal Section */
+        .journal-section {
+            background: var(--dark-2);
+        }
+
+        .journal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .journal-card {
+            cursor: pointer;
+            transition: transform 0.4s;
+        }
+
+        .journal-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .journal-card-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            transition: transform 0.6s;
+        }
+
+        .journal-card:hover .journal-card-img {
+            transform: scale(1.03);
+        }
+
+        .journal-card-img-wrap {
+            overflow: hidden;
+        }
+
+        .journal-card-date {
+            font-size: 0.75rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .journal-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .journal-card-excerpt {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .journal-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gold);
+            font-size: 0.85rem;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: gap 0.3s;
+        }
+
+        .journal-card-link:hover {
+            gap: 12px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .cta-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cta-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .cta-content p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 30px;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 16px 40px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.4s;
+            border: none;
+        }
+
+        .btn-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 169, 110, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 80px 60px 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand .nav-logo {
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 300px;
+            margin-bottom: 25px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-social a:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(201, 169, 110, 0.1);
+        }
+
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero-title { font-size: 3.2rem; }
+            .hero-subtitle { font-size: 2.5rem; }
+            .properties-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 992px) {
+            .navbar-aurelia { padding: 15px 30px; }
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .section { padding: 70px 30px; }
+            .hero-content { left: 30px; max-width: 90%; }
+            .hero-title { font-size: 2.8rem; }
+            .hero-subtitle { font-size: 2.2rem; }
+            .hero-property-info { right: 30px; bottom: 100px; }
+            .stats-bar { padding: 30px; gap: 40px; flex-wrap: wrap; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .experiences-grid { grid-template-columns: 1fr; }
+            .journal-grid { grid-template-columns: 1fr; }
+            .footer { padding: 60px 30px 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.2rem; }
+            .hero-subtitle { font-size: 1.8rem; }
+            .section-title { font-size: 2.2rem; }
+            .properties-grid { grid-template-columns: 1fr; }
+            .property-card-img { height: 350px; }
+            .stats-bar { gap: 30px; }
+            .stat-divider { display: none; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
+            .about-features { grid-template-columns: 1fr; }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: var(--dark-2);
+            z-index: 2000;
+            padding: 80px 30px 30px;
+            transition: right 0.4s ease;
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+        }
+
+        .mobile-menu ul li {
+            margin-bottom: 25px;
+        }
+
+        .mobile-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu ul li a:hover {
+            color: var(--gold);
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+        }
+
+        .mobile-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar-aurelia" id="navbar">
+        <a href="#" class="nav-logo">Aurelia</a>
+        <ul class="nav-links">
+            <li><a href="#properties">Properties</a></li>
+            <li><a href="#experiences">Experiences</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#journal">Journal</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="nav-search"><i class="bi bi-search"></i></button>
+            <a href="#contact" class="btn-contact">Contact Us</a>
+            <button class="mobile-toggle" id="mobileToggle"><i class="bi bi-list"></i></button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose"><i class="bi bi-x-lg"></i></button>
+        <ul>
+            <li><a href="#properties" onclick="closeMobile()">Properties</a></li>
+            <li><a href="#experiences" onclick="closeMobile()">Experiences</a></li>
+            <li><a href="#about" onclick="closeMobile()">About</a></li>
+            <li><a href="#journal" onclick="closeMobile()">Journal</a></li>
+            <li><a href="#contact" onclick="closeMobile()">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-slider">
+            <div class="hero-slide active">
+                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1920&q=80" alt="Luxury Villa">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80" alt="Modern Estate">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80" alt="Beachfront Villa">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920&q=80" alt="Mountain Retreat">
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <div class="hero-label">Exceptional Living</div>
+            <h1 class="hero-title">More Than<br>Properties.</h1>
+            <h2 class="hero-subtitle">A Higher Standard.</h2>
+            <p class="hero-desc">Discover the world's most exclusive homes, curated for a life without compromise.</p>
+            <a href="#properties" class="btn-explore">Explore Properties <i class="bi bi-arrow-right"></i></a>
+        </div>
+
+        <div class="hero-property-info">
+            <div class="hero-property-name" id="heroPropertyName">Villa Serenità</div>
+            <div class="hero-property-location" id="heroPropertyLocation">Amalfi Coast, Italy</div>
+            <div class="hero-slider-nav">
+                <button id="prevSlide"><i class="bi bi-chevron-left"></i></button>
+                <div class="hero-slider-counter"><span id="currentSlide">01</span> / 04</div>
+                <button id="nextSlide"><i class="bi bi-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <i class="bi bi-chevron-down" style="color: rgba(255,255,255,0.5);"></i>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item fade-up">
+            <i class="bi bi-house-heart stat-icon"></i>
+            <div>
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Exclusive Properties</div>
+            </div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item fade-up">
+            <i class="bi bi-globe stat-icon"></i>
+            <div>
+                <div class="stat-number">40+</div>
+                <div class="stat-label">Global Destinations</div>
+            </div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item fade-up">
+            <i class="bi bi-star stat-icon"></i>
+            <div>
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Client Satisfaction</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Properties -->
+    <section class="section properties-section" id="properties">
+        <div class="fade-up">
+            <div class="section-label">Featured Collection</div>
+            <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+                <div>
+                    <h2 class="section-title">Exceptional Properties</h2>
+                    <p class="section-desc">Handpicked residences that redefine luxury living across the globe's most coveted destinations.</p>
+                </div>
+                <a href="#" class="btn-explore" style="border-color: rgba(255,255,255,0.2);">View All <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="properties-grid">
+            <div class="property-card fade-up">
+                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80" alt="Villa Serenità" class="property-card-img">
+                <div class="property-card-overlay"></div>
+                <div class="property-card-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                <div class="property-card-content">
+                    <div class="property-card-tag">Featured</div>
+                    <h3 class="property-card-name">Villa Serenità</h3>
+                    <div class="property-card-location"><i class="bi bi-geo-alt"></i> Amalfi Coast, Italy</div>
+                    <div class="property-card-details">
+                        <span><i class="bi bi-door-open"></i> 6 Beds</span>
+                        <span><i class="bi bi-droplet"></i> 7 Baths</span>
+                        <span><i class="bi bi-arrows-fullscreen"></i> 8,500 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card fade-up">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" alt="The Pinnacle" class="property-card-img">
+                <div class="property-card-overlay"></div>
+                <div class="property-card-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                <div class="property-card-content">
+                    <div class="property-card-tag">New Listing</div>
+                    <h3 class="property-card-name">The Pinnacle</h3>
+                    <div class="property-card-location"><i class="bi bi-geo-alt"></i> Beverly Hills, USA</div>
+                    <div class="property-card-details">
+                        <span><i class="bi bi-door-open"></i> 8 Beds</span>
+                        <span><i class="bi bi-droplet"></i> 10 Baths</span>
+                        <span><i class="bi bi-arrows-fullscreen"></i> 12,000 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card fade-up">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Azure Retreat" class="property-card-img">
+                <div class="property-card-overlay"></div>
+                <div class="property-card-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                <div class="property-card-content">
+                    <div class="property-card-tag">Exclusive</div>
+                    <h3 class="property-card-name">Azure Retreat</h3>
+                    <div class="property-card-location"><i class="bi bi-geo-alt"></i> Maldives</div>
+                    <div class="property-card-details">
+                        <span><i class="bi bi-door-open"></i> 5 Beds</span>
+                        <span><i class="bi bi-droplet"></i> 6 Baths</span>
+                        <span><i class="bi bi-arrows-fullscreen"></i> 6,200 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card fade-up">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80" alt="Alpine Chalet" class="property-card-img">
+                <div class="property-card-overlay"></div>
+                <div class="property-card-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                <div class="property-card-content">
+                    <div class="property-card-tag">Mountain</div>
+                    <h3 class="property-card-name">Alpine Chalet</h3>
+                    <div class="property-card-location"><i class="bi bi-geo-alt"></i> Swiss Alps, Switzerland</div>
+                    <div class="property-card-details">
+                        <span><i class="bi bi-door-open"></i> 7 Beds</span>
+                        <span><i class="bi bi-droplet"></i> 8 Baths</span>
+                        <span><i class="bi bi-arrows-fullscreen"></i> 9,800 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card fade-up">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80" alt="Tuscan Estate" class="property-card-img">
+                <div class="property-card-overlay"></div>
+                <div class="property-card-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                <div class="property-card-content">
+                    <div class="property-card-tag">Historic</div>
+                    <h3 class="property-card-name">Tuscan Estate</h3>
+                    <div class="property-card-location"><i class="bi bi-geo-alt"></i> Tuscany, Italy</div>
+                    <div class="property-card-details">
+                        <span><i class="bi bi-door-open"></i> 10 Beds</span>
+                        <span><i class="bi bi-droplet"></i> 12 Baths</span>
+                        <span><i class="bi bi-arrows-fullscreen"></i> 15,000 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card fade-up">
+                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80" alt="Oceanfront Villa" class="property-card-img">
+                <div class="property-card-overlay"></div>
+                <div class="property-card-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                <div class="property-card-content">
+                    <div class="property-card-tag">Waterfront</div>
+                    <h3 class="property-card-name">Oceanfront Villa</h3>
+                    <div class="property-card-location"><i class="bi bi-geo-alt"></i> Santorini, Greece</div>
+                    <div class="property-card-details">
+                        <span><i class="bi bi-door-open"></i> 4 Beds</span>
+                        <span><i class="bi bi-droplet"></i> 5 Baths</span>
+                        <span><i class="bi bi-arrows-fullscreen"></i> 5,400 sqft</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiences Section -->
+    <section class="section experiences-section" id="experiences">
+        <div class="fade-up">
+            <div class="section-label">Curated Experiences</div>
+            <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+                <div>
+                    <h2 class="section-title">Beyond Real Estate</h2>
+                    <p class="section-desc">Immerse yourself in bespoke experiences crafted for the world's most discerning clientele.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="experiences-grid">
+            <div class="experience-card fade-up">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80" alt="Yacht Experience">
+                <div class="experience-card-overlay"></div>
+                <div class="experience-card-content">
+                    <div class="experience-card-tag">Maritime</div>
+                    <h3 class="experience-card-title">Private Yacht Charters</h3>
+                    <p class="experience-card-desc">Sail the Mediterranean on world-class vessels with personal crew and curated itineraries.</p>
+                </div>
+            </div>
+
+            <div class="experience-card fade-up">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Culinary Experience">
+                <div class="experience-card-overlay"></div>
+                <div class="experience-card-content">
+                    <div class="experience-card-tag">Gastronomy</div>
+                    <h3 class="experience-card-title">Private Chef Experiences</h3>
+                    <p class="experience-card-desc">Michelin-starred chefs bring exclusive dining to your residence, anywhere in the world.</p>
+                </div>
+            </div>
+
+            <div class="experience-card fade-up">
+                <img src="https://plus.unsplash.com/premium_photo-1738099055015-dccf18e6f037?w=800&q=80" alt="Wellness Retreat">
+                <div class="experience-card-overlay"></div>
+                <div class="experience-card-content">
+                    <div class="experience-card-tag">Wellness</div>
+                    <h3 class="experience-card-title">Wellness & Spa Retreats</h3>
+                    <p class="experience-card-desc">Rejuvenate at the world's most exclusive wellness destinations with personalized programs.</p>
+                </div>
+            </div>
+
+            <div class="experience-card fade-up">
+                <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=800&q=80" alt="Adventure">
+                <div class="experience-card-overlay"></div>
+                <div class="experience-card-content">
+                    <div class="experience-card-tag">Adventure</div>
+                    <h3 class="experience-card-title">Bespoke Journeys</h3>
+                    <p class="experience-card-desc">From Arctic expeditions to African safaris, experience the extraordinary with private guides.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+        <div class="about-grid">
+            <div class="about-image fade-up">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80" alt="About Aurelia">
+                <div class="about-image-accent"></div>
+            </div>
+            <div class="about-text fade-up">
+                <div class="section-label">Our Story</div>
+                <h3>Redefining Luxury Living Since 2008</h3>
+                <p>Aurelia was founded on a singular vision: to curate the world's most exceptional properties for those who accept nothing less than extraordinary.</p>
+                <p>With offices in twelve countries and a portfolio spanning four continents, we bring unparalleled expertise and discretion to every transaction.</p>
+                <div class="about-features">
+                    <div class="about-feature">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>White-glove service</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Global network</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Complete discretion</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Bespoke solutions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journal Section -->
+    <section class="section journal-section" id="journal">
+        <div class="fade-up">
+            <div class="section-label">The Journal</div>
+            <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+                <div>
+                    <h2 class="section-title">Latest Insights</h2>
+                    <p class="section-desc">Stories, trends, and perspectives from the world of luxury real estate.</p>
+                </div>
+                <a href="#" class="btn-explore" style="border-color: rgba(255,255,255,0.2);">All Articles <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="journal-grid">
+            <div class="journal-card fade-up">
+                <div class="journal-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80" alt="Article" class="journal-card-img">
+                </div>
+                <div class="journal-card-date">October 2026</div>
+                <h3 class="journal-card-title">The Rise of Sustainable Luxury Architecture</h3>
+                <p class="journal-card-excerpt">How the world's leading architects are blending environmental responsibility with uncompromising elegance.</p>
+                <a href="#" class="journal-card-link">Read More <i class="bi bi-arrow-right"></i></a>
+            </div>
+
+            <div class="journal-card fade-up">
+                <div class="journal-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80" alt="Article" class="journal-card-img">
+                </div>
+                <div class="journal-card-date">September 2026</div>
+                <h3 class="journal-card-title">Investment Trends in Global Prime Real Estate</h3>
+                <p class="journal-card-excerpt">An analysis of emerging markets and shifting preferences among ultra-high-net-worth individuals.</p>
+                <a href="#" class="journal-card-link">Read More <i class="bi bi-arrow-right"></i></a>
+            </div>
+
+            <div class="journal-card fade-up">
+                <div class="journal-card-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80" alt="Article" class="journal-card-img">
+                </div>
+                <div class="journal-card-date">August 2026</div>
+                <h3 class="journal-card-title">Designing Spaces for the Modern Collector</h3>
+                <p class="journal-card-excerpt">Creating homes that seamlessly integrate art, technology, and timeless design principles.</p>
+                <a href="#" class="journal-card-link">Read More <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80" alt="CTA Background">
+        <div class="cta-overlay">
+            <div class="cta-content fade-up">
+                <h2>Begin Your Journey</h2>
+                <p>Let us find the perfect property that matches your extraordinary lifestyle.</p>
+                <a href="#" class="btn-cta">Schedule a Consultation <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="nav-logo">Aurelia</a>
+                <p>Curating the world's most exceptional properties for those who accept nothing less than extraordinary.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                    <a href="#"><i class="bi bi-twitter-x"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Properties</h4>
+                <ul>
+                    <li><a href="#">Featured Homes</a></li>
+                    <li><a href="#">New Listings</a></li>
+                    <li><a href="#">Exclusive Collection</a></li>
+                    <li><a href="#">International</a></li>
+                    <li><a href="#">Sell Your Property</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="bi bi-geo-alt"></i> 42 Park Avenue, New York</a></li>
+                    <li><a href="#"><i class="bi bi-telephone"></i> +1 (212) 555-0199</a></li>
+                    <li><a href="#"><i class="bi bi-envelope"></i> hello@aurelia.com</a></li>
+                    <li><a href="#"><i class="bi bi-clock"></i> Mon–Fri: 9am – 7pm</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Aurelia. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Hero Slider
+        const slides = document.querySelectorAll('.hero-slide');
+        const propertyNames = ['Villa Serenità', 'The Pinnacle', 'Azure Retreat', 'Alpine Chalet'];
+        const propertyLocations = ['Amalfi Coast, Italy', 'Beverly Hills, USA', 'Maldives', 'Swiss Alps, Switzerland'];
+        let currentSlideIndex = 0;
+        let slideInterval;
+
+        function goToSlide(index) {
+            slides[currentSlideIndex].classList.remove('active');
+            currentSlideIndex = (index + slides.length) % slides.length;
+            slides[currentSlideIndex].classList.add('active');
+            document.getElementById('currentSlide').textContent = String(currentSlideIndex + 1).padStart(2, '0');
+            document.getElementById('heroPropertyName').textContent = propertyNames[currentSlideIndex];
+            document.getElementById('heroPropertyLocation').textContent = propertyLocations[currentSlideIndex];
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlideIndex + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentSlideIndex - 1);
+        }
+
+        function startSlider() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function resetSlider() {
+            clearInterval(slideInterval);
+            startSlider();
+        }
+
+        document.getElementById('nextSlide').addEventListener('click', () => {
+            nextSlide();
+            resetSlider();
+        });
+
+        document.getElementById('prevSlide').addEventListener('click', () => {
+            prevSlide();
+            resetSlider();
+        });
+
+        startSlider();
+
+        // Mobile Menu
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileClose = document.getElementById('mobileClose');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+            mobileOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeMobile() {
+            mobileMenu.classList.remove('open');
+            mobileOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        mobileClose.addEventListener('click', closeMobile);
+        mobileOverlay.addEventListener('click', closeMobile);
+
+        // Scroll Animations
+        const fadeElements = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const text = counter.textContent;
+                const num = parseInt(text);
+                const suffix = text.replace(/[0-9]/g, '');
+                let current = 0;
+                const increment = num / 60;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= num) {
+                        counter.textContent = text;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + suffix;
+                    }
+                }, 25);
+            });
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsBar = document.querySelector('.stats-bar');
+        if (statsBar) statsObserver.observe(statsBar);
+    </script>
+</body>
+</html>
