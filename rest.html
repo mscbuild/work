@@ -1,0 +1,2450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegencia - Restaurant</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Reset & Variables --- */
+        :root {
+            --bg-color: #1a1a1a;
+            --bg-secondary: #222222;
+            --bg-tertiary: #151515;
+            --text-color: #f0f0f0;
+            --text-muted: #888888;
+            --accent-gold: #d4af37;
+            --accent-beige: #f3dcb0;
+            --font-heading: 'Cinzel', serif;
+            --font-logo: 'Great Vibes', cursive;
+            --font-body: 'Montserrat', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(26, 26, 26, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .logo {
+            font-family: var(--font-logo);
+            font-size: 2.5rem;
+            color: var(--accent-beige);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 1rem;
+        }
+
+        .btn-reservation {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: #fff;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            padding-right: 20px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-reservation:hover {
+            color: var(--accent-gold);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding-left: 20px;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--accent-beige);
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -6px);
+        }
+
+        /* --- Navigation --- */
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            position: relative;
+            padding: 5px 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent-gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 5% 50px;
+            background: radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 100%);
+            position: relative;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .hero-content {
+            padding-right: 2rem;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            color: var(--accent-gold);
+            font-style: italic;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .hero-text {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 3rem;
+            max-width: 500px;
+            font-weight: 300;
+        }
+
+        .btn-view-more {
+            display: inline-block;
+            background-color: var(--accent-beige);
+            color: #1a1a1a;
+            padding: 1rem 2.5rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            border: 1px solid var(--accent-beige);
+        }
+
+        .btn-view-more:hover {
+            background-color: transparent;
+            color: var(--accent-beige);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 1s ease-out;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+            transform: rotate(-5deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .hero-image img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        /* --- Carousel Controls --- */
+        .carousel-controls {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .control-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        /* --- Section Styles --- */
+        .section {
+            padding: 100px 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-logo);
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: #fff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .section-divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            margin: 1.5rem auto;
+        }
+
+        /* --- About Section --- */
+        .about-section {
+            background-color: var(--bg-secondary);
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--accent-gold);
+            border-radius: 8px;
+            z-index: -1;
+        }
+
+        .about-content {
+            padding-left: 2rem;
+        }
+
+        .about-text {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-beige), var(--accent-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #1a1a1a;
+        }
+
+        .feature-text {
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        /* --- Menu Section --- */
+        .menu-section {
+            background-color: var(--bg-color);
+        }
+
+        .menu-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .menu-category {
+            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .menu-category-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .menu-item-info {
+            flex: 1;
+        }
+
+        .menu-item-name {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .menu-item-description {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .menu-item-price {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-left: 1.5rem;
+            white-space: nowrap;
+        }
+
+        .menu-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background-color: var(--accent-gold);
+            color: #1a1a1a;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .btn-menu-full {
+            display: block;
+            width: fit-content;
+            margin: 3rem auto 0;
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: var(--transition);
+        }
+
+        .btn-menu-full:hover {
+            background: var(--accent-gold);
+            color: #1a1a1a;
+        }
+
+        /* --- Chef Section --- */
+        .chef-section {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-color) 100%);
+        }
+
+        .chef-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .chef-image {
+            position: relative;
+        }
+
+        .chef-image img {
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .chef-image::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--accent-beige), var(--accent-gold));
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .chef-content {
+            padding-left: 2rem;
+        }
+
+        .chef-name {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--accent-beige);
+            margin-bottom: 0.5rem;
+        }
+
+        .chef-title {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--accent-gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .chef-text {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .chef-signature {
+            font-family: var(--font-logo);
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-top: 2rem;
+        }
+
+        .chef-achievements {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .achievement {
+            text-align: center;
+        }
+
+        .achievement-number {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .achievement-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Portfolio Section --- */
+        .portfolio-section {
+            background-color: var(--bg-color);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            aspect-ratio: 1;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-category {
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .portfolio-view-all {
+            display: block;
+            width: fit-content;
+            margin: 3rem auto 0;
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: var(--transition);
+        }
+
+        .portfolio-view-all:hover {
+            background: var(--accent-gold);
+            color: #1a1a1a;
+        }
+
+        /* --- Blog Section --- */
+        .blog-section {
+            background-color: var(--bg-secondary);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .blog-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-gold);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-date {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            color: var(--accent-beige);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .blog-link:hover {
+            color: var(--accent-gold);
+            gap: 0.8rem;
+        }
+
+        /* --- Contact Section --- */
+        .contact-section {
+            background-color: var(--bg-color);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            padding-right: 2rem;
+        }
+
+        .contact-info-title {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--accent-beige);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info-text {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+
+        .contact-detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-detail-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-beige), var(--accent-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #1a1a1a;
+            flex-shrink: 0;
+        }
+
+        .contact-detail-text h4 {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-detail-text p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .contact-form-container {
+            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 2.5rem;
+        }
+
+        .contact-form-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--accent-beige);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form .form-label {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            color: var(--accent-beige);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .contact-form .form-input,
+        .contact-form .form-textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .contact-form .form-input:focus,
+        .contact-form .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background-color: rgba(212, 175, 55, 0.05);
+        }
+
+        .contact-form .form-input::placeholder,
+        .contact-form .form-textarea::placeholder {
+            color: #666;
+        }
+
+        .contact-form .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-contact-submit {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-beige) 0%, var(--accent-gold) 100%);
+            color: #1a1a1a;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-contact-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: #111;
+            padding: 80px 5% 30px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-column h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--accent-beige);
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-logo);
+            font-size: 2.5rem;
+            color: var(--accent-beige);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .footer-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+            padding-left: 5px;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .contact-icon {
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+            margin-top: 2px;
+        }
+
+        .footer-hours {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .footer-hours strong {
+            color: #fff;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            border-color: var(--accent-gold);
+            background-color: var(--accent-gold);
+            color: #1a1a1a;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom-links a {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* --- Mobile Menu Overlay --- */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background-color: #111;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: right 0.4s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-nav-links {
+            text-align: center;
+        }
+
+        .mobile-nav-links li {
+            margin: 2rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active .mobile-nav-links li {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-menu.active .mobile-nav-links li:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active .mobile-nav-links li:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-menu.active .mobile-nav-links li:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-menu.active .mobile-nav-links li:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-menu.active .mobile-nav-links li:nth-child(5) { transition-delay: 0.5s; }
+        .mobile-menu.active .mobile-nav-links li:nth-child(6) { transition-delay: 0.6s; }
+        .mobile-menu.active .mobile-nav-links li:nth-child(7) { transition-delay: 0.7s; }
+        .mobile-menu.active .mobile-nav-links li:nth-child(8) { transition-delay: 0.8s; }
+        .mobile-menu.active .mobile-nav-links li:nth-child(9) { transition-delay: 0.9s; }
+        .mobile-menu.active .mobile-nav-links li:nth-child(10) { transition-delay: 1s; }
+
+        .mobile-nav-links a {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .mobile-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent-gold);
+            transition: var(--transition);
+        }
+
+        .mobile-nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .close-menu span {
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background-color: var(--accent-beige);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .close-menu span:nth-child(1) {
+            transform: rotate(45deg);
+        }
+
+        .close-menu span:nth-child(2) {
+            transform: rotate(-45deg);
+        }
+
+        .close-menu:hover span {
+            background-color: var(--accent-gold);
+            width: 35px;
+        }
+
+        /* --- Reservation Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9) translateY(-20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-title {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--accent-beige);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-subtitle {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            border-color: var(--accent-gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .modal-close span {
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        .modal-close span:nth-child(1) {
+            transform: rotate(45deg);
+        }
+
+        .modal-close span:nth-child(2) {
+            transform: rotate(-45deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            color: var(--accent-beige);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background-color: rgba(212, 175, 55, 0.05);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: #666;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d4af37' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .form-select option {
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-beige) 0%, var(--accent-gold) 100%);
+            color: #1a1a1a;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .form-note {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 1rem;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border: 3px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+        }
+
+        .success-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--accent-beige);
+            margin-bottom: 1rem;
+        }
+
+        .success-text {
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        .btn-close-success {
+            padding: 0.8rem 2rem;
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-close-success:hover {
+            background: var(--accent-gold);
+            color: #1a1a1a;
+        }
+
+        .reservation-form {
+            display: block;
+        }
+
+        .reservation-form.hidden {
+            display: none;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 1200px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-container,
+            .about-container,
+            .chef-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                order: 2;
+            }
+
+            .hero-image {
+                order: 1;
+                margin-bottom: 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 2rem;
+            }
+
+            .hero-text {
+                margin: 0 auto 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .about-content,
+            .chef-content,
+            .contact-info {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .about-image,
+            .chef-image {
+                order: 1;
+            }
+
+            .about-content,
+            .chef-content {
+                order: 2;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid,
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .chef-achievements {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                padding: 0;
+                border: none;
+            }
+            
+            .logo {
+                position: static;
+                transform: none;
+                margin: 1rem 0;
+            }
+
+            .btn-reservation {
+                border: none;
+                padding: 0;
+            }
+            
+            .hamburger {
+                border: none;
+                padding: 0;
+            }
+
+            .hero {
+                padding-top: 80px;
+            }
+
+            .section {
+                padding: 60px 5%;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .modal-container {
+                width: 95%;
+                margin: 1rem;
+            }
+
+            .modal-header,
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .portfolio-grid,
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chef-image img {
+                height: 350px;
+            }
+
+            .chef-name {
+                font-size: 2rem;
+            }
+
+            .chef-achievements {
+                gap: 1.5rem;
+            }
+
+            .achievement-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu" id="closeMenu">
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="mobile-nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#chef">Chef</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#" class="btn-reservation" id="mobileReservation">Reservations</a></li>
+        </ul>
+    </div>
+
+    <!-- Reservation Modal -->
+    <div class="modal-overlay" id="reservationModal">
+        <div class="modal-container">
+            <button class="modal-close" id="modalClose">
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="modal-header">
+                <h2 class="modal-title">Table Reservation</h2>
+                <p class="modal-subtitle">Book your table at Elegencia</p>
+            </div>
+            
+            <div class="modal-body">
+                <form class="reservation-form" id="reservationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-input" placeholder="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-input" placeholder="Doe" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" id="email" class="form-input" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone</label>
+                            <input type="tel" id="phone" class="form-input" placeholder="+1 234 567 8900" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="date">Date</label>
+                            <input type="date" id="date" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="time">Time</label>
+                            <select id="time" class="form-select" required>
+                                <option value="">Select Time</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="13:00">1:00 PM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="18:00">6:00 PM</option>
+                                <option value="19:00">7:00 PM</option>
+                                <option value="20:00">8:00 PM</option>
+                                <option value="21:00">9:00 PM</option>
+                                <option value="22:00">10:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="guests">Guests</label>
+                            <select id="guests" class="form-select" required>
+                                <option value="">Select Guests</option>
+                                <option value="1">1 Person</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3 People</option>
+                                <option value="4">4 People</option>
+                                <option value="5">5 People</option>
+                                <option value="6">6 People</option>
+                                <option value="7">7 People</option>
+                                <option value="8">8+ People</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="occasion">Occasion</label>
+                            <select id="occasion" class="form-select">
+                                <option value="">Select Occasion</option>
+                                <option value="birthday">Birthday</option>
+                                <option value="anniversary">Anniversary</option>
+                                <option value="business">Business</option>
+                                <option value="romantic">Romantic</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="requests">Special Requests</label>
+                        <textarea id="requests" class="form-textarea" placeholder="Any dietary restrictions, special occasions, or seating preferences..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">CONFIRM RESERVATION</button>
+                    
+                    <p class="form-note">We will send you a confirmation email shortly.</p>
+                </form>
+                
+                <div class="success-message" id="successMessage">
+                    <div class="success-icon">✓</div>
+                    <h3 class="success-title">Reservation Confirmed!</h3>
+                    <p class="success-text">Thank you for booking with us. We've sent a confirmation email to your inbox. We look forward to welcoming you!</p>
+                    <button class="btn-close-success" id="btnCloseSuccess">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <a href="#" class="btn-reservation" id="btnReservation">RESERVATIONS</a>
+            <a href="#" class="logo">Elegencia</a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#menu">MENU</a></li>
+                <li><a href="#chef">CHEF</a></li>
+                <li><a href="#portfolio">PORTFOLIO</a></li>
+                <li><a href="#blog">BLOG</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">ELEGANCE RETREAT <span class="hero-subtitle">RESTAURANT</span></h1>
+                <p class="hero-text">
+                    Welcome to our restaurant, where culinary artistry meets exceptional dining experiences. At Elegencia, we strive to create a gastronomic haven that tantalizes your taste buds and leaves you with unforgettable memories.
+                </p>
+                <a href="#about" class="btn-view-more">VIEW MORE</a>
+            </div>
+            
+            <div class="hero-image">
+                <img src="https://image.qwenlm.ai/public_source/f80b14aa-25bc-44d1-aada-0aed92d3bec4/1fe329582-06a7-43a3-b3c2-5ba388146581.png" alt="Roasted Chicken Dish">
+            </div>
+        </div>
+
+        <div class="carousel-controls">
+            <div class="control-btn">&larr;</div>
+            <div class="control-btn">&rarr;</div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+        <div class="section-header">
+            <p class="section-subtitle">Our Story</p>
+            <h2 class="section-title">About Us</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+        <div class="about-container">
+            <div class="about-image fade-in-up">
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&h=400&fit=crop" alt="Restaurant Interior">
+            </div>
+            
+            <div class="about-content fade-in-up">
+                <p class="about-text">
+                    Founded in 2010, Elegencia Restaurant has been a beacon of culinary excellence in the heart of the city. Our journey began with a simple vision: to create a dining experience that transcends the ordinary and celebrates the art of fine cuisine.
+                </p>
+                <p class="about-text">
+                    Under the guidance of our award-winning executive chef, we source only the finest ingredients from local farms and trusted suppliers worldwide. Every dish is a masterpiece, carefully crafted to honor traditional techniques while embracing modern innovation.
+                </p>
+                <p class="about-text">
+                    Our elegant ambiance, combined with impeccable service, makes Elegencia the perfect destination for romantic dinners, business gatherings, and memorable celebrations. We believe that dining is not just about food—it's about creating moments that linger in your memory long after the last bite.
+                </p>
+                
+                <div class="about-features">
+                    <div class="about-feature">
+                        <div class="feature-icon">🌿</div>
+                        <span class="feature-text">Fresh Ingredients</span>
+                    </div>
+                    <div class="about-feature">
+                        <div class="feature-icon">👨‍🍳</div>
+                        <span class="feature-text">Expert Chefs</span>
+                    </div>
+                    <div class="about-feature">
+                        <div class="feature-icon">🍷</div>
+                        <span class="feature-text">Premium Wines</span>
+                    </div>
+                    <div class="about-feature">
+                        <div class="feature-icon">✨</div>
+                        <span class="feature-text">Fine Dining</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="section menu-section" id="menu">
+        <div class="section-header">
+            <p class="section-subtitle">Discover</p>
+            <h2 class="section-title">Our Menu</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+        <div class="menu-container">
+            <div class="menu-grid">
+                <div class="menu-category">
+                    <h3 class="menu-category-title">Starters</h3>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-info">
+                            <h4 class="menu-item-name">Truffle Arancini <span class="menu-badge">NEW</span></h4>
+                            <p class="menu-item-description">Crispy risotto balls with black truffle, mozzarella, and garlic aioli</p>
+                        </div>
+                        <span class="menu-item-price">$18</span>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-info">
+                            <h4 class="menu-item-name">Pan-Seared Scallops</h4>
+                            <p class="menu-item-description">Atlantic scallops with cauliflower purée, crispy pancetta, and lemon butter</p>
+                        </div>
+                        <span class="menu-item-price">$24</span>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-info">
+                            <h4 class="menu-item-name">Foie Gras Terrine</h4>
+                            <p class="menu-item-description">With fig compote, toasted brioche, and aged balsamic reduction</p>
+                        </div>
+                        <span class="menu-item-price">$28</span>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-info">
+                            <h4 class="menu-item-name">Burrata & Heirloom Tomatoes</h4>
+                            <p class="menu-item-description">Fresh burrata, basil oil, pine nuts, and aged parmesan</p>
+                        </div>
+                        <span class="menu-item-price">$22</span>
+                    </div>
+                </div>
+                
+                <div class="menu-category">
+                    <h3 class="menu-category-title">Main Courses</h3>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-info">
+                            <h4 class="menu-item-name">Wagyu Beef Tenderloin <span class="menu-badge">SIGNATURE</span></h4>
+                            <p class="menu-item-description">8oz A5 Wagyu with roasted bone marrow, truffle mash, and red wine jus</p>
+                        </div>
+                        <span class="menu-item-price">$85</span>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-info">
+                            <h4 class="menu-item-name">Herb-Crusted Lamb Rack</h4>
+                            <p class="menu-item-description">New Zealand lamb with minted pea purée, roasted vegetables, and rosemary jus</p>
+                        </div>
+                        <span class="menu-item-price">$52</span>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-info">
+                            <h4 class="menu-item-name">Chilean Sea Bass</h4>
+                            <p class="menu-item-description">Miso-glazed sea bass with bok choy, shiitake mushrooms, and ginger broth</p>
+                        </div>
+                        <span class="menu-item-price">$48</span>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-item-info">
+                            <h4 class="menu-item-name">Duck Confit</h4>
+                            <p class="menu-item-description">Slow-cooked duck leg with potato gratin, cherry reduction, and sautéed greens</p>
+                        </div>
+                        <span class="menu-item-price">$42</span>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="#" class="btn-menu-full">VIEW FULL MENU</a>
+        </div>
+    </section>
+
+    <!-- Chef Section -->
+    <section class="section chef-section" id="chef">
+        <div class="section-header">
+            <p class="section-subtitle">Culinary Master</p>
+            <h2 class="section-title">Our Chef</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+        <div class="chef-container">
+            <div class="chef-image fade-in-up">
+                <img src="https://image.qwenlm.ai/public_source/f80b14aa-25bc-44d1-aada-0aed92d3bec4/15741b1e6-a8e6-4534-a82f-b6ecc1767c2e.png" alt="Executive Chef">
+            </div>
+            
+            <div class="chef-content fade-in-up">
+                <h3 class="chef-name">Chef Laurent Dubois</h3>
+                <p class="chef-title">Executive Chef & Founder</p>
+                
+                <p class="chef-text">
+                    With over 25 years of culinary expertise, Chef Laurent Dubois has established himself as one of the most renowned chefs in the fine dining industry. Trained in the prestigious culinary schools of Paris and having worked in Michelin-starred restaurants across Europe, Chef Laurent brings a wealth of knowledge and passion to every dish created at Elegencia.
+                </p>
+                
+                <p class="chef-text">
+                    His philosophy centers on respecting ingredients while pushing creative boundaries. Chef Laurent believes that great food tells a story—each plate is a narrative of tradition, innovation, and love for the culinary arts. His signature style blends classic French techniques with modern global influences, creating unforgettable dining experiences.
+                </p>
+                
+                <p class="chef-text">
+                    "Cooking is not just about feeding people; it's about creating memories, evoking emotions, and sharing the beauty of flavors with those who appreciate the art of fine dining."
+                </p>
+                
+                <div class="chef-signature">Laurent Dubois</div>
+                
+                <div class="chef-achievements">
+                    <div class="achievement">
+                        <div class="achievement-number">25+</div>
+                        <div class="achievement-label">Years Experience</div>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-number">3</div>
+                        <div class="achievement-label">Michelin Stars</div>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-number">50+</div>
+                        <div class="achievement-label">Awards Won</div>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-number">100+</div>
+                        <div class="achievement-label">Signature Dishes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="section portfolio-section" id="portfolio">
+        <div class="section-header">
+            <p class="section-subtitle">Our Work</p>
+            <h2 class="section-title">Portfolio</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item fade-in-up">
+                <img src="https://image.qwenlm.ai/public_source/f80b14aa-25bc-44d1-aada-0aed92d3bec4/1e1365164-301b-480d-aba9-c02951f75d45.png" alt="Seared Scallops">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Seared Scallops</h3>
+                    <p class="portfolio-category">Signature Dish</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item fade-in-up">
+                <img src="https://image.qwenlm.ai/public_source/f80b14aa-25bc-44d1-aada-0aed92d3bec4/143fa1fea-e2d0-499e-a3b4-c20ae90a663a.png" alt="Dining Room">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Private Dining</h3>
+                    <p class="portfolio-category">Interior</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item fade-in-up">
+                <img src="https://image.qwenlm.ai/public_source/f80b14aa-25bc-44d1-aada-0aed92d3bec4/146cd748a-3bcb-4e42-b0a0-10ad64b346ac.png" alt="Wagyu Steak">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Wagyu Steak</h3>
+                    <p class="portfolio-category">Main Course</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item fade-in-up">
+                <img src="https://image.qwenlm.ai/public_source/f80b14aa-25bc-44d1-aada-0aed92d3bec4/16c2f0b82-0fb5-495f-8da1-73b7fcb98233.png" alt="Chocolate Dessert">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Gold Leaf Chocolate</h3>
+                    <p class="portfolio-category">Dessert</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item fade-in-up">
+                <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?w=600&h=600&fit=crop" alt="Wine Cellar">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Wine Cellar</h3>
+                    <p class="portfolio-category">Facilities</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item fade-in-up">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=600&fit=crop" alt="Restaurant Ambiance">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Evening Ambiance</h3>
+                    <p class="portfolio-category">Atmosphere</p>
+                </div>
+            </div>
+        </div>
+        
+        <a href="#" class="portfolio-view-all">VIEW ALL PROJECTS</a>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="section blog-section" id="blog">
+        <div class="section-header">
+            <p class="section-subtitle">Latest News</p>
+            <h2 class="section-title">Our Blog</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+        <div class="blog-grid">
+            <article class="blog-card fade-in-up">
+                <div class="blog-image">
+                    <img src="https://image.qwenlm.ai/public_source/f80b14aa-25bc-44d1-aada-0aed92d3bec4/1b9980740-9c6e-412e-9bd1-1389718f6fdd.png" alt="Fresh Ingredients">
+                </div>
+                <div class="blog-content">
+                    <p class="blog-date">December 15, 2024</p>
+                    <h3 class="blog-title">The Art of Selecting Fresh Ingredients</h3>
+                    <p class="blog-excerpt">Discover how our chef selects only the finest ingredients from local farms to create exceptional dishes that delight your palate.</p>
+                    <a href="#" class="blog-link">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="blog-card fade-in-up">
+                <div class="blog-image">
+                    <img src="https://image.qwenlm.ai/public_source/f80b14aa-25bc-44d1-aada-0aed92d3bec4/19862a034-2df9-4792-8cbc-a8dc08d9eea0.png" alt="Wine Pairing">
+                </div>
+                <div class="blog-content">
+                    <p class="blog-date">December 10, 2024</p>
+                    <h3 class="blog-title">Perfect Wine Pairings for Every Course</h3>
+                    <p class="blog-excerpt">Learn the secrets of wine pairing from our sommelier and elevate your dining experience with the perfect glass.</p>
+                    <a href="#" class="blog-link">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="blog-card fade-in-up">
+                <div class="blog-image">
+                    <img src="https://image.qwenlm.ai/public_source/f80b14aa-25bc-44d1-aada-0aed92d3bec4/1684bc20d-6714-4163-8652-fe6ebceb196e.png" alt="Chef Cooking">
+                </div>
+                <div class="blog-content">
+                    <p class="blog-date">December 5, 2024</p>
+                    <h3 class="blog-title">Behind the Scenes: A Day in Our Kitchen</h3>
+                    <p class="blog-excerpt">Take an exclusive look at what happens in our kitchen before service begins and meet the talented team behind every dish.</p>
+                    <a href="#" class="blog-link">Read More →</a>
+                </div>
+            </article>
+        </div>
+        
+        <a href="#" class="portfolio-view-all">VIEW ALL POSTS</a>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact-section" id="contact">
+        <div class="section-header">
+            <p class="section-subtitle">Get In Touch</p>
+            <h2 class="section-title">Contact Us</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info fade-in-up">
+                <h3 class="contact-info-title">We'd Love to Hear From You</h3>
+                <p class="contact-info-text">
+                    Whether you have a question about reservations, private events, or anything else, our team is ready to answer all your questions. Feel free to reach out to us through any of the following channels.
+                </p>
+                
+                <div class="contact-details">
+                    <div class="contact-detail-item">
+                        <div class="contact-detail-icon">📍</div>
+                        <div class="contact-detail-text">
+                            <h4>Location</h4>
+                            <p>123 Culinary Avenue, Food District, NY 10001</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail-item">
+                        <div class="contact-detail-icon">📞</div>
+                        <div class="contact-detail-text">
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail-item">
+                        <div class="contact-detail-icon">✉️</div>
+                        <div class="contact-detail-text">
+                            <h4>Email</h4>
+                            <p>reservations@elegencia.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail-item">
+                        <div class="contact-detail-icon">🕐</div>
+                        <div class="contact-detail-text">
+                            <h4>Opening Hours</h4>
+                            <p>Mon - Sun: 11:00 AM - 11:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="social-icons">
+                    <a href="#" class="social-icon" aria-label="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="18" cy="6" r="1" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="YouTube">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#1a1a1a"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="contact-form-container fade-in-up">
+                <h3 class="contact-form-title">Send Us a Message</h3>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="contactName">Your Name</label>
+                            <input type="text" id="contactName" class="form-input" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="contactEmail">Your Email</label>
+                            <input type="email" id="contactEmail" class="form-input" placeholder="john@example.com" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="contactSubject">Subject</label>
+                        <input type="text" id="contactSubject" class="form-input" placeholder="How can we help?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="contactMessage">Message</label>
+                        <textarea id="contactMessage" class="form-textarea" placeholder="Your message..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-contact-submit">SEND MESSAGE</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="#" class="footer-logo">Elegencia</a>
+                    <p class="footer-description">
+                        Experience the finest in culinary artistry at Elegencia. Where every dish tells a story and every moment becomes a cherished memory.
+                    </p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="18" cy="6" r="1" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="YouTube">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#1a1a1a"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#menu">Our Menu</a></li>
+                        <li><a href="#chef">Our Chef</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <span class="contact-icon">📍</span>
+                            <span>123 Culinary Avenue,<br>Food District, NY 10001</span>
+                        </li>
+                        <li>
+                            <span class="contact-icon">📞</span>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li>
+                            <span class="contact-icon">✉️</span>
+                            <span>reservations@elegencia.com</span>
+                        </li>
+                        <li>
+                            <span class="contact-icon">🕐</span>
+                            <span>Mon - Sun: 11:00 AM - 11:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Opening Hours</h3>
+                    <div class="footer-hours">
+                        <p><strong>Monday - Friday</strong><br>Lunch: 11:00 AM - 3:00 PM<br>Dinner: 5:00 PM - 10:00 PM</p>
+                        <br>
+                        <p><strong>Saturday - Sunday</strong><br>Brunch: 10:00 AM - 3:00 PM<br>Dinner: 5:00 PM - 11:00 PM</p>
+                        <br>
+                        <p><strong>Happy Hour</strong><br>Daily: 4:00 PM - 6:00 PM</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2024 Elegencia Restaurant. All Rights Reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Mobile Menu Functionality ---
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+
+        const toggleMenu = () => {
+            mobileMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        };
+
+        hamburger.addEventListener('click', toggleMenu);
+        closeMenu.addEventListener('click', toggleMenu);
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                toggleMenu();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+
+        // --- Reservation Modal Functionality ---
+        const btnReservation = document.getElementById('btnReservation');
+        const mobileReservation = document.getElementById('mobileReservation');
+        const reservationModal = document.getElementById('reservationModal');
+        const modalClose = document.getElementById('modalClose');
+        const reservationForm = document.getElementById('reservationForm');
+        const successMessage = document.getElementById('successMessage');
+        const btnCloseSuccess = document.getElementById('btnCloseSuccess');
+
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+
+        const openModal = () => {
+            reservationModal.classList.add('active');
+            document.body.classList.add('modal-open');
+            reservationForm.classList.remove('hidden');
+            successMessage.classList.remove('active');
+            reservationForm.reset();
+            toggleMenu(); // Close mobile menu if open
+        };
+
+        const closeModal = () => {
+            reservationModal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        };
+
+        btnReservation.addEventListener('click', openModal);
+        mobileReservation.addEventListener('click', openModal);
+        modalClose.addEventListener('click', closeModal);
+        btnCloseSuccess.addEventListener('click', closeModal);
+
+        reservationModal.addEventListener('click', (e) => {
+            if (e.target === reservationModal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && reservationModal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        reservationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                guests: document.getElementById('guests').value,
+                occasion: document.getElementById('occasion').value,
+                requests: document.getElementById('requests').value
+            };
+
+            console.log('Reservation Data:', formData);
+            
+            reservationForm.classList.add('hidden');
+            successMessage.classList.add('active');
+        });
+
+        // --- Contact Form Functionality ---
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const contactData = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                subject: document.getElementById('contactSubject').value,
+                message: document.getElementById('contactMessage').value
+            };
+
+            console.log('Contact Form Data:', contactData);
+            
+            // Show success feedback
+            const submitBtn = contactForm.querySelector('.btn-contact-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'MESSAGE SENT!';
+            submitBtn.style.background = 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)';
+            
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.style.background = '';
+                contactForm.reset();
+            }, 2000);
+        });
+
+        // --- Smooth Scroll for Navigation ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // --- Scroll Animation Observer ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.about-image, .about-content, .menu-category, .chef-image, .chef-content, .portfolio-item, .blog-card, .contact-info, .contact-form-container').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
+        });
+
+        // --- Header Background on Scroll ---
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(26, 26, 26, 0.98)';
+            } else {
+                header.style.background = 'rgba(26, 26, 26, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
+
