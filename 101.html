@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mini games – minigames.eu | Play free online games</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/nunito@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/nunito@latest/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/nunito@latest/800.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/baloo-2@latest/800.css">
+
+<style>
+:root{
+  --green-950:#0e3320;
+  --green-900:#123f2a;
+  --green-800:#1c5a30;
+  --green-700:#2f7a35;
+  --green-600:#4c9a2e;
+  --green-500:#63b132;
+  --green-200:#cfe3b4;
+  --green-100:#e4efcf;
+  --green-50:#f2f7e6;
+  --ink:#26361b;
+  --muted:#68795a;
+  --orange:#ff9d00;
+  --yellow:#ffc93c;
+  --red:#ff4757;
+  --card-border:#e0e8cd;
+  --radius:12px;
+  --shadow:0 1px 2px rgba(30,50,20,.10),0 2px 8px rgba(30,50,20,.07);
+  --shadow-lg:0 10px 24px rgba(20,40,15,.20);
+  --header-h:64px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Nunito",system-ui,-apple-system,Segoe UI,sans-serif;
+  background:var(--green-50);
+  color:var(--ink);
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(99,177,50,.10), transparent 40%),
+    radial-gradient(circle at 90% 100%, rgba(99,177,50,.08), transparent 45%);
+}
+::selection{background:var(--green-500);color:#fff}
+
+/* ============ HEADER ============ */
+.site-header{
+  position:sticky;top:0;z-index:1030;
+  background:linear-gradient(180deg,#6db33f 0%,#55952b 100%);
+  border-bottom:3px solid #3e7a1e;
+  box-shadow:0 2px 10px rgba(20,50,10,.25);
+}
+.header-inner{
+  max-width:1440px;margin:0 auto;
+  display:flex;align-items:center;gap:12px;
+  min-height:var(--header-h);padding:10px 16px;
+}
+.icon-btn{
+  flex:0 0 auto;width:42px;height:42px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#fff;color:var(--green-700);border:0;
+  font-size:20px;box-shadow:0 2px 6px rgba(0,0,0,.18);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.icon-btn:hover{transform:scale(1.08);box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.icon-btn:active{transform:scale(.95)}
+.menu-btn{display:none}
+@media (max-width:991.98px){.menu-btn{display:inline-flex}}
+
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;flex:0 0 auto}
+.brand-badge{
+  width:40px;height:40px;border-radius:12px;flex:0 0 auto;
+  background:linear-gradient(145deg,var(--yellow),var(--orange));
+  color:#fff;display:inline-flex;align-items:center;justify-content:center;
+  font-size:20px;transform:rotate(-6deg);
+  box-shadow:inset 0 -3px 0 rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.25);
+}
+.brand-text{
+  font-family:"Baloo 2","Nunito",sans-serif;font-weight:800;
+  font-size:24px;line-height:1;color:#fff;letter-spacing:.5px;
+  text-shadow:0 2px 0 rgba(0,0,0,.18);white-space:nowrap;
+}
+.brand-text .brand-tld{color:#ffe08a;font-size:.72em}
+@media (max-width:575.98px){.brand-text{font-size:18px}.brand-badge{width:34px;height:34px;font-size:17px}}
+
+.search-wrap{
+  position:relative;flex:1 1 auto;max-width:640px;margin-inline:auto;
+}
+.search-wrap input{
+  width:100%;height:42px;border:0;border-radius:999px;
+  padding:0 52px 0 18px;font:700 14px/1 "Nunito",sans-serif;
+  color:var(--ink);background:#fff;
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.10);
+  outline:3px solid transparent;transition:outline-color .15s;
+}
+.search-wrap input:focus{outline-color:rgba(255,201,60,.7)}
+.search-wrap input::placeholder{color:#9aa88c;font-weight:600}
+.search-btn{
+  position:absolute;right:5px;top:50%;transform:translateY(-50%);
+  width:34px;height:32px;border:0;border-radius:999px;
+  background:linear-gradient(180deg,var(--green-500),var(--green-600));
+  color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;
+  transition:filter .15s;
+}
+.search-btn:hover{filter:brightness(1.1)}
+
+/* ============ LAYOUT ============ */
+.page-layout{
+  max-width:1440px;margin:0 auto;
+  display:flex;gap:18px;padding:18px 16px 30px;
+  align-items:flex-start;
+}
+.content{flex:1 1 auto;min-width:0}
+
+/* ============ SIDEBAR ============ */
+.cat-sidebar{
+  flex:0 0 58px;position:sticky;top:calc(var(--header-h) + 14px);
+  display:flex;flex-direction:column;gap:4px;
+  background:#fbfdf6;border:1px solid var(--card-border);
+  border-radius:14px;padding:8px 6px;box-shadow:var(--shadow);
+  max-height:calc(100vh - var(--header-h) - 28px);overflow-y:auto;
+  scrollbar-width:none;
+}
+.cat-sidebar::-webkit-scrollbar{display:none}
+.cat-btn{
+  position:relative;width:44px;height:42px;border:0;border-radius:10px;
+  background:transparent;color:#5c6b4a;font-size:19px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s,color .15s,transform .1s;
+}
+.cat-btn:hover{background:var(--green-100);color:var(--green-700);transform:translateX(2px)}
+.cat-btn.active{background:linear-gradient(180deg,var(--green-500),var(--green-600));color:#fff;box-shadow:0 3px 8px rgba(60,120,30,.35)}
+.cat-btn::after{
+  content:attr(data-label);position:absolute;left:calc(100% + 12px);top:50%;
+  transform:translateY(-50%) scale(.9);transform-origin:left center;
+  background:var(--green-900);color:#fff;font:700 11px/1 "Nunito",sans-serif;
+  padding:6px 9px;border-radius:7px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:.15s;z-index:60;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+.cat-btn:hover::after{opacity:1;transform:translateY(-50%) scale(1)}
+@media (max-width:991.98px){.cat-sidebar{display:none}}
+
+/* ============ CONTENT HEAD ============ */
+.content-head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:12px;margin:2px 2px 14px;
+}
+.content-head h1{
+  font-family:"Baloo 2","Nunito",sans-serif;font-weight:800;
+  font-size:clamp(20px,3vw,26px);margin:0;color:#22401a;
+  display:flex;align-items:center;gap:10px;
+}
+.content-head h1 i{color:var(--green-600);font-size:.9em}
+.games-count{font:800 12px/1 "Nunito",sans-serif;color:var(--muted);background:var(--green-100);padding:6px 12px;border-radius:999px}
+
+/* ============ GAMES GRID ============ */
+.games-grid{
+  display:grid;gap:16px;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+}
+@media (max-width:575.98px){.games-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}}
+.card-game{
+  display:block;background:#fff;border:1px solid var(--card-border);
+  border-radius:var(--radius);overflow:hidden;text-decoration:none;
+  box-shadow:var(--shadow);color:inherit;
+  transition:transform .18s ease, box-shadow .18s ease;
+  animation:cardIn .35s ease backwards;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card-game:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);z-index:2}
+.thumb{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--green-100)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.card-game:hover .thumb img{transform:scale(1.07)}
+.thumb::after{
+  content:"\F4F4"; /* play fill */
+  font-family:"bootstrap-icons";position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px;color:#fff;background:rgba(18,63,42,.35);
+  opacity:0;transition:opacity .2s;
+}
+.card-game:hover .thumb::after{opacity:1}
+.badge-game{
+  position:absolute;top:8px;left:8px;z-index:2;
+  font:800 10px/1 "Nunito",sans-serif;letter-spacing:.6px;
+  color:#fff;padding:4px 8px;border-radius:6px;
+  box-shadow:0 2px 5px rgba(0,0,0,.3);
+}
+.badge-new{background:linear-gradient(180deg,#ff6b81,var(--(--red,#ff4757)));background:var(--red)}
+.badge-hot{background:linear-gradient(180deg,#ffb64c,var(--orange))}
+.card-title{
+  padding:9px 11px 10px;font:700 13px/1.25 "Nunito",sans-serif;color:#33421f;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.card-game.flash{outline:3px solid var(--yellow);outline-offset:2px;animation:flashPulse .6s ease 2}
+@keyframes flashPulse{0%,100%{box-shadow:var(--shadow)}50%{box-shadow:0 0 0 10px rgba(255,201,60,.45)}}
+
+/* empty state */
+.empty-state{
+  text-align:center;padding:60px 20px;color:var(--muted);
+  background:#fbfdf6;border:2px dashed var(--green-200);border-radius:16px;
+}
+.empty-state i{font-size:44px;color:var(--green-500);display:block;margin-bottom:10px}
+.empty-state p{font-weight:700;margin-bottom:14px}
+.reset-btn{
+  border:0;border-radius:999px;padding:10px 22px;
+  background:linear-gradient(180deg,var(--green-500),var(--green-600));
+  color:#fff;font:800 13px/1 "Nunito",sans-serif;
+  box-shadow:0 4px 10px rgba(60,120,30,.35);transition:filter .15s;
+}
+.reset-btn:hover{filter:brightness(1.08)}
+
+/* ============ SEO TEXT ============ */
+.seo{
+  margin-top:34px;background:var(--green-100);
+  border:1px solid var(--green-200);border-radius:16px;
+  padding:22px 24px;color:#42543a;
+}
+.seo h2{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:18px;color:#22401a;margin-bottom:10px}
+.seo h3{font-weight:800;font-size:14.5px;color:#2c4a22;margin:16px 0 6px}
+.seo p{font-size:13.5px;line-height:1.65;margin:0}
+.seo a{color:var(--green-700);font-weight:800}
+
+.breadcrumb-row{
+  display:flex;align-items:center;gap:8px;margin:16px 2px 0;
+  font:700 12px/1 "Nunito",sans-serif;color:var(--muted);
+}
+.breadcrumb-row a{color:var(--green-700);text-decoration:none}
+.breadcrumb-row a:hover{text-decoration:underline}
+.breadcrumb-row i{font-size:10px}
+
+/* ============ FOOTER ============ */
+.site-footer{background:var(--green-900);color:#cfe3cf;margin-top:10px}
+.footer-inner{
+  max-width:1440px;margin:0 auto;padding:20px 16px;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+}
+.footer-brand{display:flex;align-items:center;gap:10px;font:700 12.5px/1.3 "Nunito",sans-serif}
+.footer-brand .brand-badge{width:32px;height:32px;font-size:15px;border-radius:9px}
+.footer-links{
+  display:flex;gap:22px;list-style:none;margin:0;padding:0;flex-wrap:wrap;
+  margin-inline:auto;
+}
+.footer-links a{color:#cfe3cf;text-decoration:none;font:700 12.5px/1 "Nunito",sans-serif}
+.footer-links a:hover{color:#fff;text-decoration:underline}
+.footer-actions{display:flex;align-items:center;gap:10px}
+.contact-btn{
+  border:0;border-radius:9px;padding:9px 16px;
+  background:var(--yellow);color:#3c3008;font:800 12.5px/1 "Nunito",sans-serif;
+  display:inline-flex;align-items:center;gap:7px;
+  box-shadow:0 3px 8px rgba(0,0,0,.3);transition:transform .12s;
+}
+.contact-btn:hover{transform:translateY(-2px)}
+.lang-btn{
+  background:transparent;border:1.5px solid rgba(255,255,255,.35);color:#e6f2dd;
+  border-radius:9px;padding:8px 12px;font:800 12px/1 "Nunito",sans-serif;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.lang-btn:hover{border-color:#fff;color:#fff}
+.dropdown-menu{font:700 13px/1 "Nunito",sans-serif;border-radius:10px;border:1px solid var(--green-200)}
+.dropdown-item:active{background:var(--green-600)}
+@media (max-width:767.98px){
+  .footer-inner{flex-direction:column;text-align:center}
+  .footer-links{justify-content:center;margin-inline:0}
+}
+
+/* ============ OFFCANVAS MOBILE MENU ============ */
+.offcanvas{background:#f6f9ef;width:290px}
+.oc-header{
+  display:flex;align-items:center;gap:10px;padding:14px 16px;
+  background:linear-gradient(180deg,#6db33f,#55952b);color:#fff;
+}
+.oc-header .brand-badge{width:34px;height:34px;font-size:16px}
+.oc-title{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:19px}
+.oc-body{padding:12px}
+.oc-label{font:800 11px/1 "Nunito",sans-serif;letter-spacing:1px;color:var(--muted);margin:6px 8px 8px;text-transform:uppercase}
+.mcat-btn{
+  width:100%;display:flex;align-items:center;gap:12px;
+  border:0;background:transparent;border-radius:10px;
+  padding:11px 12px;font:700 14px/1 "Nunito",sans-serif;color:#33421f;
+  transition:background .12s;
+}
+.mcat-btn i{font-size:18px;color:var(--green-600);width:22px;text-align:center}
+.mcat-btn em{margin-left:auto;font:800 11px/1 "Nunito",sans-serif;font-style:normal;background:var(--green-100);color:var(--green-700);padding:4px 8px;border-radius:999px}
+.mcat-btn:hover{background:var(--green-100)}
+.mcat-btn.active{background:linear-gradient(180deg,var(--green-500),var(--green-600));color:#fff}
+.mcat-btn.active i{color:#ffe08a}
+.mcat-btn.active em{background:rgba(255,255,255,.2);color:#fff}
+.oc-footer{padding:14px 16px;border-top:1px solid var(--green-200)}
+
+/* ============ MODAL ============ */
+.modal-content{border-radius:16px;border:0;overflow:hidden;box-shadow:var(--shadow-lg)}
+.modal-header{background:linear-gradient(180deg,#6db33f,#55952b);color:#fff;padding:12px 16px}
+.modal-title{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:18px}
+.modal-header .btn-close{filter:invert(1);opacity:.9}
+.modal-thumb{aspect-ratio:16/9;background:var(--green-100)}
+.modal-thumb img{width:100%;height:100%;object-fit:cover}
+.modal-meta{display:flex;gap:8px;padding:14px 16px 4px}
+.cat-chip{font:800 11px/1 "Nunito",sans-serif;background:var(--green-100);color:var(--green-700);padding:6px 10px;border-radius:999px;text-transform:capitalize}
+.play-btn{
+  width:100%;border:0;border-radius:12px;padding:12px;
+  background:linear-gradient(180deg,var(--yellow),var(--orange));
+  color:#4a2c00;font:800 16px/1 "Nunito",sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:inset 0 -3px 0 rgba(0,0,0,.15);transition:filter .15s,transform .12s;
+}
+.play-btn i{font-size:20px}
+.play-btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+
+/* ============ TOAST + TOTOP ============ */
+.toast-demo{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);
+  background:var(--green-900);color:#fff;padding:11px 20px;border-radius:999px;
+  font:800 13px/1 "Nunito",sans-serif;box-shadow:0 8px 20px rgba(0,0,0,.35);
+  opacity:0;pointer-events:none;transition:.25s;z-index:2000;max-width:90vw;text-align:center;
+}
+.toast-demo.show{opacity:1;transform:translate(-50%,0)}
+.to-top{
+  position:fixed;right:18px;bottom:18px;z-index:1500;
+  width:46px;height:46px;border:0;border-radius:50%;
+  background:linear-gradient(180deg,var(--green-500),var(--green-700));
+  color:#fff;font-size:19px;box-shadow:0 6px 16px rgba(20,60,20,.4);
+  opacity:0;pointer-events:none;transform:translateY(12px);transition:.25s;
+  display:flex;align-items:center;justify-content:center;
+}
+.to-top.show{opacity:1;pointer-events:auto;transform:none}
+.to-top:hover{filter:brightness(1.1)}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="header-inner">
+    <button class="icon-btn menu-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-label="Open menu">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <a href="#" class="brand" aria-label="minigames home">
+      <span class="brand-badge"><i class="bi bi-dice-5-fill"></i></span>
+      <span class="brand-text">minigames<span class="brand-tld">.eu</span></span>
+    </a>
+
+    <form class="search-wrap" id="searchForm" role="search" autocomplete="off">
+      <input type="search" id="searchInput" placeholder="Search games and categories" aria-label="Search games">
+      <button class="search-btn" type="submit" aria-label="Search"><i class="bi bi-search"></i></button>
+    </form>
+
+    <button class="icon-btn" id="shuffleBtn" type="button" title="Pick a random game" aria-label="Pick a random game">
+      <i class="bi bi-shuffle"></i>
+    </button>
+  </div>
+</header>
+
+<!-- ================= LAYOUT ================= -->
+<div class="page-layout">
+
+  <aside class="cat-sidebar" id="catSidebar" aria-label="Game categories"></aside>
+
+  <main class="content">
+    <div class="content-head">
+      <h1><i class="bi bi-controller"></i> Mini games</h1>
+      <span class="games-count" id="gamesCount"></span>
+    </div>
+
+    <div class="games-grid" id="gamesGrid"></div>
+
+    <div class="empty-state" id="emptyState" hidden>
+      <i class="bi bi-emoji-frown"></i>
+      <p>No games found. Try another search or category!</p>
+      <button class="reset-btn" id="resetFilters" type="button"><i class="bi bi-arrow-counterclockwise"></i> Reset filters</button>
+    </div>
+
+    <section class="seo">
+      <h2>Mini games</h2>
+      <p>Ready for a quick adventure? Our mini-games are perfect for a short break: easy controls, instant fun and zero downloads. Jump in, play for a couple of minutes and squeeze every drop of fun out of your free time — on desktop or mobile, right in your browser.</p>
+      <h3>What are genres of mini-games?</h3>
+      <p>Most mini-games are quick arcade games with simple controls. In many of them you race to the end of a level, dodge obstacles or react at lightning speed — no tutorial needed. Others are clever puzzles and skill games where a bit of logic and a steady hand take you to the top of the board.</p>
+      <h3>Popular mini-games on our site</h3>
+      <p>Fans of fast action love <a href="#" data-demo>Geometry Jump</a> — dodge the spikes and fly over every obstacle — and <a href="#" data-demo>Helix Jump</a>, where you bounce down a colorful tower. Want to laugh instead? <a href="#" data-demo>Basket Random</a> and <a href="#" data-demo>Slap and Run</a> serve chaotic ragdoll physics and guaranteed giggles. Puzzle lovers can relax with <a href="#" data-demo>Marble Sort</a> or <a href="#" data-demo>Sort Tiles</a>. Try any of them and fill your day with quick, funny games!</p>
+    </section>
+
+    <nav class="breadcrumb-row" aria-label="Breadcrumb">
+      <a href="#">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <span>Mini games</span>
+    </nav>
+  </main>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-badge"><i class="bi bi-dice-5-fill"></i></span>
+      <span>©2026 minigames.eu<br>All rights reserved.</span>
+    </div>
+
+    <ul class="footer-links">
+      <li><a href="#" data-demo>Terms of Use</a></li>
+      <li><a href="#" data-demo>Privacy and cookie policy</a></li>
+      <li><a href="#" data-demo>Privacy settings</a></li>
+    </ul>
+
+    <div class="footer-actions">
+      <button class="contact-btn" type="button" id="contactBtn"><i class="bi bi-envelope-heart-fill"></i> Contact</button>
+      <div class="dropdown">
+        <button class="lang-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-globe-americas"></i> <span id="langLabel">EN</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><button class="dropdown-item lang-item" data-lang="EN" type="button">🇺🇸 English</button></li>
+          <li><button class="dropdown-item lang-item" data-lang="ES" type="button">🇪🇸 Español</button></li>
+          <li><button class="dropdown-item lang-item" data-lang="DE" type="button">🇩🇪 Deutsch</button></li>
+          <li><button class="dropdown-item lang-item" data-lang="FR" type="button">🇫🇷 Français</button></li>
+         <li><button class="dropdown-item lang-item" data-lang="LV" type="button">lv Latvia</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= MOBILE MENU ================= -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+  <div class="oc-header">
+    <span class="brand-badge"><i class="bi bi-dice-5-fill"></i></span>
+    <span class="oc-title" id="mobileMenuLabel">minigames<span style="color:#ffe08a">.com</span></span>
+    <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="oc-body">
+    <div class="oc-label">Categories</div>
+    <div id="catList"></div>
+  </div>
+  <div class="oc-footer">
+    <button class="contact-btn w-100 justify-content-center" type="button" id="contactBtn2"><i class="bi bi-envelope-heart-fill"></i> Contact us</button>
+  </div>
+</div>
+
+<!-- ================= GAME MODAL ================= -->
+<div class="modal fade" id="gameModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="gameModalTitle">Game</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="modal-thumb"><img id="gameModalImg" src="" alt="Game preview"></div>
+        <div class="modal-meta">
+          <span class="cat-chip" id="gameModalCat"></span>
+          <span class="cat-chip" id="gameModalBadge" style="display:none"></span>
+        </div>
+      </div>
+      <div class="modal-footer border-0 pt-1 pb-3 px-3">
+        <button class="play-btn" type="button" id="playBtn"><i class="bi bi-play-circle-fill"></i> Play now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-demo" id="toastDemo" role="status"></div>
+<button class="to-top" id="toTop" type="button" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ================= DATA ================= */
+const GAMES = [
+  {t:"Marble Sort",        c:"puzzle",  b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1cdc863ca-b572-4b93-a2eb-cdea24e68bf5.png"},
+  {t:"My Arcade Center 2", c:"arcade",  b:"new", img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1ea5850cd-0f1d-4134-a386-0ba9f10c91b4.png"},
+  {t:"Geometry Arrow",     c:"arcade",  b:"hot", img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/132093377-e092-4a96-a262-854024146ab0.png"},
+  {t:"Hole.io",            c:"action",  b:"hot", img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/126eece57-353d-4e2b-98c3-d1a1ce572f8d.png"},
+  {t:"Sort Tiles",         c:"puzzle",  b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1ee48d8ae-898d-4cd8-8beb-cf35388fb29e.png"},
+  {t:"Square Bird",        c:"arcade",  b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/108650d72-f839-4663-b862-ac4c946c5764.png"},
+  {t:"Slice It All",       c:"skill",   b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1dc34573d-38fd-42eb-9a3b-e68b3fd0fab6.png"},
+  {t:"Magic Tiles 3",      c:"music",   b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1d3699c99-bf81-4499-978e-bdd4593d97a0.png"},
+  {t:"Bus Parking Out",    c:"racing",  b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/13d9e79b0-9d9c-4bfd-8713-c2c850d37dde.png"},
+  {t:"Geometry Jump",      c:"arcade",  b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1d7bead70-3ab8-4354-9a7e-5f5d929690a6.png"},
+  {t:"Flip Bottle",        c:"skill",   b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/13ce27530-7aa7-4b32-a4e3-45c75103a481.png"},
+  {t:"Slap and Run",       c:"action",  b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1592b2d3a-a8f1-498e-9615-6b4219fff75f.png"},
+  {t:"Coffee Color Blocks",c:"puzzle",  b:"new", img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1b2118eb2-56e1-4f7f-9af5-ecfff8561afd.png"},
+  {t:"Basket Random",      c:"sports",  b:"hot", img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1bc9e4257-56fb-4810-a56c-e507ca3cbdc5.png"},
+  {t:"Jump Dash",          c:"arcade",  b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/17e72ef1e-0819-4cb5-94a5-cda3a4820b5a.png"},
+  {t:"Helix Jump",         c:"skill",   b:"hot", img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1e3b94e04-5f82-42f0-8bb0-014cce119a0d.png"},
+  {t:"Sorting Balls",      c:"puzzle",  b:"new", img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1c6b81336-9c3e-431a-9ebe-ab42fdaaa9fb.png"},
+  {t:"Juice Merge",        c:"merge",   b:"",    img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/114d09abe-e7ba-4669-afa8-301a82970245.png"},
+  {t:"Pizza Tycoon",       c:"cooking", b:"hot", img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1a171adef-b529-437c-a748-3dcd42480fe9.png"},
+  {t:"Mini Golf Saga",     c:"sports",  b:"new", img:"https://image.qwenlm.ai/public_source/14bac902-16ab-45c0-a51d-66be7b9b3be6/1485336e6-baa3-4150-84ad-9bc51c7de3ee.png"}
+];
+
+const CATS = [
+  {id:"all",     icon:"bi-grid-fill",             label:"All games"},
+  {id:"new",     icon:"bi-stars",                 label:"New"},
+  {id:"hot",     icon:"bi-fire",                  label:"Popular"},
+  {id:"puzzle",  icon:"bi-puzzle-fill",           label:"Puzzle"},
+  {id:"arcade",  icon:"bi-joystick",              label:"Arcade"},
+  {id:"action",  icon:"bi-lightning-charge-fill", label:"Action"},
+  {id:"skill",   icon:"bi-bullseye",              label:"Skill"},
+  {id:"sports",  icon:"bi-trophy-fill",           label:"Sports"},
+  {id:"racing",  icon:"bi-car-front-fill",        label:"Racing"},
+  {id:"music",   icon:"bi-music-note-beamed",     label:"Music"},
+  {id:"cooking", icon:"bi-cup-hot-fill",          label:"Cooking"},
+  {id:"merge",   icon:"bi-diagram-3-fill",        label:"Merge"}
+];
+
+/* ================= HELPERS ================= */
+const $ = s => document.querySelector(s);
+const grid = $("#gamesGrid"), countEl = $("#gamesCount"), emptyEl = $("#emptyState");
+const state = {q:"", cat:"all"};
+let toastTimer = null;
+
+function showToast(msg){
+  const t = $("#toastDemo");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove("show"), 2200);
+}
+function inCat(g, id){
+  if(id==="all") return true;
+  if(id==="new") return g.b==="new";
+  if(id==="hot") return g.b==="hot";
+  return g.c===id;
+}
+function catCount(id){ return GAMES.filter(g=>inCat(g,id)).length; }
+
+/* ================= RENDER SIDEBAR + MOBILE MENU ================= */
+$("#catSidebar").innerHTML = CATS.map(c =>
+  `<button class="cat-btn${c.id===state.cat?" active":""}" type="button" data-cat="${c.id}" data-label="${c.label}" aria-label="${c.label}"><i class="bi ${c.icon}"></i></button>`
+).join("");
+
+$("#catList").innerHTML = CATS.map(c =>
+  `<button class="mcat-btn${c.id===state.cat?" active":""}" type="button" data-cat="${c.id}"><i class="bi ${c.icon}"></i><span>${c.label}</span><em>${catCount(c.id)}</em></button>`
+).join("");
+
+/* ================= RENDER GRID ================= */
+function cardHTML(g, i){
+  const badge = g.b==="new" ? '<span class="badge-game badge-new">NEW</span>'
+              : g.b==="hot" ? '<span class="badge-game badge-hot">HOT</span>' : "";
+  return `<a href="#" class="card-game" data-index="${i}" title="${g.t}" style="animation-delay:${(i%10)*35}ms">
+    <div class="thumb"><img src="${g.img}" alt="${g.t}" loading="lazy" width="400" height="300">${badge}</div>
+    <div class="card-title">${g.t}</div>
+  </a>`;
+}
+function applyFilter(){
+  const q = state.q.trim().toLowerCase();
+  const list = GAMES.map((g,i)=>({g,i})).filter(({g}) => inCat(g,state.cat) && (!q || g.t.toLowerCase().includes(q)));
+  grid.innerHTML = list.map(({g,i})=>cardHTML(g,i)).join("");
+  countEl.textContent = list.length + (list.length===1 ? " game" : " games");
+  emptyEl.hidden = list.length > 0;
+  grid.style.display = list.length ? "" : "none";
+}
+applyFilter();
+
+/* ================= CATEGORY SWITCH ================= */
+function setCategory(id){
+  state.cat = id;
+  document.querySelectorAll("[data-cat]").forEach(el=>{
+    el.classList.toggle("active", el.dataset.cat===id);
+  });
+  applyFilter();
+  if(window.innerWidth < 992){
+    const oc = bootstrap.Offcanvas.getInstance($("#mobileMenu"));
+    if(oc) oc.hide();
+  }
+}
+$("#catSidebar").addEventListener("click", e=>{
+  const b = e.target.closest(".cat-btn"); if(b) setCategory(b.dataset.cat);
+});
+$("#catList").addEventListener("click", e=>{
+  const b = e.target.closest(".mcat-btn"); if(b) setCategory(b.dataset.cat);
+});
+
+/* ================= SEARCH ================= */
+$("#searchInput").addEventListener("input", e=>{ state.q = e.target.value; applyFilter(); });
+$("#searchForm").addEventListener("submit", e=>{ e.preventDefault(); e.target.querySelector("input").blur(); });
+
+/* ================= RESET ================= */
+$("#resetFilters").addEventListener("click", ()=>{
+  state.q=""; state.cat="all"; $("#searchInput").value="";
+  document.querySelectorAll("[data-cat]").forEach(el=>el.classList.toggle("active", el.dataset.cat==="all"));
+  applyFilter();
+});
+
+/* ================= GAME MODAL ================= */
+const gameModal = new bootstrap.Modal($("#gameModal"));
+let currentGame = null;
+grid.addEventListener("click", e=>{
+  const card = e.target.closest(".card-game"); if(!card) return;
+  e.preventDefault();
+  currentGame = GAMES[+card.dataset.index];
+  $("#gameModalTitle").textContent = currentGame.t;
+  $("#gameModalImg").src = currentGame.img;
+  $("#gameModalImg").alt = currentGame.t;
+  $("#gameModalCat").textContent = (CATS.find(c=>c.id===currentGame.c)||{}).label || currentGame.c;
+  const bEl = $("#gameModalBadge");
+  if(currentGame.b){ bEl.style.display=""; bEl.textContent = currentGame.b==="new" ? "★ Just added" : "🔥 Popular"; }
+  else bEl.style.display="none";
+  gameModal.show();
+});
+$("#playBtn").addEventListener("click", ()=>{
+  gameModal.hide();
+  showToast("🎮 Loading “"+(currentGame?currentGame.t:"game")+"”… (demo)");
+});
+
+/* ================= RANDOM GAME ================= */
+$("#shuffleBtn").addEventListener("click", ()=>{
+  const cards = [...grid.querySelectorAll(".card-game")];
+  if(!cards.length){ showToast("No games to pick — reset the filters!"); return; }
+  const pick = cards[Math.floor(Math.random()*cards.length)];
+  pick.scrollIntoView({behavior:"smooth", block:"center"});
+  pick.classList.add("flash");
+  setTimeout(()=>pick.classList.remove("flash"), 1400);
+  showToast("🎲 Random pick: "+GAMES[+pick.dataset.index].t);
+});
+
+/* ================= MISC BUTTONS ================= */
+document.querySelectorAll("[data-demo]").forEach(a=>{
+  a.addEventListener("click", e=>{ e.preventDefault(); showToast("“"+a.textContent.trim()+"” is a demo link"); });
+});
+$("#contactBtn").addEventListener("click", ()=>showToast("📮 Thanks! We'll be in touch (demo)"));
+$("#contactBtn2").addEventListener("click", ()=>showToast("📮 Thanks! We'll be in touch (demo)"));
+document.querySelectorAll(".lang-item").forEach(b=>{
+  b.addEventListener("click", ()=>{ $("#langLabel").textContent = b.dataset.lang; showToast("🌐 Language: "+b.textContent.trim()+" (demo)"); });
+});
+
+/* ================= BACK TO TOP ================= */
+const toTop = $("#toTop");
+window.addEventListener("scroll", ()=>{
+  toTop.classList.toggle("show", window.scrollY > 400);
+}, {passive:true});
+toTop.addEventListener("click", ()=>window.scrollTo({top:0, behavior:"smooth"}));
+</script>
+</body>
+</html>
