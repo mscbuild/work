@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon 3D Product Cards | Cyber Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================
+   1. RESET & BASE STYLES
+   ========================================= */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  min-height: 100vh;
+  background: #0a0a0f;
+  font-family: 'Rajdhani', sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+  color: #fff;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0,255,255,.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(255,0,128,.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 0%, rgba(128,0,255,.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =========================================
+   2. HEADER & NAVIGATION
+   ========================================= */
+.main-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 15px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+.logo .highlight { color: #00ffff; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+.desktop-nav { display: flex; gap: 30px; }
+.desktop-nav a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  position: relative;
+}
+.desktop-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; left: 0;
+  width: 0; height: 2px;
+  background: #00ffff;
+  box-shadow: 0 0 10px #00ffff;
+  transition: width 0.3s ease;
+}
+.desktop-nav a:hover { color: #fff; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+.desktop-nav a:hover::after { width: 100%; }
+
+.header-actions { display: flex; align-items: center; gap: 20px; }
+.search-box { position: relative; display: flex; align-items: center; }
+.search-box input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 8px 15px 8px 35px;
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  width: 200px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+.search-box input:focus { border-color: #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.2); width: 250px; }
+.search-box .search-icon {
+  position: absolute; left: 10px; width: 18px; height: 18px;
+  color: rgba(255, 255, 255, 0.5); pointer-events: none;
+}
+
+.cart-btn {
+  position: relative;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #fff;
+}
+.cart-btn:hover { border-color: #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); color: #00ffff; }
+.cart-count {
+  position: absolute;
+  top: -5px; right: -5px;
+  background: #ff0080;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+  transform: scale(0);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.cart-count.active { transform: scale(1); }
+
+.mobile-menu-btn {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 5px; z-index: 1001;
+}
+.mobile-menu-btn span {
+  display: block; width: 25px; height: 2px; background: #fff; transition: all 0.3s ease;
+}
+.mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+.mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+.mobile-menu {
+  position: fixed; top: 70px; left: 0; right: 0;
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 20px;
+  transform: translateY(-150%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+}
+.mobile-menu.active { transform: translateY(0); }
+.mobile-search { padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 10px; }
+.mobile-search input {
+  width: 100%; background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;
+  padding: 12px 15px; color: #fff; font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem; outline: none;
+}
+.mobile-search input:focus { border-color: #00ffff; box-shadow: 0 0 10px rgba(0, 255, 255, 0.2); }
+.mobile-menu a {
+  color: #fff; text-decoration: none; font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem; text-align: center; padding: 10px;
+  border: 1px solid transparent; transition: all 0.3s ease;
+}
+.mobile-menu a:hover { border-color: #00ffff; background: rgba(0, 255, 255, 0.05); }
+
+/* =========================================
+   3. HERO SECTION
+   ========================================= */
+.hero-section {
+  min-height: 80vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 120px 20px 60px;
+  position: relative; z-index: 1; overflow: hidden;
+}
+.hero-content { max-width: 800px; position: relative; z-index: 2; }
+.hero-content h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900; color: #fff; line-height: 1.1;
+  margin-bottom: 20px; letter-spacing: 2px;
+}
+.hero-content .neon-text {
+  background: linear-gradient(90deg, #00ffff, #bf00ff, #ff0080);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.4));
+}
+.hero-content p {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 40px; line-height: 1.6;
+  max-width: 600px; margin-left: auto; margin-right: auto;
+}
+.hero-btn {
+  display: inline-block; padding: 15px 40px;
+  background: transparent; color: #00ffff;
+  font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
+  border: 2px solid #00ffff; border-radius: 5px;
+  position: relative; overflow: hidden;
+  transition: all 0.3s ease; box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+.hero-btn:hover {
+  background: rgba(0, 255, 255, 0.1);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), inset 0 0 20px rgba(0, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+.hero-bg-effects {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+  z-index: 1; pointer-events: none; animation: pulse 4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+}
+
+/* =========================================
+   4. PRODUCTS & CARDS
+   ========================================= */
+.products-section { position: relative; z-index: 1; padding-bottom: 60px; }
+.page-title { text-align: center; margin: 40px 0 30px; position: relative; z-index: 1; }
+.page-title h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;
+  background: linear-gradient(90deg, #0ff, #f0f, #0ff);
+  background-size: 200% auto; -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.4));
+  letter-spacing: 4px; text-transform: uppercase;
+}
+.page-title p { color: rgba(255, 255, 255, 0.4); font-size: 1.1rem; margin-top: 8px; letter-spacing: 6px; text-transform: uppercase; }
+@keyframes shimmer { to { background-position: 200% center; } }
+
+.cards-container {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px; padding: 0 40px; max-width: 1400px; width: 100%;
+  margin: 0 auto; position: relative; z-index: 1;
+}
+.no-results {
+  text-align: center; padding: 40px; font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.5); font-family: 'Orbitron', sans-serif;
+  grid-column: 1 / -1;
+}
+.card-wrapper { perspective: 1000px; display: flex; justify-content: center; }
+.neon-card {
+  position: relative; width: 100%; max-width: 340px; min-height: 480px;
+  border-radius: 20px; transform-style: preserve-3d;
+  transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+  cursor: pointer; background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05); overflow: hidden;
+}
+.neon-card::before {
+  content: ''; position: absolute; inset: -2px; border-radius: 22px; z-index: -1;
+  opacity: 0; transition: opacity 0.3s ease;
+  background: linear-gradient(135deg, var(--neon-dim), transparent 60%, var(--neon-dim));
+}
+.neon-card:hover::before { opacity: 1; }
+
+.neon-card.cyan { --neon: #00ffff; --neon-dim: rgba(0,255,255,.3); --neon-glow: rgba(0,255,255,.15); --neon-rgb: 0,255,255; }
+.neon-card.pink { --neon: #ff0080; --neon-dim: rgba(255,0,128,.3); --neon-glow: rgba(255,0,128,.15); --neon-rgb: 255,0,128; }
+.neon-card.purple { --neon: #bf00ff; --neon-dim: rgba(191,0,255,.3); --neon-glow: rgba(191,0,255,.15); --neon-rgb: 191,0,255; }
+.neon-card.green { --neon: #39ff14; --neon-dim: rgba(57,255,20,.3); --neon-glow: rgba(57,255,20,.15); --neon-rgb: 57,255,20; }
+.neon-card.orange { --neon: #ff6e00; --neon-dim: rgba(255,110,0,.3); --neon-glow: rgba(255,110,0,.15); --neon-rgb: 255,110,0; }
+.neon-card.gold { --neon: #ffd700; --neon-dim: rgba(255,215,0,.3); --neon-glow: rgba(255,215,0,.15); --neon-rgb: 255,215,0; }
+
+.neon-card:hover {
+  box-shadow: 0 0 20px var(--neon-glow), 0 0 60px var(--neon-glow), 0 20px 60px rgba(0,0,0,.4), inset 0 0 30px var(--neon-glow);
+  border-color: var(--neon-dim);
+}
+.card-inner {
+  padding: 25px; position: relative; z-index: 1;
+  transform-style: preserve-3d; height: 100%; display: flex; flex-direction: column;
+}
+.card-badge {
+  display: inline-block; padding: 4px 14px; border-radius: 20px;
+  font-size: .75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--neon); border: 1px solid var(--neon-dim);
+  background: rgba(var(--neon-rgb), .08); margin-bottom: 16px; width: fit-content;
+  text-shadow: 0 0 10px var(--neon-dim); box-shadow: 0 0 10px var(--neon-glow);
+  transform: translateZ(10px);
+}
+.card-image {
+  width: 100%; aspect-ratio: 16/9; border-radius: 14px; margin-bottom: 20px;
+  position: relative; overflow: hidden; background: rgba(var(--neon-rgb), .04);
+  border: 1px solid rgba(var(--neon-rgb), .1); display: flex;
+  align-items: center; justify-content: center; transform: translateZ(30px);
+}
+.card-image img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 2; transition: transform 0.3s ease; }
+.neon-card:hover .card-image img { transform: scale(1.05); }
+.card-image::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(var(--neon-rgb), .1) 100%);
+  pointer-events: none; z-index: 3;
+}
+.card-image .glow-orb {
+  position: absolute; width: 100px; height: 100px; border-radius: 50%;
+  background: radial-gradient(circle, var(--neon-dim) 0%, transparent 70%);
+  filter: blur(30px); animation: orbPulse 3s ease-in-out infinite; z-index: 1;
+}
+@keyframes orbPulse { 0%, 100% { transform: scale(1); opacity: .5; } 50% { transform: scale(1.3); opacity: .8; } }
+.card-title {
+  font-family: 'Orbitron', sans-serif; font-size: 1.25rem; font-weight: 700;
+  color: #fff; margin-bottom: 6px; transform: translateZ(20px);
+  text-shadow: 0 0 15px var(--neon-glow);
+}
+.card-desc {
+  font-size: .9rem; color: rgba(255, 255, 255, 0.45); line-height: 1.5;
+  margin-bottom: 18px; transform: translateZ(15px); flex-grow: 1;
+}
+.card-specs { display: flex; gap: 12px; margin-bottom: 20px; transform: translateZ(10px); }
+.spec {
+  flex: 1; padding: 8px 0; text-align: center; border-radius: 10px;
+  background: rgba(var(--neon-rgb), .05); border: 1px solid rgba(var(--neon-rgb), .08);
+}
+.spec-val { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700; color: var(--neon); text-shadow: 0 0 8px var(--neon-dim); }
+.spec-label { font-size: .65rem; color: rgba(255, 255, 255, 0.35); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+.card-bottom { display: flex; align-items: center; justify-content: space-between; transform: translateZ(25px); }
+.card-price { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--neon); text-shadow: 0 0 20px var(--neon-dim); }
+.card-price span { font-size: .8rem; color: rgba(255, 255, 255, 0.3); text-decoration: line-through; margin-left: 8px; font-weight: 400; }
+.btn-buy {
+  padding: 10px 24px; border: none; border-radius: 12px;
+  font-family: 'Orbitron', sans-serif; font-size: .75rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: #000;
+  background: var(--neon); cursor: pointer; position: relative; overflow: hidden;
+  transition: all 0.3s ease; box-shadow: 0 0 20px var(--neon-dim);
+}
+.btn-buy:hover { transform: scale(1.05); box-shadow: 0 0 30px var(--neon-dim), 0 0 60px var(--neon-glow); }
+.btn-buy::before {
+  content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+  transition: left 0.5s ease;
+}
+.btn-buy:hover::before { left: 100%; }
+
+.scan-line {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  opacity: 0; z-index: 2; pointer-events: none; box-shadow: 0 0 15px var(--neon);
+}
+.neon-card:hover .scan-line { animation: scanDown 2s ease-in-out infinite; }
+@keyframes scanDown { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+.corner { position: absolute; width: 20px; height: 20px; z-index: 2; opacity: 0; transition: opacity 0.3s ease; }
+.neon-card:hover .corner { opacity: 1; }
+.corner::before, .corner::after { content: ''; position: absolute; background: var(--neon); box-shadow: 0 0 8px var(--neon); }
+.corner-tl { top: 8px; left: 8px; } .corner-tl::before { top: 0; left: 0; width: 20px; height: 2px; } .corner-tl::after { top: 0; left: 0; width: 2px; height: 20px; }
+.corner-tr { top: 8px; right: 8px; } .corner-tr::before { top: 0; right: 0; width: 20px; height: 2px; } .corner-tr::after { top: 0; right: 0; width: 2px; height: 20px; }
+.corner-bl { bottom: 8px; left: 8px; } .corner-bl::before { bottom: 0; left: 0; width: 20px; height: 2px; } .corner-bl::after { bottom: 0; left: 0; width: 2px; height: 20px; }
+.corner-br { bottom: 8px; right: 8px; } .corner-br::before { bottom: 0; right: 0; width: 20px; height: 2px; } .corner-br::after { bottom: 0; right: 0; width: 2px; height: 20px; }
+
+/* =========================================
+   5. MODALS & CART DRAWER
+   ========================================= */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px); z-index: 2000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  padding: 20px;
+}
+.modal-overlay.active { opacity: 1; pointer-events: all; }
+
+.modal-content {
+  background: #0a0a0f; border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 20px; max-width: 800px; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+  padding: 30px; position: relative;
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
+  transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.modal-overlay.active .modal-content { transform: scale(1); }
+
+.modal-close {
+  position: absolute; top: 15px; right: 15px;
+  background: none; border: none; color: rgba(255,255,255,0.5);
+  font-size: 2rem; cursor: pointer; transition: color 0.3s;
+  line-height: 1;
+}
+.modal-close:hover { color: #ff0080; }
+
+.modal-image {
+  border-radius: 14px; overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-image img { width: 100%; height: 100%; object-fit: cover; }
+
+.modal-details { display: flex; flex-direction: column; }
+.modal-details h2 {
+  font-family: 'Orbitron', sans-serif; font-size: 1.8rem;
+  color: #fff; margin-bottom: 10px; text-shadow: 0 0 15px var(--neon-glow, rgba(0,255,255,0.3));
+}
+.modal-desc {
+  color: rgba(255, 255, 255, 0.7); line-height: 1.6;
+  margin-bottom: 20px; font-size: 1.05rem; flex-grow: 1;
+}
+.modal-specs {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  margin-bottom: 25px;
+}
+.modal-specs .spec { padding: 12px 0; }
+.modal-price {
+  font-family: 'Orbitron', sans-serif; font-size: 2rem;
+  font-weight: 900; color: var(--neon, #00ffff);
+  text-shadow: 0 0 20px var(--neon-dim, rgba(0,255,255,0.3));
+  margin-bottom: 20px;
+}
+.modal-price span { font-size: 1rem; color: rgba(255,255,255,0.3); text-decoration: line-through; margin-left: 10px; font-weight: 400; }
+
+/* Cart Drawer */
+.cart-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: 400px; max-width: 100vw;
+  background: #0a0a0f; border-left: 1px solid rgba(0, 255, 255, 0.2);
+  z-index: 2100; transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex; flex-direction: column;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+}
+.cart-drawer.active { transform: translateX(0); }
+.cart-header {
+  padding: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.cart-header h3 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: #fff; letter-spacing: 1px; }
+.cart-close {
+  background: none; border: none; color: rgba(255,255,255,0.5);
+  font-size: 1.8rem; cursor: pointer; transition: color 0.3s;
+}
+.cart-close:hover { color: #ff0080; }
+
+.cart-items {
+  flex: 1; overflow-y: auto; padding: 20px;
+  display: flex; flex-direction: column; gap: 15px;
+}
+.cart-item {
+  display: flex; gap: 15px; background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px;
+  padding: 10px; position: relative;
+}
+.cart-item-image {
+  width: 70px; height: 70px; border-radius: 8px; overflow: hidden;
+  background: rgba(255, 255, 255, 0.05); flex-shrink: 0;
+}
+.cart-item-image img { width: 100%; height: 100%; object-fit: cover; }
+.cart-item-details { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.cart-item-title { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #fff; margin-bottom: 5px; }
+.cart-item-price { color: var(--neon, #00ffff); font-weight: 700; font-size: 1rem; }
+.cart-item-controls {
+  display: flex; align-items: center; gap: 10px; margin-top: 8px;
+}
+.qty-btn {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff; font-size: 1.2rem; display: flex; align-items: center;
+  justify-content: center; cursor: pointer; transition: all 0.2s;
+}
+.qty-btn:hover { background: rgba(0, 255, 255, 0.2); border-color: #00ffff; }
+.cart-item-qty { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; min-width: 20px; text-align: center; }
+.cart-item-remove {
+  position: absolute; top: 10px; right: 10px;
+  background: none; border: none; color: rgba(255, 0, 128, 0.6);
+  cursor: pointer; font-size: 1.2rem; transition: color 0.2s;
+}
+.cart-item-remove:hover { color: #ff0080; }
+
+.cart-empty {
+  text-align: center; color: rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem; margin-top: 40px; font-family: 'Orbitron', sans-serif;
+}
+
+.cart-footer {
+  padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.3);
+}
+.cart-total {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px; font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem; color: #fff;
+}
+.cart-total span { color: #00ffff; font-size: 1.5rem; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+.btn-checkout {
+  width: 100%; padding: 15px; border: none; border-radius: 12px;
+  background: linear-gradient(90deg, #00ffff, #0088ff);
+  color: #000; font-family: 'Orbitron', sans-serif;
+  font-size: 1rem; font-weight: 900; letter-spacing: 2px;
+  text-transform: uppercase; cursor: pointer;
+  transition: all 0.3s ease; box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+.btn-checkout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+}
+.btn-checkout:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* Checkout Modal Specifics */
+.checkout-content {
+  max-width: 500px; padding: 40px;
+}
+.checkout-content h2 {
+  font-family: 'Orbitron', sans-serif; font-size: 1.8rem;
+  color: #fff; margin-bottom: 25px; text-align: center;
+}
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block; color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem; margin-bottom: 8px; letter-spacing: 1px;
+}
+.form-group input {
+  width: 100%; background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;
+  padding: 12px 15px; color: #fff; font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem; outline: none; transition: all 0.3s;
+}
+.form-group input:focus { border-color: #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.2); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+.success-message {
+  text-align: center; padding: 40px 20px;
+}
+.success-icon {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(57, 255, 20, 0.1); border: 2px solid #39ff14;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 2.5rem; color: #39ff14;
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+.success-message h2 { color: #39ff14; margin-bottom: 10px; }
+.success-message p { color: rgba(255, 255, 255, 0.7); margin-bottom: 30px; }
+
+/* =========================================
+   6. FOOTER
+   ========================================= */
+.main-footer {
+  background: rgba(5, 5, 10, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 60px 40px 20px; position: relative; z-index: 1; margin-top: auto;
+}
+.footer-content {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 40px; max-width: 1400px; margin: 0 auto;
+}
+.footer-brand p { color: rgba(255, 255, 255, 0.5); margin-top: 15px; line-height: 1.6; max-width: 300px; }
+.footer-links h4, .footer-newsletter h4 {
+  font-family: 'Orbitron', sans-serif; color: #fff;
+  font-size: 1.1rem; margin-bottom: 20px; letter-spacing: 1px;
+}
+.footer-links a {
+  display: block; color: rgba(255, 255, 255, 0.5); text-decoration: none;
+  margin-bottom: 12px; font-size: 0.95rem; transition: color 0.3s ease, transform 0.3s ease;
+}
+.footer-links a:hover { color: #00ffff; transform: translateX(5px); }
+.footer-newsletter p { color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; margin-bottom: 15px; }
+.newsletter-form { display: flex; gap: 10px; }
+.newsletter-form input {
+  flex: 1; background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 5px;
+  padding: 10px 15px; color: #fff; font-family: 'Rajdhani', sans-serif;
+  outline: none; transition: border-color 0.3s ease;
+}
+.newsletter-form input:focus { border-color: #00ffff; }
+.newsletter-form button {
+  background: #00ffff; color: #000; border: none; border-radius: 5px;
+  padding: 10px 20px; font-family: 'Orbitron', sans-serif;
+  font-weight: 700; cursor: pointer; transition: all 0.3s ease;
+}
+.newsletter-form button:hover { box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); }
+.footer-bottom {
+  max-width: 1400px; margin: 40px auto 0; padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center; color: rgba(255, 255, 255, 0.3); font-size: 0.9rem;
+}
+
+/* =========================================
+   7. FLOATING PARTICLES
+   ========================================= */
+.particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.particle {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: rgba(0, 255, 255, 0.4); animation: float linear infinite;
+}
+@keyframes float {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; } 90% { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* =========================================
+   8. RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 1024px) {
+  .footer-content { grid-template-columns: 1fr 1fr; }
+  .modal-content { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
+  .modal-image { aspect-ratio: 16/9; }
+}
+@media (max-width: 768px) {
+  .main-header { padding: 15px 20px; }
+  .desktop-nav, .search-box { display: none; }
+  .mobile-menu-btn { display: flex; }
+  .hero-section { min-height: 60vh; padding: 100px 20px 40px; }
+  .cards-container { grid-template-columns: 1fr; padding: 0 20px; gap: 30px; }
+  .page-title { margin: 30px 0 10px; }
+  .footer-content { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+  .footer-brand p { max-width: 100%; }
+  .newsletter-form { flex-direction: column; }
+  .footer-links a:hover { transform: none; }
+  .cart-drawer { width: 100vw; }
+  .form-row { grid-template-columns: 1fr; }
+}
+@media (min-width: 769px) and (max-width: 1100px) {
+  .cards-container { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- Header & Navigation -->
+<header class="main-header">
+  <a href="#hero" class="logo">CYBER<span class="highlight">COLLECTION</span></a>
+  
+  <nav class="desktop-nav">
+    <a href="#hero">Home</a>
+    <a href="#products">Products</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  
+  <div class="header-actions">
+    <div class="search-box">
+      <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search products...">
+    </div>
+    
+    <button class="cart-btn" id="cartBtn" aria-label="Open cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-search">
+    <input type="text" id="mobileSearchInput" placeholder="Search products...">
+  </div>
+  <a href="#hero">Home</a>
+  <a href="#products">Products</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero-section" id="hero">
+  <div class="hero-bg-effects"></div>
+  <div class="hero-content">
+    <h1>Next Gen <span class="neon-text">Cyber</span> Gear</h1>
+    <p>Upgrade your reality with our premium selection of futuristic tech. Immersive, responsive, and unapologetically bold.</p>
+    <a href="#products" class="hero-btn">Explore Collection</a>
+  </div>
+</section>
+
+<!-- Products Section -->
+<section class="products-section" id="products">
+  <div class="page-title">
+    <h2>Cyber Collection</h2>
+    <p>Next Gen Products</p>
+  </div>
+  <div class="cards-container" id="cardsContainer"></div>
+  <div id="noResults" class="no-results" style="display: none;">No products found matching your search.</div>
+</section>
+
+<!-- Footer -->
+<footer class="main-footer" id="contact">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <a href="#hero" class="logo">CYBER<span class="highlight">COLLECTION</span></a>
+      <p>Forging the future of technology, one neon-lit product at a time.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <a href="#hero">Home</a><a href="#products">Products</a>
+      <a href="#about">About Us</a><a href="#contact">Contact</a>
+    </div>
+    <div class="footer-links">
+      <h4>Support</h4>
+      <a href="#">FAQ</a><a href="#">Shipping</a>
+      <a href="#">Returns</a><a href="#">Warranty</a>
+    </div>
+    <div class="footer-newsletter">
+      <h4>Stay Updated</h4>
+      <p>Subscribe to our neural feed for exclusive drops.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed to neural feed!');">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">JOIN</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2026 Cyber Collection. All rights reserved.</p></div>
+</footer>
+
+<!-- Background Elements -->
+<div class="grid-bg"></div>
+<div class="particles" id="particles"></div>
+
+<!-- Product Modal -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal-content" id="modalContent">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <div class="modal-image"><img src="" alt="" id="modalImg"></div>
+    <div class="modal-details">
+      <span class="card-badge" id="modalBadge" style="margin-bottom: 15px;"></span>
+      <h2 id="modalTitle"></h2>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-specs" id="modalSpecs"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <button class="btn-buy" id="modalAddToCart" style="padding: 15px; font-size: 1rem;">ADD TO CART</button>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>YOUR CART</h3>
+    <button class="cart-close" id="cartClose">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">Your cart is empty</div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">Total: <span id="cartTotal">$0</span></div>
+    <button class="btn-checkout" id="btnCheckout" disabled>PROCEED TO CHECKOUT</button>
+  </div>
+</div>
+
+<!-- Checkout Modal -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal-content checkout-content" id="checkoutContent">
+    <button class="modal-close" id="checkoutClose">&times;</button>
+    <div id="checkoutFormContainer">
+      <h2>SECURE CHECKOUT</h2>
+      <form id="checkoutForm">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" required placeholder="john@cyber.net">
+        </div>
+        <div class="form-group">
+          <label>Shipping Address</label>
+          <input type="text" required placeholder="123 Neon Street, Cyber City">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Card Number</label>
+            <input type="text" required placeholder="0000 0000 0000 0000" maxlength="19">
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="text" required placeholder="123" maxlength="3">
+          </div>
+        </div>
+        <button type="submit" class="btn-checkout" id="processPaymentBtn">COMPLETE PURCHASE</button>
+      </form>
+    </div>
+    <div class="success-message" id="successMessage" style="display: none;">
+      <div class="success-icon">✓</div>
+      <h2>ORDER CONFIRMED</h2>
+      <p>Your neural-linked gear is being prepared for dispatch. Check your email for tracking.</p>
+      <button class="btn-buy" id="continueShopping" style="padding: 15px 30px; font-size: 1rem;">CONTINUE SHOPPING</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// =========================================
+// 1. PRODUCT DATA & RENDERING
+// =========================================
+const products = [
+  { id: 'p1', theme: 'cyan', badge: 'New Release', title: 'Quantum Headset X', desc: 'Immersive spatial audio with holographic sound projection and neural-sync comfort padding.', specs: [{val:'7.1',label:'Surround'},{val:'40ms',label:'Latency'},{val:'60h',label:'Battery'}], price: 299, oldPrice: 399, image: 'https://image.qwenlm.ai/public_source/8768d9aa-c411-4e53-a21e-f6b11c5ea167/18e9ddd7f-5362-4548-a6c2-bfefa2c20227.png' },
+  { id: 'p2', theme: 'pink', badge: 'Best Seller', title: 'NeonBlade Keyboard', desc: 'Mechanical keys with per-key RGB, magnetic switches, and aircraft-grade aluminum frame.', specs: [{val:'MX',label:'Switch'},{val:'1ms',label:'Response'},{val:'RGB',label:'Lighting'}], price: 189, oldPrice: 249, image: 'https://image.qwenlm.ai/public_source/8768d9aa-c411-4e53-a21e-f6b11c5ea167/1c2b5b77e-e965-4c2b-a14c-8e213227d6ec.png' },
+  { id: 'p3', theme: 'purple', badge: 'Limited', title: 'VoidMouse Pro', desc: 'Ultra-lightweight ergonomic design with 25K DPI sensor and zero-latency wireless connection.', specs: [{val:'25K',label:'DPI'},{val:'58g',label:'Weight'},{val:'0ms',label:'Lag'}], price: 149, oldPrice: 199, image: 'https://image.qwenlm.ai/public_source/8768d9aa-c411-4e53-a21e-f6b11c5ea167/1ba85b2f5-1177-4e47-948c-df406bb7096a.png' },
+  { id: 'p4', theme: 'green', badge: 'Pro Edition', title: 'CyberLens VR', desc: '8K resolution per eye, 200° FOV, and full-body haptic feedback integration.', specs: [{val:'8K',label:'Per Eye'},{val:'200°',label:'FOV'},{val:'120Hz',label:'Refresh'}], price: 599, oldPrice: 799, image: 'https://image.qwenlm.ai/public_source/8768d9aa-c411-4e53-a21e-f6b11c5ea167/1617bd0d9-7174-438f-b741-ecdf6acec559.png' },
+  { id: 'p5', theme: 'orange', badge: 'Hot Deal', title: 'Pulse Speaker', desc: '360° omnidirectional sound with bass-reactive neon ring and waterproof nano-coating.', specs: [{val:'360°',label:'Sound'},{val:'50W',label:'Power'},{val:'IP68',label:'Rating'}], price: 229, oldPrice: 319, image: 'https://image.qwenlm.ai/public_source/8768d9aa-c411-4e53-a21e-f6b11c5ea167/156007926-645e-4bc8-b8f3-4a004d2b3ba4.png' },
+  { id: 'p6', theme: 'gold', badge: 'Premium', title: 'AuraWatch Ultra', desc: 'Titanium build, always-on AMOLED display, health monitoring AI, and 14-day battery life.', specs: [{val:'AMOLED',label:'Display'},{val:'Ti',label:'Build'},{val:'14d',label:'Battery'}], price: 449, oldPrice: 549, image: 'https://image.qwenlm.ai/public_source/8768d9aa-c411-4e53-a21e-f6b11c5ea167/1f91160d2-efb9-471c-ac6c-bc3e873e1dea.png' }
+];
+
+const container = document.getElementById('cardsContainer');
+
+products.forEach((p) => {
+  const cardWrapper = document.createElement('div');
+  cardWrapper.className = 'card-wrapper';
+  cardWrapper.innerHTML = `
+    <div class="neon-card ${p.theme}" data-id="${p.id}">
+      <div class="scan-line"></div>
+      <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+      <div class="card-inner">
+        <div class="card-badge">${p.badge}</div>
+        <div class="card-image">
+          <div class="glow-orb"></div>
+          <img src="${p.image}" alt="${p.title}" loading="lazy">
+        </div>
+        <h2 class="card-title">${p.title}</h2>
+        <p class="card-desc">${p.desc}</p>
+        <div class="card-specs">
+          ${p.specs.map(s => `<div class="spec"><div class="spec-val">${s.val}</div><div class="spec-label">${s.label}</div></div>`).join('')}
+        </div>
+        <div class="card-bottom">
+          <div class="card-price">$${p.price}<span>$${p.oldPrice}</span></div>
+          <button class="btn-buy" data-id="${p.id}">BUY</button>
+        </div>
+      </div>
+    </div>
+  `;
+  container.appendChild(cardWrapper);
+});
+
+// =========================================
+// 2. 3D TILT EFFECT
+// =========================================
+document.querySelectorAll('.neon-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -10;
+    const rotateY = ((x - centerX) / centerX) * 10;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+  });
+});
+
+// =========================================
+// 3. FLOATING PARTICLES
+// =========================================
+const particleContainer = document.getElementById('particles');
+const neonColors = [[0,255,255], [255,0,128], [191,0,255], [57,255,20], [255,110,0], [255,215,0]];
+function createParticle() {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const color = neonColors[Math.floor(Math.random() * neonColors.length)];
+  p.style.background = `rgba(${color[0]},${color[1]},${color[2]},${Math.random() * 0.5 + 0.2})`;
+  p.style.left = Math.random() * 100 + '%';
+  p.style.width = (Math.random() * 3 + 1) + 'px';
+  p.style.height = p.style.width;
+  p.style.animationDuration = (Math.random() * 10 + 8) + 's';
+  p.style.animationDelay = (Math.random() * 5) + 's';
+  particleContainer.appendChild(p);
+  setTimeout(() => p.remove(), 20000);
+}
+for (let i = 0; i < 30; i++) setTimeout(createParticle, i * 200);
+setInterval(createParticle, 600);
+
+// =========================================
+// 4. SEARCH FUNCTIONALITY
+// =========================================
+const searchInput = document.getElementById('searchInput');
+const mobileSearchInput = document.getElementById('mobileSearchInput');
+const noResults = document.getElementById('noResults');
+
+function filterProducts(query) {
+  const lowerQuery = query.toLowerCase();
+  let hasResults = false;
+  document.querySelectorAll('.card-wrapper').forEach(wrapper => {
+    const title = wrapper.querySelector('.card-title').textContent.toLowerCase();
+    const desc = wrapper.querySelector('.card-desc').textContent.toLowerCase();
+    if (title.includes(lowerQuery) || desc.includes(lowerQuery)) {
+      wrapper.style.display = 'flex';
+      hasResults = true;
+    } else {
+      wrapper.style.display = 'none';
+    }
+  });
+  noResults.style.display = hasResults ? 'none' : 'block';
+}
+searchInput.addEventListener('input', (e) => { mobileSearchInput.value = e.target.value; filterProducts(e.target.value); });
+mobileSearchInput.addEventListener('input', (e) => { searchInput.value = e.target.value; filterProducts(e.target.value); });
+
+// =========================================
+// 5. MOBILE MENU TOGGLE
+// =========================================
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+mobileMenuBtn.addEventListener('click', () => {
+  mobileMenuBtn.classList.toggle('active');
+  mobileMenu.classList.toggle('active');
+});
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenuBtn.classList.remove('active');
+    mobileMenu.classList.remove('active');
+  });
+});
+
+// =========================================
+// 6. SHOPPING CART LOGIC
+// =========================================
+let cart = [];
+
+function updateCartUI() {
+  const cartItemsContainer = document.getElementById('cartItems');
+  const cartCount = document.getElementById('cartCount');
+  const cartTotal = document.getElementById('cartTotal');
+  const btnCheckout = document.getElementById('btnCheckout');
+  
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  
+  cartCount.textContent = totalItems;
+  cartCount.classList.toggle('active', totalItems > 0);
+  cartTotal.textContent = `$${totalPrice}`;
+  btnCheckout.disabled = totalItems === 0;
+  
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
+    return;
+  }
+  
+  cartItemsContainer.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-image"><img src="${item.image}" alt="${item.title}"></div>
+      <div class="cart-item-details">
+        <div class="cart-item-title">${item.title}</div>
+        <div class="cart-item-price">$${item.price}</div>
+        <div class="cart-item-controls">
+          <button class="qty-btn" onclick="changeQty('${item.id}', -1)">−</button>
+          <span class="cart-item-qty">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+        </div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">&times;</button>
+    </div>
+  `).join('');
+}
+
+function addToCart(product) {
+  const existing = cart.find(item => item.id === product.id);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+  updateCartUI();
+  
+  // Visual feedback on button
+  const btn = document.querySelector(`.btn-buy[data-id="${product.id}"]`);
+  if (btn) {
+    const originalText = btn.textContent;
+    btn.textContent = '✓ ADDED';
+    btn.style.background = '#39ff14';
+    setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; }, 1500);
+  }
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (item) {
+    item.qty += delta;
+    if (item.qty <= 0) removeFromCart(id);
+    else updateCartUI();
+  }
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  updateCartUI();
+}
+
+// =========================================
+// 7. MODAL & CART DRAWER INTERACTIONS
+// =========================================
+const productModal = document.getElementById('productModal');
+const modalContent = document.getElementById('modalContent');
+const checkoutModal = document.getElementById('checkoutModal');
+const cartDrawer = document.getElementById('cartDrawer');
+
+// Open Product Modal
+container.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn-buy');
+  if (btn) {
+    e.stopPropagation();
+    const product = products.find(p => p.id === btn.dataset.id);
+    addToCart(product);
+    openCart();
+    return;
+  }
+  
+  const card = e.target.closest('.neon-card');
+  if (card) {
+    const product = products.find(p => p.id === card.dataset.id);
+    openModal(product);
+  }
+});
+
+function openModal(product) {
+  document.getElementById('modalImg').src = product.image;
+  document.getElementById('modalImg').alt = product.title;
+  document.getElementById('modalBadge').textContent = product.badge;
+  document.getElementById('modalBadge').className = `card-badge`;
+  document.getElementById('modalBadge').style.color = `var(--neon)`;
+  document.getElementById('modalTitle').textContent = product.title;
+  document.getElementById('modalDesc').textContent = product.desc;
+  document.getElementById('modalPrice').innerHTML = `$${product.price}<span>$${product.oldPrice}</span>`;
+  document.getElementById('modalSpecs').innerHTML = product.specs.map(s => 
+    `<div class="spec"><div class="spec-val">${s.val}</div><div class="spec-label">${s.label}</div></div>`
+  ).join('');
+  
+  const addBtn = document.getElementById('modalAddToCart');
+  addBtn.onclick = () => { addToCart(product); closeModal(); openCart(); };
+  
+  // Apply theme color to modal
+  modalContent.style.setProperty('--neon', `var(--neon)`); // Fallback, handled by CSS inheritance mostly, but let's set inline for dynamic
+  const themeColor = getComputedStyle(document.querySelector(`.neon-card.${product.theme}`)).getPropertyValue('--neon').trim();
+  modalContent.style.setProperty('--neon', themeColor);
+  modalContent.style.setProperty('--neon-dim', themeColor + '4D'); // 30% opacity hex approx
+  modalContent.style.borderColor = themeColor;
+  
+  productModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  productModal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+productModal.addEventListener('click', (e) => { if (e.target === productModal) closeModal(); });
+
+// Cart Drawer
+const cartBtn = document.getElementById('cartBtn');
+const cartClose = document.getElementById('cartClose');
+
+function openCart() {
+  cartDrawer.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  cartDrawer.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+cartBtn.addEventListener('click', openCart);
+cartClose.addEventListener('click', closeCart);
+
+// =========================================
+// 8. CHECKOUT PROCESS
+// =========================================
+const btnCheckout = document.getElementById('btnCheckout');
+const checkoutForm = document.getElementById('checkoutForm');
+const checkoutFormContainer = document.getElementById('checkoutFormContainer');
+const successMessage = document.getElementById('successMessage');
+const processPaymentBtn = document.getElementById('processPaymentBtn');
+
+btnCheckout.addEventListener('click', () => {
+  closeCart();
+  checkoutModal.classList.add('active');
+  checkoutFormContainer.style.display = 'block';
+  successMessage.style.display = 'none';
+  document.body.style.overflow = 'hidden';
+});
+
+document.getElementById('checkoutClose').addEventListener('click', () => {
+  checkoutModal.classList.remove('active');
+  document.body.style.overflow = '';
+});
+checkoutModal.addEventListener('click', (e) => {
+  if (e.target === checkoutModal) {
+    checkoutModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+
+checkoutForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  processPaymentBtn.textContent = 'PROCESSING...';
+  processPaymentBtn.disabled = true;
+  
+  // Simulate API call
+  setTimeout(() => {
+    checkoutFormContainer.style.display = 'none';
+    successMessage.style.display = 'block';
+    cart = [];
+    updateCartUI();
+    processPaymentBtn.textContent = 'COMPLETE PURCHASE';
+    processPaymentBtn.disabled = false;
+    checkoutForm.reset();
+  }, 2000);
+});
+
+document.getElementById('continueShopping').addEventListener('click', () => {
+  checkoutModal.classList.remove('active');
+  document.body.style.overflow = '';
+});
+
+// Close modals/drawers on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeModal();
+    closeCart();
+    checkoutModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+</script>
+</body>
+</html>
