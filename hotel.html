@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrandVista Hotels - Luxury Stays Worldwide</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/playfair-display@5.0.0/index.css">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .hero-gradient { background: linear-gradient(135deg, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.4) 100%); }
+        .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .fade-in { animation: fadeIn 0.6s ease-out; }
+        .slide-up { animation: slideUp 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .scroll-smooth { scroll-behavior: smooth; }
+        .nav-scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .nav-transparent { background: transparent; }
+        .star-rating { color: #fbbf24; }
+        .modal-overlay { background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+        .gradient-text { background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; }
+        .parallax-bg { background-attachment: fixed; background-size: cover; background-position: center; }
+        .pulse-gold { animation: pulseGold 2s infinite; }
+        @keyframes pulseGold { 0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); } 50% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); } }
+    </style>
+</head>
+<body class="scroll-smooth bg-slate-50">
+    <div id="app">
+        <!-- Navigation -->
+        <nav :class="scrolled ? 'nav-scrolled' : 'nav-transparent'" class="fixed w-full z-50 transition-all duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <div class="flex items-center">
+                        <svg class="h-8 w-8" :class="scrolled ? 'text-amber-600' : 'text-white'" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold" :class="scrolled ? 'text-slate-900' : 'text-white'">
+                            Grand<span class="gradient-text">Vista</span>
+                        </span>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a v-for="link in navLinks" :key="link" @click="scrollToSection(link)" 
+                           class="cursor-pointer font-medium transition-colors hover:text-amber-500"
+                           :class="scrolled ? 'text-slate-700' : 'text-white'">
+                            {{ link }}
+                        </a>
+                        <button @click="openBookingModal" 
+                                class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-xl">
+                            Book Now
+                        </button>
+                    </div>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden" :class="scrolled ? 'text-slate-900' : 'text-white'">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div v-if="mobileMenuOpen" class="md:hidden bg-white shadow-lg">
+                <div class="px-4 py-4 space-y-3">
+                    <a v-for="link in navLinks" :key="link" @click="scrollToSection(link); mobileMenuOpen = false"
+                       class="block py-2 text-slate-700 hover:text-amber-600 cursor-pointer font-medium">
+                        {{ link }}
+                    </a>
+                    <button @click="openBookingModal; mobileMenuOpen = false" 
+                            class="w-full px-6 py-2.5 bg-amber-500 text-white rounded-full font-semibold">
+                        Book Now
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="relative h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0">
+                <img :src="heroImage" class="w-full h-full object-cover" alt="Luxury Hotel">
+                <div class="hero-gradient absolute inset-0"></div>
+            </div>
+            <div class="relative z-10 text-center px-4 max-w-5xl mx-auto slide-up">
+                <div class="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20">
+                    <span class="text-white text-sm font-medium">✦ Award Winning Luxury Hotels</span>
+                </div>
+                <h1 class="font-serif text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                    Experience the Art of<br>
+                    <span class="gradient-text">Luxury Living</span>
+                </h1>
+                <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
+                    Discover world-class accommodations, breathtaking views, and unforgettable moments at our exclusive collection of premium hotels.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button @click="scrollToSection('Hotels')" 
+                            class="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-xl pulse-gold">
+                        Explore Hotels
+                    </button>
+                    <button @click="scrollToSection('About')" 
+                            class="px-8 py-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white rounded-full font-semibold transition-all border border-white/30">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+            <!-- Scroll indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Search Bar -->
+        <section class="relative -mt-16 z-20 px-4">
+            <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Destination</label>
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <input v-model="search.destination" type="text" placeholder="Where are you going?" 
+                                   class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Check In</label>
+                        <input v-model="search.checkIn" type="date" 
+                               class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Check Out</label>
+                        <input v-model="search.checkOut" type="date" 
+                               class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Guests</label>
+                        <select v-model="search.guests" 
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition bg-white">
+                            <option value="1">1 Guest</option>
+                            <option value="2">2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4 Guests</option>
+                            <option value="5">5+ Guests</option>
+                        </select>
+                    </div>
+                </div>
+                <button @click="searchHotels" 
+                        class="w-full mt-4 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    Search Available Hotels
+                </button>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-16 px-4">
+            <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div v-for="(stat, idx) in stats" :key="idx" class="text-center">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2">{{ stat.value }}</div>
+                    <div class="text-slate-600 font-medium">{{ stat.label }}</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Hotels -->
+        <section id="Hotels" class="py-20 px-4 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-amber-600 font-semibold uppercase tracking-wider text-sm">Our Collection</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-slate-900 mt-2 mb-4">Featured Hotels</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto">Handpicked destinations offering the finest in luxury, comfort, and unforgettable experiences.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div v-for="(hotel, idx) in filteredHotels" :key="idx" 
+                         class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg cursor-pointer group"
+                         @click="viewHotel(hotel)">
+                        <div class="relative overflow-hidden h-64">
+                            <img :src="hotel.image" :alt="hotel.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                                <span class="text-amber-600 font-bold text-sm">${{ hotel.price }}/night</span>
+                            </div>
+                            <div v-if="hotel.featured" class="absolute top-4 left-4 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                Featured
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center mb-2">
+                                <svg class="w-4 h-4 text-amber-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                                <span class="text-sm font-semibold text-slate-700">{{ hotel.rating }}</span>
+                                <span class="text-sm text-slate-500 ml-1">({{ hotel.reviews }} reviews)</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-slate-900 mb-1">{{ hotel.name }}</h3>
+                            <div class="flex items-center text-slate-500 text-sm mb-3">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                </svg>
+                                {{ hotel.location }}
+                            </div>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span v-for="amenity in hotel.amenities.slice(0,3)" :key="amenity" 
+                                      class="text-xs px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full">
+                                    {{ amenity }}
+                                </span>
+                            </div>
+                            <button class="w-full py-2.5 bg-slate-900 hover:bg-amber-500 text-white rounded-xl font-semibold transition-colors">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="About" class="py-20 px-4 bg-slate-50">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-amber-600 font-semibold uppercase tracking-wider text-sm">Why Choose Us</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-slate-900 mt-2 mb-4">Exceptional Services</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto">Every detail is crafted to ensure your stay is nothing short of extraordinary.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div v-for="(service, idx) in services" :key="idx" 
+                         class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all hover:-translate-y-2">
+                        <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center mb-5">
+                            <span class="text-2xl">{{ service.icon }}</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 mb-3">{{ service.title }}</h3>
+                        <p class="text-slate-600 leading-relaxed">{{ service.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parallax CTA -->
+        <section class="parallax-bg py-32 px-4 relative" :style="{ backgroundImage: `url(${parallaxImage})` }">
+            <div class="absolute inset-0 bg-slate-900/70"></div>
+            <div class="relative z-10 max-w-4xl mx-auto text-center">
+                <h2 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6">Ready for Your Next Adventure?</h2>
+                <p class="text-xl text-white/90 mb-10">Book today and receive 20% off your first luxury stay. Limited time offer.</p>
+                <button @click="openBookingModal" 
+                        class="px-10 py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-semibold transition-all shadow-2xl hover:shadow-amber-500/50 text-lg">
+                    Book Your Stay Now
+                </button>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-20 px-4 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-amber-600 font-semibold uppercase tracking-wider text-sm">Testimonials</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-slate-900 mt-2 mb-4">What Our Guests Say</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div v-for="(testimonial, idx) in testimonials" :key="idx" 
+                         class="bg-gradient-to-br from-slate-50 to-white p-8 rounded-2xl border border-slate-100 hover:shadow-xl transition-all">
+                        <div class="flex mb-4">
+                            <svg v-for="i in 5" :key="i" class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                        </div>
+                        <p class="text-slate-700 italic mb-6 leading-relaxed">"{{ testimonial.text }}"</p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-lg">
+                                {{ testimonial.name.charAt(0) }}
+                            </div>
+                            <div class="ml-3">
+                                <div class="font-semibold text-slate-900">{{ testimonial.name }}</div>
+                                <div class="text-sm text-slate-500">{{ testimonial.role }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="py-20 px-4 bg-gradient-to-br from-slate-900 to-slate-800">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mb-4">Stay in the Loop</h2>
+                <p class="text-slate-300 mb-8">Subscribe to receive exclusive deals, travel inspiration, and insider tips.</p>
+                <form @submit.prevent="subscribeNewsletter" class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+                    <input v-model="newsletterEmail" type="email" placeholder="Enter your email" required
+                           class="flex-1 px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none">
+                    <button type="submit" 
+                            class="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-semibold transition-all shadow-lg">
+                        Subscribe
+                    </button>
+                </form>
+                <p v-if="subscribed" class="text-green-400 mt-4 fade-in">✓ Thank you for subscribing!</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-slate-950 text-slate-400 py-16 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <svg class="h-8 w-8 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                            <span class="ml-2 text-xl font-bold text-white">Grand<span class="text-amber-500">Vista</span></span>
+                        </div>
+                        <p class="text-sm leading-relaxed">Luxury accommodations and unforgettable experiences at our exclusive collection of premium hotels worldwide.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li v-for="link in navLinks" :key="link" @click="scrollToSection(link)" class="cursor-pointer hover:text-amber-500 transition">{{ link }}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Contact</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>📧 hello@grandvista.com</li>
+                            <li>📞 +1 (555) 123-4567</li>
+                            <li>📍 123 Luxury Ave, NY 10001</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Follow Us</h4>
+                        <div class="flex gap-3">
+                            <a v-for="social in ['Facebook', 'Twitter', 'Instagram', 'LinkedIn']" :key="social" 
+                               class="w-10 h-10 bg-white/10 hover:bg-amber-500 rounded-full flex items-center justify-center transition-colors cursor-pointer">
+                                <span class="text-white text-xs font-bold">{{ social.charAt(0) }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
+                    <p>© 2026 GrandVista Hotels. All rights reserved.</p>
+                    <div class="flex gap-6 mt-4 md:mt-0">
+                        <a class="hover:text-amber-500 cursor-pointer">Privacy Policy</a>
+                        <a class="hover:text-amber-500 cursor-pointer">Terms of Service</a>
+                        <a class="hover:text-amber-500 cursor-pointer">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Hotel Detail Modal -->
+        <div v-if="selectedHotel" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay" @click.self="selectedHotel = null">
+            <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto fade-in">
+                <div class="relative h-72">
+                    <img :src="selectedHotel.image" :alt="selectedHotel.name" class="w-full h-full object-cover rounded-t-2xl">
+                    <button @click="selectedHotel = null" class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="font-serif text-3xl font-bold text-slate-900">{{ selectedHotel.name }}</h3>
+                            <div class="flex items-center text-slate-600 mt-1">
+                                <svg class="w-4 h-4 mr-1 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                </svg>
+                                {{ selectedHotel.location }}
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold gradient-text">${{ selectedHotel.price }}</div>
+                            <div class="text-sm text-slate-500">per night</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="flex">
+                            <svg v-for="i in 5" :key="i" class="w-5 h-5" :class="i <= Math.floor(selectedHotel.rating) ? 'text-amber-400' : 'text-slate-200'" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                        </div>
+                        <span class="font-semibold text-slate-700">{{ selectedHotel.rating }}</span>
+                        <span class="text-slate-500">({{ selectedHotel.reviews }} reviews)</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed mb-6">{{ selectedHotel.description }}</p>
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-slate-900 mb-3">Amenities</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span v-for="amenity in selectedHotel.amenities" :key="amenity" 
+                                  class="px-3 py-1.5 bg-amber-50 text-amber-700 rounded-full text-sm font-medium">
+                                {{ amenity }}
+                            </span>
+                        </div>
+                    </div>
+                    <button @click="bookHotel(selectedHotel)" 
+                            class="w-full py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-xl font-semibold transition-all shadow-lg">
+                        Book This Hotel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Confirmation Modal -->
+        <div v-if="bookingConfirmed" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+            <div class="bg-white rounded-2xl max-w-md w-full p-8 text-center fade-in">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-slate-900 mb-3">Booking Confirmed!</h3>
+                <p class="text-slate-600 mb-6">Thank you for choosing GrandVista. A confirmation email has been sent to your inbox.</p>
+                <div class="bg-slate-50 rounded-xl p-4 mb-6 text-left">
+                    <div class="flex justify-between py-1 text-sm">
+                        <span class="text-slate-500">Hotel:</span>
+                        <span class="font-semibold text-slate-900">{{ bookingInfo.hotel }}</span>
+                    </div>
+                    <div class="flex justify-between py-1 text-sm">
+                        <span class="text-slate-500">Check-in:</span>
+                        <span class="font-semibold text-slate-900">{{ bookingInfo.checkIn }}</span>
+                    </div>
+                    <div class="flex justify-between py-1 text-sm">
+                        <span class="text-slate-500">Check-out:</span>
+                        <span class="font-semibold text-slate-900">{{ bookingInfo.checkOut }}</span>
+                    </div>
+                    <div class="flex justify-between py-1 text-sm">
+                        <span class="text-slate-500">Guests:</span>
+                        <span class="font-semibold text-slate-900">{{ bookingInfo.guests }}</span>
+                    </div>
+                    <div class="border-t border-slate-200 mt-2 pt-2 flex justify-between">
+                        <span class="font-semibold text-slate-900">Total:</span>
+                        <span class="font-bold text-amber-600">${{ bookingInfo.total }}</span>
+                    </div>
+                </div>
+                <button @click="bookingConfirmed = false" 
+                        class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, computed, onMounted, onUnmounted } = Vue;
+
+        createApp({
+            setup() {
+                const scrolled = ref(false);
+                const mobileMenuOpen = ref(false);
+                const selectedHotel = ref(null);
+                const bookingConfirmed = ref(false);
+                const subscribed = ref(false);
+                const newsletterEmail = ref('');
+
+                const search = ref({
+                    destination: '',
+                    checkIn: '2026-08-15',
+                    checkOut: '2026-08-20',
+                    guests: '2'
+                });
+
+                const bookingInfo = ref({
+                    hotel: '',
+                    checkIn: '',
+                    checkOut: '',
+                    guests: '',
+                    total: 0
+                });
+
+                const heroImage = 'https://image.qwenlm.ai/public_source/b14dbe85-fbea-4007-bda8-a3b481be110e/16b786d21-5f61-4d1f-a55a-896e1db635e0.png';
+                const parallaxImage = 'https://image.qwenlm.ai/public_source/b14dbe85-fbea-4007-bda8-a3b481be110e/1f5d4f397-116f-4388-9572-4c18537912b3.png';
+
+                const navLinks = ['Hotels', 'About', 'Services', 'Contact'];
+
+                const stats = [
+                    { value: '150+', label: 'Luxury Hotels' },
+                    { value: '50+', label: 'Countries' },
+                    { value: '1M+', label: 'Happy Guests' },
+                    { value: '4.9', label: 'Average Rating' }
+                ];
+
+                const hotels = [
+                    {
+                        name: 'The Azure Resort',
+                        location: 'Miami Beach, USA',
+                        price: 450,
+                        rating: 4.9,
+                        reviews: 2847,
+                        featured: true,
+                        image: 'https://image.qwenlm.ai/public_source/b14dbe85-fbea-4007-bda8-a3b481be110e/16b786d21-5f61-4d1f-a55a-896e1db635e0.png',
+                        description: 'An iconic beachfront resort featuring stunning ocean views, world-class spa facilities, and Michelin-starred dining. Experience the ultimate in tropical luxury.',
+                        amenities: ['Infinity Pool', 'Spa', 'Fine Dining', 'Beach Access', 'Concierge', 'Gym']
+                    },
+                    {
+                        name: 'Urban Skyline Suite',
+                        location: 'Manhattan, New York',
+                        price: 380,
+                        rating: 4.8,
+                        reviews: 1923,
+                        featured: true,
+                        image: 'https://image.qwenlm.ai/public_source/b14dbe85-fbea-4007-bda8-a3b481be110e/1ef3abe6d-cecd-4b66-a422-efd0c5ad0138.png',
+                        description: 'Sophisticated urban retreat in the heart of Manhattan. Floor-to-ceiling windows showcase breathtaking city skyline views from every suite.',
+                        amenities: ['City View', 'Rooftop Bar', 'Fitness Center', 'Room Service', 'Valet Parking']
+                    },
+                    {
+                        name: 'Coral Bay Retreat',
+                        location: 'Maldives',
+                        price: 720,
+                        rating: 5.0,
+                        reviews: 1456,
+                        featured: true,
+                        image: 'https://image.qwenlm.ai/public_source/b14dbe85-fbea-4007-bda8-a3b481be110e/1f5d4f397-116f-4388-9572-4c18537912b3.png',
+                        description: 'Overwater villas on pristine turquoise waters. Private beach access, personal butler service, and underwater restaurant experiences await.',
+                        amenities: ['Overwater Villa', 'Snorkeling', 'Private Beach', 'Butler Service', 'Water Sports']
+                    },
+                    {
+                        name: 'Alpine Chalet Lodge',
+                        location: 'Swiss Alps, Switzerland',
+                        price: 520,
+                        rating: 4.9,
+                        reviews: 1089,
+                        featured: false,
+                        image: 'https://image.qwenlm.ai/public_source/b14dbe85-fbea-4007-bda8-a3b481be110e/1e34a9ecc-e335-4d1b-8f7f-6bb32c839606.png',
+                        description: 'Cozy mountain retreat with panoramic alpine views. Ski-in/ski-out access, hot tubs, and authentic Swiss hospitality in a stunning setting.',
+                        amenities: ['Ski Access', 'Hot Tub', 'Fireplace', 'Mountain View', 'Restaurant']
+                    }
+                ];
+
+                const filteredHotels = computed(() => {
+                    if (!search.value.destination) return hotels;
+                    return hotels.filter(h => 
+                        h.name.toLowerCase().includes(search.value.destination.toLowerCase()) ||
+                        h.location.toLowerCase().includes(search.value.destination.toLowerCase())
+                    );
+                });
+
+                const services = [
+                    { icon: '️', title: '24/7 Concierge', description: 'Personalized service around the clock to ensure every aspect of your stay exceeds expectations.' },
+                    { icon: '🍽️', title: 'Fine Dining', description: 'Michelin-starred restaurants and world-class chefs crafting unforgettable culinary experiences.' },
+                    { icon: '💆', title: 'Luxury Spa', description: 'Rejuvenating treatments and wellness programs designed to restore body, mind, and spirit.' },
+                    { icon: '🏊', title: 'Premium Pools', description: 'Stunning infinity pools and private cabanas offering the perfect oasis for relaxation.' },
+                    { icon: '✈️', title: 'Airport Transfer', description: 'Complimentary luxury vehicle transfers to and from major airports worldwide.' },
+                    { icon: '🎯', title: 'Curated Experiences', description: 'Exclusive local tours, private events, and bespoke activities tailored to your interests.' }
+                ];
+
+                const testimonials = [
+                    { name: 'Sarah Mitchell', role: 'Travel Blogger', text: 'The Azure Resort exceeded every expectation. The attention to detail and personalized service made our anniversary truly unforgettable.' },
+                    { name: 'James Chen', role: 'Business Executive', text: 'Urban Skyline Suite is my go-to for New York trips. The views are spectacular and the business amenities are top-notch.' },
+                    { name: 'Emma Rodriguez', role: 'Honeymoon Couple', text: 'Coral Bay Retreat was pure paradise. Waking up over the water with that view—absolutely magical. Worth every penny!' }
+                ];
+
+                const handleScroll = () => {
+                    scrolled.value = window.scrollY > 50;
+                };
+
+                const scrollToSection = (section) => {
+                    const el = document.getElementById(section);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                };
+
+                const openBookingModal = () => {
+                    scrollToSection('Hotels');
+                };
+
+                const viewHotel = (hotel) => {
+                    selectedHotel.value = hotel;
+                };
+
+                const searchHotels = () => {
+                    scrollToSection('Hotels');
+                };
+
+                const bookHotel = (hotel) => {
+                    const checkIn = new Date(search.value.checkIn);
+                    const checkOut = new Date(search.value.checkOut);
+                    const nights = Math.max(1, Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)));
+                    const total = hotel.price * nights;
+
+                    bookingInfo.value = {
+                        hotel: hotel.name,
+                        checkIn: search.value.checkIn,
+                        checkOut: search.value.checkOut,
+                        guests: search.value.guests,
+                        total: total
+                    };
+                    selectedHotel.value = null;
+                    bookingConfirmed.value = true;
+                };
+
+                const subscribeNewsletter = () => {
+                    if (newsletterEmail.value) {
+                        subscribed.value = true;
+                        setTimeout(() => {
+                            subscribed.value = false;
+                            newsletterEmail.value = '';
+                        }, 3000);
+                    }
+                };
+
+                onMounted(() => {
+                    window.addEventListener('scroll', handleScroll);
+                });
+
+                onUnmounted(() => {
+                    window.removeEventListener('scroll', handleScroll);
+                });
+
+                return {
+                    scrolled,
+                    mobileMenuOpen,
+                    selectedHotel,
+                    bookingConfirmed,
+                    subscribed,
+                    newsletterEmail,
+                    search,
+                    bookingInfo,
+                    heroImage,
+                    parallaxImage,
+                    navLinks,
+                    stats,
+                    hotels,
+                    filteredHotels,
+                    services,
+                    testimonials,
+                    scrollToSection,
+                    openBookingModal,
+                    viewHotel,
+                    searchHotels,
+                    bookHotel,
+                    subscribeNewsletter
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
