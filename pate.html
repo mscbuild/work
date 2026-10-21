@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pâté Bakery - Artisan French Pastries & Breads</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/playfair-display@5.0.0/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/dancing-script@5.0.0/index.css">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-script { font-family: 'Dancing Script', cursive; }
+        body { background: #fdf8f3; }
+        .cream-bg { background: #fdf8f3; }
+        .warm-bg { background: #f5ebe0; }
+        .dark-warm { background: #2c1810; }
+        .gold-text { color: #b8860b; }
+        .warm-brown { color: #6b4423; }
+        .hero-gradient { background: linear-gradient(135deg, rgba(44,24,16,0.75) 0%, rgba(44,24,16,0.3) 100%); }
+        .card-hover { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(107,68,35,0.25); }
+        .fade-in { animation: fadeIn 0.8s ease-out; }
+        .slide-up { animation: slideUp 1s ease-out; }
+        .slide-left { animation: slideLeft 1s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+        .nav-scrolled { background: rgba(253,248,243,0.97); backdrop-filter: blur(12px); box-shadow: 0 4px 20px rgba(107,68,35,0.08); }
+        .nav-transparent { background: transparent; }
+        .modal-overlay { background: rgba(44,24,16,0.7); backdrop-filter: blur(6px); }
+        .gradient-text { background: linear-gradient(135deg, #b8860b 0%, #d4a574 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .btn-primary { background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%); }
+        .btn-primary:hover { background: linear-gradient(135deg, #8b6914 0%, #6b4423 100%); }
+        .pattern-dots { background-image: radial-gradient(circle, #d4a574 1px, transparent 1px); background-size: 24px 24px; }
+        .divider-ornament::before, .divider-ornament::after {
+            content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, #d4a574, transparent);
+        }
+        .scroll-smooth { scroll-behavior: smooth; }
+        .cart-bounce { animation: cartBounce 0.4s ease-out; }
+        @keyframes cartBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        .floating { animation: floating 3s ease-in-out infinite; }
+        @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body class="scroll-smooth">
+    <div id="app">
+        <!-- Navigation -->
+        <nav :class="scrolled ? 'nav-scrolled' : 'nav-transparent'" class="fixed w-full z-50 transition-all duration-500">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 rounded-full btn-primary flex items-center justify-center">
+                            <span class="text-white font-serif font-bold text-xl">P</span>
+                        </div>
+                        <div>
+                            <div class="font-serif text-2xl font-bold" :class="scrolled ? 'warm-brown' : 'text-white'">Pâté</div>
+                            <div class="font-script text-xs -mt-1" :class="scrolled ? 'gold-text' : 'text-amber-200'">Bakery & Pâtisserie</div>
+                        </div>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a v-for="link in navLinks" :key="link.name" @click="scrollToSection(link.id)" 
+                           class="cursor-pointer font-medium transition-colors hover:text-amber-700"
+                           :class="scrolled ? 'warm-brown' : 'text-white'">
+                            {{ link.name }}
+                        </a>
+                        <button @click="cartOpen = true" class="relative" :class="scrolled ? 'text-warm-brown' : 'text-white'">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            <span v-if="cartCount > 0" :key="cartCount" class="absolute -top-2 -right-2 w-5 h-5 bg-amber-600 text-white text-xs rounded-full flex items-center justify-center font-bold cart-bounce">
+                                {{ cartCount }}
+                            </span>
+                        </button>
+                        <button @click="scrollToSection('order')" 
+                                class="px-6 py-2.5 btn-primary text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-xl">
+                            Order Now
+                        </button>
+                    </div>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden" :class="scrolled ? 'text-warm-brown' : 'text-white'">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div v-if="mobileMenuOpen" class="md:hidden bg-[#fdf8f3] shadow-lg">
+                <div class="px-4 py-4 space-y-3">
+                    <a v-for="link in navLinks" :key="link.name" @click="scrollToSection(link.id); mobileMenuOpen = false"
+                       class="block py-2 warm-brown hover:text-amber-700 cursor-pointer font-medium">
+                        {{ link.name }}
+                    </a>
+                    <button @click="cartOpen = true; mobileMenuOpen = false" class="w-full py-2 warm-brown font-medium flex items-center justify-between">
+                        <span>Cart</span>
+                        <span v-if="cartCount > 0" class="bg-amber-600 text-white px-2 py-0.5 rounded-full text-xs">{{ cartCount }}</span>
+                    </button>
+                    <button @click="scrollToSection('order'); mobileMenuOpen = false" 
+                            class="w-full px-6 py-2.5 btn-primary text-white rounded-full font-semibold">
+                        Order Now
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="relative h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0">
+                <img :src="heroImage" class="w-full h-full object-cover" alt="Pâté Bakery">
+                <div class="hero-gradient absolute inset-0"></div>
+            </div>
+            <div class="relative z-10 text-center px-4 max-w-4xl mx-auto slide-up">
+                <div class="font-script text-3xl md:text-4xl text-amber-200 mb-4 floating">Since 1952</div>
+                <h1 class="font-serif text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                    Freshly Baked<br>
+                    <span class="gradient-text">With Love</span>
+                </h1>
+                <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
+                    Artisan French pastries, crusty breads, and delicate cakes crafted daily using traditional recipes and the finest ingredients.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button @click="scrollToSection('products')" 
+                            class="px-8 py-4 btn-primary text-white rounded-full font-semibold transition-all shadow-xl hover:shadow-2xl">
+                        Explore Our Menu
+                    </button>
+                    <button @click="scrollToSection('story')" 
+                            class="px-8 py-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white rounded-full font-semibold transition-all border border-white/30">
+                        Our Story
+                    </button>
+                </div>
+            </div>
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Features Strip -->
+        <section class="warm-bg py-12 px-4 border-y border-amber-900/10">
+            <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div v-for="(feature, idx) in features" :key="idx" class="flex items-center gap-3 justify-center">
+                    <div class="text-3xl">{{ feature.icon }}</div>
+                    <div>
+                        <div class="font-serif font-bold warm-brown">{{ feature.title }}</div>
+                        <div class="text-sm text-amber-800/70">{{ feature.desc }}</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section id="story" class="py-24 px-4 cream-bg">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <img :src="storyImage" alt="Our Bakery" class="rounded-2xl shadow-2xl w-full">
+                    <div class="absolute -bottom-8 -right-8 bg-white rounded-2xl p-6 shadow-xl hidden md:block">
+                        <div class="font-serif text-5xl font-bold gradient-text">70+</div>
+                        <div class="text-sm warm-brown font-medium">Years of Tradition</div>
+                    </div>
+                    <div class="absolute -top-6 -left-6 w-24 h-24 pattern-dots rounded-full hidden md:block"></div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-4 mb-6 divider-ornament">
+                        <span class="font-script text-2xl gold-text">Our Story</span>
+                    </div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold warm-brown mb-6 leading-tight">
+                        A Family Tradition of<br>
+                        <span class="gradient-text">Baking Excellence</span>
+                    </h2>
+                    <p class="text-amber-900/80 leading-relaxed mb-6 text-lg">
+                        For over seven decades, Pâté Bakery has been the heart of our community. What began as a small family shop in 1952 has blossomed into a beloved destination for lovers of authentic French baking.
+                    </p>
+                    <p class="text-amber-900/80 leading-relaxed mb-8">
+                        Every morning at 4 AM, our master bakers begin their craft, kneading dough by hand, shaping croissants with care, and baking breads that fill the streets with the irresistible aroma of fresh pastry. We use only organic flour, European butter, and seasonal fruits—because great baking starts with great ingredients.
+                    </p>
+                    <div class="grid grid-cols-3 gap-6 mb-8">
+                        <div v-for="(stat, idx) in storyStats" :key="idx">
+                            <div class="font-serif text-3xl font-bold gradient-text">{{ stat.value }}</div>
+                            <div class="text-sm warm-brown">{{ stat.label }}</div>
+                        </div>
+                    </div>
+                    <button @click="scrollToSection('products')" 
+                            class="px-8 py-3 btn-primary text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-xl">
+                        Discover Our Pastries
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="py-24 px-4 warm-bg">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <div class="flex items-center gap-4 justify-center mb-4 divider-ornament">
+                        <span class="font-script text-2xl gold-text">Our Menu</span>
+                    </div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold warm-brown mb-4">Freshly Baked Daily</h2>
+                    <p class="text-amber-900/70 max-w-2xl mx-auto">From flaky croissants to decadent cakes, every item is crafted with passion and precision.</p>
+                </div>
+                
+                <!-- Category Filter -->
+                <div class="flex flex-wrap justify-center gap-3 mb-12">
+                    <button v-for="cat in categories" :key="cat" 
+                            @click="activeCategory = cat"
+                            :class="activeCategory === cat ? 'btn-primary text-white shadow-lg' : 'bg-white warm-brown hover:bg-amber-50'"
+                            class="px-6 py-2.5 rounded-full font-medium transition-all">
+                        {{ cat }}
+                    </button>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div v-for="(product, idx) in filteredProducts" :key="product.id" 
+                         class="card-hover bg-white rounded-2xl overflow-hidden shadow-md group">
+                        <div class="relative overflow-hidden h-64 cursor-pointer" @click="viewProduct(product)">
+                            <img :src="product.image" :alt="product.name" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div v-if="product.badge" class="absolute top-4 left-4 bg-amber-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                {{ product.badge }}
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                <span class="text-white font-medium">View Details →</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-1 mb-2">
+                                <svg v-for="i in 5" :key="i" class="w-4 h-4" :class="i <= product.rating ? 'text-amber-500' : 'text-amber-200'" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                                <span class="text-xs warm-brown ml-1">({{ product.reviews }})</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold warm-brown mb-1">{{ product.name }}</h3>
+                            <p class="text-sm text-amber-900/70 mb-4 line-clamp-2">{{ product.description }}</p>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="font-serif text-2xl font-bold gradient-text">${{ product.price.toFixed(2) }}</span>
+                                </div>
+                                <button @click="addToCart(product)" 
+                                        class="px-4 py-2 btn-primary text-white rounded-full text-sm font-semibold transition-all shadow hover:shadow-lg flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                    </svg>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daily Specials Banner -->
+        <section class="py-20 px-4 dark-warm relative overflow-hidden">
+            <div class="absolute inset-0 pattern-dots opacity-10"></div>
+            <div class="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="font-script text-3xl text-amber-300 mb-4">Today's Special</div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                        Almond Croissant<br>
+                        <span class="gradient-text">with Fresh Berries</span>
+                    </h2>
+                    <p class="text-amber-100/80 text-lg mb-8 leading-relaxed">
+                        Our signature almond croissant, filled with homemade frangipane and topped with fresh seasonal berries. A perfect pairing with your morning coffee.
+                    </p>
+                    <div class="flex items-center gap-6 mb-8">
+                        <div>
+                            <div class="text-amber-300/60 line-through text-xl">$6.50</div>
+                            <div class="font-serif text-4xl font-bold gradient-text">$4.99</div>
+                        </div>
+                        <div class="bg-amber-600 text-white px-4 py-2 rounded-full font-semibold">
+                            Save 23%
+                        </div>
+                    </div>
+                    <button @click="addToCart(specialProduct)" 
+                            class="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-semibold transition-all shadow-xl">
+                        Order Today's Special
+                    </button>
+                </div>
+                <div class="relative">
+                    <img :src="specialImage" alt="Today's Special" class="rounded-2xl shadow-2xl w-full">
+                    <div class="absolute -top-4 -right-4 w-20 h-20 bg-amber-500 rounded-full flex items-center justify-center text-white font-serif font-bold shadow-xl floating">
+                        <div class="text-center">
+                            <div class="text-xs">ONLY</div>
+                            <div class="text-xl">$4.99</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="reviews" class="py-24 px-4 cream-bg">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <div class="flex items-center gap-4 justify-center mb-4 divider-ornament">
+                        <span class="font-script text-2xl gold-text">Testimonials</span>
+                    </div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold warm-brown mb-4">Loved by Our Customers</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div v-for="(t, idx) in testimonials" :key="idx" 
+                         class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all relative">
+                        <div class="absolute -top-4 left-8 text-6xl font-serif gradient-text leading-none">"</div>
+                        <div class="flex mb-4 pt-4">
+                            <svg v-for="i in 5" :key="i" class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                        </div>
+                        <p class="text-amber-900/80 italic mb-6 leading-relaxed">{{ t.text }}</p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full btn-primary flex items-center justify-center text-white font-bold text-lg">
+                                {{ t.name.charAt(0) }}
+                            </div>
+                            <div class="ml-3">
+                                <div class="font-semibold warm-brown">{{ t.name }}</div>
+                                <div class="text-sm text-amber-800/60">{{ t.role }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visit Us Section -->
+        <section id="visit" class="py-24 px-4 warm-bg">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <div class="flex items-center gap-4 justify-center mb-4 divider-ornament">
+                        <span class="font-script text-2xl gold-text">Visit Us</span>
+                    </div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold warm-brown mb-4">Come Say Hello</h2>
+                    <p class="text-amber-900/70 max-w-2xl mx-auto">Stop by our bakery and experience the aroma of fresh-baked goods.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div v-for="(loc, idx) in locations" :key="idx" 
+                         class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all text-center">
+                        <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-amber-100 flex items-center justify-center">
+                            <svg class="w-8 h-8 gold-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold warm-brown mb-2">{{ loc.name }}</h3>
+                        <p class="text-amber-900/70 mb-4">{{ loc.address }}</p>
+                        <div class="border-t border-amber-900/10 pt-4">
+                            <div class="text-sm font-semibold warm-brown mb-2">Hours</div>
+                            <div v-for="(h, hidx) in loc.hours" :key="hidx" class="text-sm text-amber-900/70 flex justify-between py-0.5">
+                                <span>{{ h.day }}</span>
+                                <span>{{ h.time }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section id="order" class="py-24 px-4 cream-bg relative overflow-hidden">
+            <div class="absolute inset-0 pattern-dots opacity-30"></div>
+            <div class="relative max-w-4xl mx-auto text-center">
+                <div class="font-script text-3xl gold-text mb-4">Stay Fresh</div>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold warm-brown mb-6">Join Our Baking Club</h2>
+                <p class="text-amber-900/70 mb-10 text-lg">Get 15% off your first order and receive weekly updates on new pastries, seasonal specials, and baking tips.</p>
+                <form @submit.prevent="subscribeNewsletter" class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+                    <input v-model="newsletterEmail" type="email" placeholder="Your email address" required
+                           class="flex-1 px-6 py-4 rounded-full bg-white border border-amber-900/10 warm-brown placeholder-amber-900/40 focus:ring-2 focus:ring-amber-600 focus:border-transparent outline-none shadow-sm">
+                    <button type="submit" 
+                            class="px-8 py-4 btn-primary text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-xl">
+                        Get 15% Off
+                    </button>
+                </form>
+                <p v-if="subscribed" class="text-green-700 mt-4 fade-in font-medium">✓ Welcome to the club! Check your inbox for your discount code.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="dark-warm text-amber-100/70 py-16 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center">
+                                <span class="text-white font-serif font-bold text-xl">P</span>
+                            </div>
+                            <div>
+                                <div class="font-serif text-2xl font-bold text-white">Pâté</div>
+                                <div class="font-script text-xs -mt-1 text-amber-300">Bakery & Pâtisserie</div>
+                            </div>
+                        </div>
+                        <p class="text-sm leading-relaxed">Crafting artisan French pastries and breads with love since 1952. Every bite tells a story of tradition and passion.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-4 font-serif">Quick Links</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li v-for="link in navLinks" :key="link.name" @click="scrollToSection(link.id)" class="cursor-pointer hover:text-amber-400 transition">{{ link.name }}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-4 font-serif">Contact</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>📧 hello@patebakery.com</li>
+                            <li>📞 +1 (555) 234-5678</li>
+                            <li>📍 42 Rue de la Paix, Paris</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-4 font-serif">Follow Us</h4>
+                        <div class="flex gap-3 mb-4">
+                            <a v-for="social in socials" :key="social" 
+                               class="w-10 h-10 bg-white/10 hover:bg-amber-500 rounded-full flex items-center justify-center transition-colors cursor-pointer">
+                                <span class="text-white text-sm font-bold">{{ social }}</span>
+                            </a>
+                        </div>
+                        <p class="text-xs">Tag us @patebakery for a chance to be featured!</p>
+                    </div>
+                </div>
+                <div class="border-t border-amber-100/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
+                    <p>© 2026 Pâté Bakery. Baked with love in Paris.</p>
+                    <div class="flex gap-6 mt-4 md:mt-0">
+                        <a class="hover:text-amber-400 cursor-pointer">Privacy Policy</a>
+                        <a class="hover:text-amber-400 cursor-pointer">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Product Detail Modal -->
+        <div v-if="selectedProduct" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay" @click.self="selectedProduct = null">
+            <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="relative h-72 md:h-auto">
+                        <img :src="selectedProduct.image" :alt="selectedProduct.name" class="w-full h-full object-cover md:rounded-l-2xl">
+                        <button @click="selectedProduct = null" class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white md:hidden">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="p-8 relative">
+                        <button @click="selectedProduct = null" class="absolute top-4 right-4 w-10 h-10 bg-amber-50 hover:bg-amber-100 rounded-full hidden md:flex items-center justify-center">
+                            <svg class="w-5 h-5 warm-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                        <div class="text-sm gold-text font-semibold uppercase tracking-wider mb-2">{{ selectedProduct.category }}</div>
+                        <h3 class="font-serif text-3xl font-bold warm-brown mb-3">{{ selectedProduct.name }}</h3>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex">
+                                <svg v-for="i in 5" :key="i" class="w-5 h-5" :class="i <= selectedProduct.rating ? 'text-amber-500' : 'text-amber-200'" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm warm-brown">({{ selectedProduct.reviews }} reviews)</span>
+                        </div>
+                        <p class="text-amber-900/80 leading-relaxed mb-6">{{ selectedProduct.fullDescription }}</p>
+                        <div class="mb-6">
+                            <div class="text-sm font-semibold warm-brown mb-2">Ingredients</div>
+                            <div class="flex flex-wrap gap-2">
+                                <span v-for="ing in selectedProduct.ingredients" :key="ing" 
+                                      class="px-3 py-1 bg-amber-50 text-amber-800 rounded-full text-xs font-medium">
+                                    {{ ing }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mb-6 pt-4 border-t border-amber-900/10">
+                            <div>
+                                <div class="font-serif text-3xl font-bold gradient-text">${{ selectedProduct.price.toFixed(2) }}</div>
+                                <div class="text-xs text-amber-800/60">per piece</div>
+                            </div>
+                            <div class="flex items-center gap-2 bg-amber-50 rounded-full p-1">
+                                <button @click="productQty = Math.max(1, productQty - 1)" class="w-8 h-8 rounded-full hover:bg-amber-100 warm-brown font-bold">−</button>
+                                <span class="w-8 text-center font-semibold warm-brown">{{ productQty }}</span>
+                                <button @click="productQty++" class="w-8 h-8 rounded-full hover:bg-amber-100 warm-brown font-bold">+</button>
+                            </div>
+                        </div>
+                        <button @click="addToCartWithQty(selectedProduct)" 
+                                class="w-full py-3.5 btn-primary text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl">
+                            Add to Cart · ${{ (selectedProduct.price * productQty).toFixed(2) }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Sidebar -->
+        <div v-if="cartOpen" class="fixed inset-0 z-50 modal-overlay" @click.self="cartOpen = false">
+            <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl fade-in flex flex-col">
+                <div class="p-6 border-b border-amber-900/10 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold warm-brown">Your Cart</h3>
+                        <p class="text-sm text-amber-800/60">{{ cartCount }} {{ cartCount === 1 ? 'item' : 'items' }}</p>
+                    </div>
+                    <button @click="cartOpen = false" class="w-10 h-10 rounded-full hover:bg-amber-50 flex items-center justify-center">
+                        <svg class="w-5 h-5 warm-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex-1 overflow-y-auto p-6">
+                    <div v-if="cart.length === 0" class="text-center py-12">
+                        <div class="text-6xl mb-4">🥐</div>
+                        <p class="warm-brown font-serif text-xl mb-2">Your cart is empty</p>
+                        <p class="text-amber-800/60 text-sm">Add some delicious treats!</p>
+                    </div>
+                    <div v-else class="space-y-4">
+                        <div v-for="item in cart" :key="item.id" class="flex gap-4 bg-amber-50/50 p-3 rounded-xl">
+                            <img :src="item.image" :alt="item.name" class="w-20 h-20 rounded-lg object-cover">
+                            <div class="flex-1">
+                                <h4 class="font-serif font-semibold warm-brown">{{ item.name }}</h4>
+                                <div class="text-sm gold-text font-semibold">${{ item.price.toFixed(2) }}</div>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <button @click="updateCartQty(item.id, -1)" class="w-6 h-6 rounded-full bg-white hover:bg-amber-100 warm-brown text-sm font-bold">−</button>
+                                    <span class="text-sm font-semibold warm-brown w-6 text-center">{{ item.qty }}</span>
+                                    <button @click="updateCartQty(item.id, 1)" class="w-6 h-6 rounded-full bg-white hover:bg-amber-100 warm-brown text-sm font-bold">+</button>
+                                    <button @click="removeFromCart(item.id)" class="ml-auto text-xs text-red-500 hover:text-red-700">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="cart.length > 0" class="p-6 border-t border-amber-900/10 bg-amber-50/30">
+                    <div class="flex justify-between mb-2 text-sm">
+                        <span class="text-amber-800/70">Subtotal</span>
+                        <span class="warm-brown font-semibold">${{ cartTotal.toFixed(2) }}</span>
+                    </div>
+                    <div class="flex justify-between mb-4 text-sm">
+                        <span class="text-amber-800/70">Delivery</span>
+                        <span class="warm-brown font-semibold">Free</span>
+                    </div>
+                    <div class="flex justify-between mb-6 pt-4 border-t border-amber-900/10">
+                        <span class="font-serif text-xl font-bold warm-brown">Total</span>
+                        <span class="font-serif text-xl font-bold gradient-text">${{ cartTotal.toFixed(2) }}</span>
+                    </div>
+                    <button @click="checkout" class="w-full py-3.5 btn-primary text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl">
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Success Modal -->
+        <div v-if="orderPlaced" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+            <div class="bg-white rounded-2xl max-w-md w-full p-8 text-center fade-in">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="text-4xl">🥐</span>
+                </div>
+                <h3 class="font-serif text-2xl font-bold warm-brown mb-3">Order Confirmed!</h3>
+                <p class="text-amber-900/70 mb-6">Thank you! Your fresh pastries will be ready for pickup in 30 minutes.</p>
+                <div class="bg-amber-50 rounded-xl p-4 mb-6 text-left">
+                    <div class="flex justify-between py-1 text-sm">
+                        <span class="text-amber-800/70">Order #</span>
+                        <span class="font-semibold warm-brown">#PTE-{{ orderNumber }}</span>
+                    </div>
+                    <div class="flex justify-between py-1 text-sm">
+                        <span class="text-amber-800/70">Items</span>
+                        <span class="font-semibold warm-brown">{{ cartCount }}</span>
+                    </div>
+                    <div class="border-t border-amber-900/10 mt-2 pt-2 flex justify-between">
+                        <span class="font-semibold warm-brown">Total</span>
+                        <span class="font-bold gradient-text">${{ orderTotal.toFixed(2) }}</span>
+                    </div>
+                </div>
+                <button @click="orderPlaced = false" 
+                        class="w-full py-3 btn-primary text-white rounded-xl font-semibold transition-all">
+                        Continue Shopping
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, computed, onMounted, onUnmounted } = Vue;
+
+        createApp({
+            setup() {
+                const scrolled = ref(false);
+                const mobileMenuOpen = ref(false);
+                const cartOpen = ref(false);
+                const selectedProduct = ref(null);
+                const productQty = ref(1);
+                const subscribed = ref(false);
+                const orderPlaced = ref(false);
+                const orderNumber = ref(0);
+                const orderTotal = ref(0);
+                const newsletterEmail = ref('');
+                const activeCategory = ref('All');
+                const cart = ref([]);
+
+                const heroImage = 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1920&q=80';
+                const storyImage = 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=800&q=80';
+                const specialImage = 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&q=80';
+
+                const navLinks = [
+                    { name: 'Home', id: 'home' },
+                    { name: 'Story', id: 'story' },
+                    { name: 'Menu', id: 'products' },
+                    { name: 'Reviews', id: 'reviews' },
+                    { name: 'Visit', id: 'visit' }
+                ];
+
+                const socials = ['Fb', 'Ig', 'Tw', 'Pt'];
+
+                const features = [
+                    { icon: '🌾', title: 'Organic Flour', desc: '100% natural' },
+                    { icon: '🥐', title: 'Baked Daily', desc: 'Fresh every morning' },
+                    { icon: '🚚', title: 'Free Delivery', desc: 'Orders over $25' },
+                    { icon: '⭐', title: 'Award Winning', desc: 'Since 1952' }
+                ];
+
+                const storyStats = [
+                    { value: '70+', label: 'Years of Baking' },
+                    { value: '50+', label: 'Artisan Recipes' },
+                    { value: '15K+', label: 'Happy Customers' }
+                ];
+
+                const categories = ['All', 'Pastries', 'Breads', 'Cakes', 'Cookies'];
+
+                const products = [
+                    {
+                        id: 1, name: 'Butter Croissant', category: 'Pastries', price: 3.50, rating: 5, reviews: 342,
+                        badge: 'Bestseller',
+                        image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80',
+                        description: 'Flaky, buttery layers of perfection, baked to golden perfection.',
+                        fullDescription: 'Our signature butter croissant features 27 layers of hand-laminated dough made with premium French butter. Each croissant is proofed for 18 hours and baked until perfectly golden and flaky.',
+                        ingredients: ['French Butter', 'Organic Flour', 'Sea Salt', 'Yeast']
+                    },
+                    {
+                        id: 2, name: 'Sourdough Boule', category: 'Breads', price: 8.00, rating: 5, reviews: 218,
+                        badge: 'Artisan',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWLeh7Uq8FpMCntr6fbFcDWxYInMGgL75KNvYXZbCLvpGIAlSuXkBIrqk&s=10',
+                        description: 'Crusty artisan sourdough with a tangy, complex flavor.',
+                        fullDescription: 'Our sourdough boule is made with a 100-year-old starter and fermented for 24 hours. The result is a crusty exterior with a soft, tangy crumb that pairs perfectly with butter and jam.',
+                        ingredients: ['Organic Flour', 'Sourdough Starter', 'Sea Salt', 'Water']
+                    },
+                    {
+                        id: 3, name: 'Chocolate Éclair', category: 'Pastries', price: 4.75, rating: 5, reviews: 189,
+                        image: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=600&q=80',
+                        description: 'Light choux pastry filled with rich chocolate cream.',
+                        fullDescription: 'Delicate choux pastry filled with velvety Belgian chocolate pastry cream and topped with a glossy chocolate glaze. A classic French treat made with love.',
+                        ingredients: ['Belgian Chocolate', 'Heavy Cream', 'Eggs', 'Butter']
+                    },
+                    {
+                        id: 4, name: 'Strawberry Tart', category: 'Cakes', price: 28.00, rating: 5, reviews: 156,
+                        badge: 'Seasonal',
+                        image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80',
+                        description: 'Buttery tart shell with vanilla cream and fresh berries.',
+                        fullDescription: 'A crisp buttery tart shell filled with silky vanilla pastry cream and topped with a crown of fresh seasonal strawberries, finished with a light apricot glaze.',
+                        ingredients: ['Fresh Strawberries', 'Vanilla Bean', 'Butter', 'Pastry Cream']
+                    },
+                    {
+                        id: 5, name: 'Almond Macarons', category: 'Cookies', price: 12.00, rating: 5, reviews: 287,
+                        image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&q=80',
+                        description: 'Delicate French macarons in assorted flavors. Box of 6.',
+                        fullDescription: 'Six perfectly crafted French macarons in rotating seasonal flavors. Crisp shells with smooth ganache filling, made with premium almond flour.',
+                        ingredients: ['Almond Flour', 'Egg Whites', 'Sugar', 'Natural Flavors']
+                    },
+                    {
+                        id: 6, name: 'Baguette Tradition', category: 'Breads', price: 4.50, rating: 5, reviews: 412,
+                        image: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=600&q=80',
+                        description: 'Classic French baguette with crispy crust and airy crumb.',
+                        fullDescription: 'Our traditional baguette follows the strict French recipe with only four ingredients. Long fermentation creates complex flavors and a perfectly crispy crust.',
+                        ingredients: ['Organic Flour', 'Water', 'Sea Salt', 'Yeast']
+                    },
+                    {
+                        id: 7, name: 'Lemon Tart', category: 'Cakes', price: 24.00, rating: 5, reviews: 143,
+                        image: 'https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=600&q=80',
+                        description: 'Tangy lemon curd in a buttery shortcrust pastry shell.',
+                        fullDescription: 'Bright and zesty lemon curd made with fresh Meyer lemons, nestled in a buttery shortcrust pastry shell and topped with torched Italian meringue.',
+                        ingredients: ['Meyer Lemons', 'Butter', 'Eggs', 'Sugar']
+                    },
+                    {
+                        id: 8, name: 'Pain au Chocolat', category: 'Pastries', price: 4.00, rating: 5, reviews: 298,
+                        badge: 'Popular',
+                        image: 'https://images.unsplash.com/photo-1623334044303-241021148842?w=600&q=80',
+                        description: 'Flaky pastry with two bars of rich dark chocolate.',
+                        fullDescription: 'Our pain au chocolat features the same laminated dough as our croissants, wrapped around two bars of 70% dark chocolate. Pure indulgence.',
+                        ingredients: ['French Butter', 'Dark Chocolate', 'Organic Flour', 'Yeast']
+                    },
+                    {
+                        id: 9, name: 'Sablé Cookies', category: 'Cookies', price: 9.50, rating: 5, reviews: 176,
+                        image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80',
+                        description: 'Buttery French shortbread cookies. Box of 12.',
+                        fullDescription: 'Twelve delicate French sablé cookies made with the finest butter. Each one melts in your mouth with a buttery, crumbly texture.',
+                        ingredients: ['French Butter', 'Vanilla', 'Organic Flour', 'Sugar']
+                    }
+                ];
+
+                const specialProduct = {
+                    id: 100, name: 'Almond Croissant with Berries', category: 'Pastries', price: 4.99, rating: 5, reviews: 89,
+                    image: specialImage,
+                    description: 'Special offer',
+                    fullDescription: 'Special',
+                    ingredients: ['Almonds', 'Berries', 'Butter']
+                };
+
+                const filteredProducts = computed(() => {
+                    if (activeCategory.value === 'All') return products;
+                    return products.filter(p => p.category === activeCategory.value);
+                });
+
+                const testimonials = [
+                    { name: 'Marie Dubois', role: 'Food Critic', text: 'The croissants at Pâté are the best I\'ve had outside of Paris. The layers are impossibly flaky and the butter flavor is sublime.' },
+                    { name: 'Thomas Anderson', role: 'Regular Customer', text: 'I\'ve been coming here every Saturday for 5 years. The sourdough is life-changing and the staff treats you like family.' },
+                    { name: 'Sophia Chen', role: 'Wedding Planner', text: 'Pâté made our wedding cake and it was absolutely stunning. Beautiful, delicious, and the service was impeccable.' }
+                ];
+
+                const locations = [
+                    {
+                        name: 'Montmartre',
+                        address: '42 Rue de la Paix, Paris',
+                        hours: [
+                            { day: 'Mon-Fri', time: '6:00 AM - 8:00 PM' },
+                            { day: 'Saturday', time: '7:00 AM - 9:00 PM' },
+                            { day: 'Sunday', time: '7:00 AM - 6:00 PM' }
+                        ]
+                    },
+                    {
+                        name: 'Saint-Germain',
+                        address: '15 Boulevard Saint-Germain',
+                        hours: [
+                            { day: 'Mon-Fri', time: '6:30 AM - 8:00 PM' },
+                            { day: 'Saturday', time: '7:00 AM - 9:00 PM' },
+                            { day: 'Sunday', time: '8:00 AM - 6:00 PM' }
+                        ]
+                    },
+                    {
+                        name: 'Le Marais',
+                        address: '88 Rue des Rosiers',
+                        hours: [
+                            { day: 'Mon-Fri', time: '6:00 AM - 8:30 PM' },
+                            { day: 'Saturday', time: '7:00 AM - 9:00 PM' },
+                            { day: 'Sunday', time: '7:30 AM - 6:00 PM' }
+                        ]
+                    }
+                ];
+
+                const cartCount = computed(() => cart.value.reduce((sum, item) => sum + item.qty, 0));
+                const cartTotal = computed(() => cart.value.reduce((sum, item) => sum + item.price * item.qty, 0));
+
+                const handleScroll = () => {
+                    scrolled.value = window.scrollY > 50;
+                };
+
+                const scrollToSection = (id) => {
+                    if (id === 'home') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        return;
+                    }
+                    const el = document.getElementById(id);
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                };
+
+                const viewProduct = (product) => {
+                    selectedProduct.value = product;
+                    productQty.value = 1;
+                };
+
+                const addToCart = (product) => {
+                    const existing = cart.value.find(item => item.id === product.id);
+                    if (existing) {
+                        existing.qty++;
+                    } else {
+                        cart.value.push({ ...product, qty: 1 });
+                    }
+                };
+
+                const addToCartWithQty = (product) => {
+                    const existing = cart.value.find(item => item.id === product.id);
+                    if (existing) {
+                        existing.qty += productQty.value;
+                    } else {
+                        cart.value.push({ ...product, qty: productQty.value });
+                    }
+                    selectedProduct.value = null;
+                    cartOpen.value = true;
+                };
+
+                const updateCartQty = (id, delta) => {
+                    const item = cart.value.find(i => i.id === id);
+                    if (item) {
+                        item.qty += delta;
+                        if (item.qty <= 0) removeFromCart(id);
+                    }
+                };
+
+                const removeFromCart = (id) => {
+                    cart.value = cart.value.filter(i => i.id !== id);
+                };
+
+                const checkout = () => {
+                    orderNumber.value = Math.floor(Math.random() * 90000) + 10000;
+                    orderTotal.value = cartTotal.value;
+                    cart.value = [];
+                    cartOpen.value = false;
+                    orderPlaced.value = true;
+                };
+
+                const subscribeNewsletter = () => {
+                    if (newsletterEmail.value) {
+                        subscribed.value = true;
+                        setTimeout(() => {
+                            subscribed.value = false;
+                            newsletterEmail.value = '';
+                        }, 4000);
+                    }
+                };
+
+                onMounted(() => {
+                    window.addEventListener('scroll', handleScroll);
+                });
+
+                onUnmounted(() => {
+                    window.removeEventListener('scroll', handleScroll);
+                });
+
+                return {
+                    scrolled, mobileMenuOpen, cartOpen, selectedProduct, productQty,
+                    subscribed, orderPlaced, orderNumber, orderTotal, newsletterEmail,
+                    activeCategory, cart,
+                    heroImage, storyImage, specialImage,
+                    navLinks, socials, features, storyStats, categories, products,
+                    specialProduct, filteredProducts, testimonials, locations,
+                    cartCount, cartTotal,
+                    scrollToSection, viewProduct, addToCart, addToCartWithQty,
+                    updateCartQty, removeFromCart, checkout, subscribeNewsletter
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
