@@ -1,1349 +1,1370 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charSet="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="preload" as="image" href="https://yuri-after-dark.lovable.app/assets/hero-devices-tToL0Ooe.jpg"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" data-precedence="default"/>
-        <link rel="stylesheet" href="https://yuri-after-dark.lovable.app/assets/styles-BVKaqZKX.css" data-precedence="default"/>
-        <title data-i18n="title">YURI DEV — Websites and apps that work for your success</title>
-        <meta name="robots" content="index, follow" />
-        <meta name="description" data-i18n-meta="description" content="YURI DEV portfolio: modern websites, web apps and mobile solutions turnkey."/>
-        <meta property="og:title" data-i18n-og="og:title" content="YURI DEV — Web &amp; App Developer"/>
-        <meta property="og:description" data-i18n-og="og:description" content="Modern websites, web and mobile apps that deliver results."/>
-        <meta property="og:type" content="website"/>
-        <meta name="twitter:card" content="summary_large_image"/>
-        <meta http-equiv="ClearType" content="true" />
-	    <meta name="format-detection" content="date=no">
-	    <meta name="format-detection" content="telephone=no">
-        <meta name="format-detection" content="address=no">
-        <meta name="format-detection" content="email=no">
-        <meta name="referrer" content="no-referrer">
-        <link rel="shortcut icon" type="image/x-icon" href="https://mscbuild.github.io/about/favicon.ico">
-        <link rel="modulepreload" href="https://yuri-after-dark.lovable.app/assets/index-CvDesqgr.js"/>
-        <link rel="modulepreload" href="https://yuri-after-dark.lovable.app/assets/routes-BzMJXHo4.js"/>
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
-        <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-        <style>
-            #lovable-badge {
-                --badge-bg: #1b1b1b;
-                --badge-text: #c5c1b9;
-                --badge-text-hover: #dcdad5;
-                --badge-radius: 6px;
-                --badge-padding: 8px;
-                --badge-gap: 6px;
-                --badge-shadow: 0 0 0 1px rgba(0, 0, 0, 0.88), 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 2px 2px -1px rgba(0, 0, 0, 0.08), 0 4px 4px -2px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0, 0.08), 0 16px 16px -8px rgba(0, 0, 0, 0.08);
-                --badge-transition-duration: 0.2s;
-                --badge-transition-easing: cubic-bezier(0.16, 1, 0.32, 1);
-                --focus-color: #575ECF;
-                --focus-offset: 2px;
-                --focus-width: 2px;
-                position: fixed;
-                bottom: 12px;
-                right: 12px;
-                height: 24px;
-                display: flex;
-                align-items: center;
-                z-index: 1000000;
-                background-color: var(--badge-bg) !important;
-                color: var(--badge-text) !important;
-                border-radius: var(--badge-radius);
-                box-shadow: var(--badge-shadow) !important;
-                font-size: 12px;
-                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                font-weight: 400 !important;
-                text-transform: none !important;
-                font-feature-settings: normal !important;
-                transform: translateZ(0);
-                will-change: transform, opacity;
-                transition: opacity var(--badge-transition-duration) var(--badge-transition-easing);
-            }
-
-            #lovable-badge.closing {
-                opacity: 0;
-                pointer-events: none;
-            }
-
-            #lovable-badge-cta {
-                display: flex;
-                align-items: baseline;
-                gap: var(--badge-gap);
-                box-sizing: border-box;
-                padding: 4px var(--badge-padding) 0;
-                height: 100%;
-                color: inherit;
-                text-decoration: none;
-                white-space: nowrap;
-                border-radius: var(--badge-radius) 0 0 var(--badge-radius);
-                transition: background-color var(--badge-transition-duration) ease, color var(--badge-transition-duration) ease, transform 0.1s ease;
-            }
-
-            #lovable-badge-cta:hover {
-                background: rgba(255, 255, 255, 0.04);
-                color: var(--badge-text-hover);
-            }
-
-            #lovable-badge-cta:active {
-                transform: scale(0.98);
-            }
-
-            #lovable-badge-cta:focus {
-                outline: none;
-            }
-
-            #lovable-badge-cta:focus-visible {
-                outline: var(--focus-width) solid var(--focus-color);
-                outline-offset: var(--focus-offset);
-                z-index: 1;
-            }
-
-            #lovable-badge-text {
-                line-height: 1;
-            }
-
-            #lovable-badge-logo {
-                position: relative;
-                display: block;
-                width: 52px;
-                height: 12px;
-            }
-
-            #lovable-badge-logo svg {
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-
-            #lovable-badge-divider {
-                width: 1px;
-                height: 24px;
-                background-color: rgba(255, 255, 255, 0.04);
-                flex-shrink: 0;
-            }
-
-            #lovable-badge-close {
-                width: 24px;
-                height: 24px;
-                min-width: 24px;
-                min-height: 24px;
-                cursor: pointer;
-                background: none;
-                border: none;
-                padding: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 0 var(--badge-radius) var(--badge-radius) 0;
-                flex-shrink: 0;
-                transition: background-color var(--badge-transition-duration) ease, transform 0.1s ease;
-            }
-
-            #lovable-badge-close:hover {
-                background: rgba(255, 255, 255, 0.04);
-            }
-
-            #lovable-badge-close:active {
-                transform: scale(0.92);
-            }
-
-            #lovable-badge-close:focus {
-                outline: none;
-            }
-
-            #lovable-badge-close:focus-visible {
-                outline: var(--focus-width) solid var(--focus-color);
-                outline-offset: calc(var(--focus-offset) * -1);
-                z-index: 1;
-            }
-
-            #lovable-badge-close svg path {
-                fill: var(--badge-text);
-                transition: fill var(--badge-transition-duration) ease;
-            }
-
-            #lovable-badge-close:hover svg path {
-                fill: var(--badge-text-hover);
-            }
-
-            @media (prefers-reduced-motion: reduce) {
-                #lovable-badge, #lovable-badge-cta, #lovable-badge-close, #lovable-badge-close svg path {
-                    transition: none;
-                }
-
-                #lovable-badge-cta:active, #lovable-badge-close:active {
-                    transform: none;
-                }
-            }
-
-            @media (prefers-contrast: high) {
-                #lovable-badge {
-                    --badge-bg: #000;
-                    --badge-text: #fff;
-                    --badge-text-hover: #fff;
-                    border: 2px solid currentColor;
-                }
-
-                #lovable-badge-cta:focus-visible, #lovable-badge-close:focus-visible {
-                    outline-width: 3px;
-                }
-            }
-
-            .lang-switcher {
-                position: relative;
-            }
-            .lang-switcher .lang-menu {
-                position: absolute;
-                top: calc(100% + 6px);
-                right: 0;
-                min-width: 120px;
-                background: #1b1b1b;
-                border: 1px solid rgba(255,255,255,0.1);
-                border-radius: 8px;
-                padding: 4px;
-                display: none;
-                z-index: 50;
-                box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            }
-            .lang-switcher.open .lang-menu {
-                display: block;
-            }
-            .lang-switcher .lang-menu button {
-                display: block;
-                width: 100%;
-                text-align: left;
-                padding: 8px 12px;
-                font-size: 14px;
-                color: #c5c1b9;
-                background: transparent;
-                border: none;
-                border-radius: 6px;
-                cursor: pointer;
-                transition: background 0.15s ease, color 0.15s ease;
-            }
-            .lang-switcher .lang-menu button:hover {
-                background: rgba(255,255,255,0.06);
-                color: #fff;
-            }
-            .lang-switcher .lang-menu button.active {
-                color: #fff;
-                background: rgba(255,255,255,0.08);
-            }
-
-            /* Modal Styles */
-            .modal-backdrop {
-                position: fixed;
-                inset: 0;
-                background-color: rgba(0, 0, 0, 0.7);
-                backdrop-filter: blur(4px);
-                z-index: 100000;
-                display: none;
-                align-items: center;
-                justify-content: center;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-                padding: 16px;
-            }
-            .modal-backdrop.open {
-                display: flex;
-                opacity: 1;
-            }
-            .modal-content {
-                background-color: #1b1b1b;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 16px;
-                padding: 32px;
-                width: 100%;
-                max-width: 500px;
-                position: relative;
-                transform: scale(0.95) translateY(10px);
-                transition: transform 0.3s ease;
-                box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-                max-height: 90vh;
-                overflow-y: auto;
-            }
-            .modal-backdrop.open .modal-content {
-                transform: scale(1) translateY(0);
-            }
-            .modal-close {
-                position: absolute;
-                top: 16px;
-                right: 16px;
-                background: transparent;
-                border: none;
-                color: #c5c1b9;
-                cursor: pointer;
-                padding: 8px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 8px;
-                transition: background 0.15s ease, color 0.15s ease;
-            }
-            .modal-close:hover {
-                background: rgba(255, 255, 255, 0.1);
-                color: #fff;
-            }
-
-/* Mobile navigation */
-.mobile-menu-btn {
-    display: none;
-    width: 44px;
-    height: 44px;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 10px;
-    background: rgba(27,27,27,0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #fff;
-    cursor: pointer;
-    z-index: 1002;
-    position: relative;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-}
-
-.mobile-menu-btn:hover {
-    background: rgba(255,255,255,0.06);
-    border-color: rgba(255,255,255,0.22);
-}
-
-.mobile-menu-btn:active {
-    transform: scale(0.95);
-}
-
-.mobile-menu-btn:focus-visible {
-    outline: 2px solid #575ECF;
-    outline-offset: 2px;
-}
-
-.mobile-menu-btn svg {
-    width: 22px;
-    height: 22px;
-    display: block;
-}
-
-/* Icon swap animation */
-.mobile-menu-btn .icon-hamburger,
-.mobile-menu-btn .icon-close {
-    transition: opacity 0.2s ease, transform 0.25s ease;
-}
-
-.mobile-menu-btn .icon-close {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-90deg) scale(0.6);
-    opacity: 0;
-}
-
-.mobile-menu-btn .icon-hamburger {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
-}
-
-.mobile-menu-btn.is-open .icon-hamburger {
-    opacity: 0;
-    transform: rotate(90deg) scale(0.6);
-}
-
-.mobile-menu-btn.is-open .icon-close {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(0deg) scale(1);
-}
-
-.mobile-menu {
-    display: none;
-}
-
-@media (max-width: 767px) {
-    .desktop-nav {
-        display: none !important;
-    }
-
-    .mobile-menu-btn {
-        display: inline-flex;
-    }
-
-    .mobile-menu {
-        display: flex;
+  <head>
+    <meta charSet="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" as="image" href="https://yuri-after-dark.lovable.app/assets/hero-devices-tToL0Ooe.jpg" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" data-precedence="default" />
+    <link rel="stylesheet" href="https://yuri-after-dark.lovable.app/assets/styles-BVKaqZKX.css" data-precedence="default" />
+    <title data-i18n="title">YURI DEV — Websites and apps that work for your success</title>
+    <meta name="robots" content="index, follow" />
+    <meta name="description" data-i18n-meta="description" content="YURI DEV portfolio: modern websites, web apps and mobile solutions turnkey." />
+    <meta property="og:title" data-i18n-og="og:title" content="YURI DEV — Web &amp; App Developer" />
+    <meta property="og:description" data-i18n-og="og:description" content="Modern websites, web and mobile apps that deliver results." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta http-equiv="ClearType" content="true" />
+    <meta name="format-detection" content="date=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="address=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://mscbuild.github.io/about/favicon.ico" />
+    <link rel="modulepreload" href="https://yuri-after-dark.lovable.app/assets/index-CvDesqgr.js" />
+    <link rel="modulepreload" href="https://yuri-after-dark.lovable.app/assets/routes-BzMJXHo4.js" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <style>
+      #lovable-badge {
+        --badge-bg: #1b1b1b;
+        --badge-text: #c5c1b9;
+        --badge-text-hover: #dcdad5;
+        --badge-radius: 6px;
+        --badge-padding: 8px;
+        --badge-gap: 6px;
+        --badge-shadow: 0 0 0 1px rgba(0, 0, 0, 0.88), 0 1px 0 0 rgba(0, 0, 0, 0.04), 0 2px 2px -1px rgba(0, 0, 0, 0.08), 0 4px 4px -2px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0, 0.08), 0 16px 16px -8px rgba(0, 0, 0, 0.08);
+        --badge-transition-duration: 0.2s;
+        --badge-transition-easing: cubic-bezier(0.16, 1, 0.32, 1);
+        --focus-color: #575ECF;
+        --focus-offset: 2px;
+        --focus-width: 2px;
         position: fixed;
-        inset: 0;
-        z-index: 1000;
-        flex-direction: column;
-        justify-content: center;
+        bottom: 12px;
+        right: 12px;
+        height: 24px;
+        display: flex;
         align-items: center;
-        gap: 24px;
-        background: rgba(10,10,10,0.98);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
+        z-index: 1000000;
+        background-color: var(--badge-bg) !important;
+        color: var(--badge-text) !important;
+        border-radius: var(--badge-radius);
+        box-shadow: var(--badge-shadow) !important;
+        font-size: 12px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-weight: 400 !important;
+        text-transform: none !important;
+        font-feature-settings: normal !important;
+        transform: translateZ(0);
+        will-change: transform, opacity;
+        transition: opacity var(--badge-transition-duration) var(--badge-transition-easing);
+      }
+
+      #lovable-badge.closing {
         opacity: 0;
-        visibility: hidden;
         pointer-events: none;
-        transform: translateY(-16px);
-        transition: opacity 0.3s ease,
-                    transform 0.3s ease,
-                    visibility 0.3s ease;
-        padding: 80px 24px 40px;
-    }
+      }
 
-    .mobile-menu.open {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transform: translateY(0);
-    }
-
-    .mobile-menu a,
-    .mobile-menu button.mobile-nav-link {
-        color: #fff;
-        font-size: 22px;
-        font-weight: 600;
+      #lovable-badge-cta {
+        display: flex;
+        align-items: baseline;
+        gap: var(--badge-gap);
+        box-sizing: border-box;
+        padding: 4px var(--badge-padding) 0;
+        height: 100%;
+        color: inherit;
         text-decoration: none;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 8px 16px;
-        transition: color 0.2s ease, transform 0.2s ease;
-        opacity: 0;
-        transform: translateY(12px);
-        animation: mobileLinkIn 0.4s ease forwards;
-    }
+        white-space: nowrap;
+        border-radius: var(--badge-radius) 0 0 var(--badge-radius);
+        transition: background-color var(--badge-transition-duration) ease, color var(--badge-transition-duration) ease, transform 0.1s ease;
+      }
 
-    .mobile-menu.open a,
-    .mobile-menu.open button.mobile-nav-link {
-        opacity: 1;
-        transform: translateY(0);
-    }
+      #lovable-badge-cta:hover {
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--badge-text-hover);
+      }
 
-    .mobile-menu.open a:nth-child(1),
-    .mobile-menu.open button.mobile-nav-link:nth-child(1) { animation-delay: 0.08s; }
-    .mobile-menu.open a:nth-child(2),
-    .mobile-menu.open button.mobile-nav-link:nth-child(2) { animation-delay: 0.14s; }
-    .mobile-menu.open a:nth-child(3),
-    .mobile-menu.open button.mobile-nav-link:nth-child(3) { animation-delay: 0.20s; }
-    .mobile-menu.open a:nth-child(4),
-    .mobile-menu.open button.mobile-nav-link:nth-child(4) { animation-delay: 0.26s; }
-    .mobile-menu.open a:nth-child(5),
-    .mobile-menu.open button.mobile-nav-link:nth-child(5) { animation-delay: 0.32s; }
+      #lovable-badge-cta:active {
+        transform: scale(0.98);
+      }
 
-    @keyframes mobileLinkIn {
-        from {
-            opacity: 0;
-            transform: translateY(12px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+      #lovable-badge-cta:focus {
+        outline: none;
+      }
 
-    .mobile-menu a:hover,
-    .mobile-menu button.mobile-nav-link:hover {
-        color: hsl(var(--primary, 250 80% 65%));
-    }
+      #lovable-badge-cta:focus-visible {
+        outline: var(--focus-width) solid var(--focus-color);
+        outline-offset: var(--focus-offset);
+        z-index: 1;
+      }
 
-    .mobile-menu a:active,
-    .mobile-menu button.mobile-nav-link:active {
-        transform: scale(0.97);
-    }
+      #lovable-badge-text {
+        line-height: 1;
+      }
 
-    .mobile-menu .mobile-contact {
-        margin-top: 12px;
-        padding: 14px 32px;
-        border: 1px solid hsl(var(--primary, 250 80% 65%));
-        border-radius: 10px;
-        color: hsl(var(--primary, 250 80% 65%));
-        font-size: 16px;
-        font-weight: 600;
-    }
+      #lovable-badge-logo {
+        position: relative;
+        display: block;
+        width: 52px;
+        height: 12px;
+      }
 
-    .mobile-menu .mobile-contact:hover {
-        background: hsla(var(--primary, 250 80% 65%), 0.1);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .mobile-menu,
-    .mobile-menu-btn .icon-hamburger,
-    .mobile-menu-btn .icon-close,
-    .mobile-menu a,
-    .mobile-menu button.mobile-nav-link {
-        transition: none !important;
-        animation: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-    }
-}
-
-/* FIX: hamburger / close button visibility */
-@media (max-width: 767px) {
-    header {
-        z-index: 1003 !important;
-        position: fixed !important;
+      #lovable-badge-logo svg {
+        position: absolute;
         top: 0;
         left: 0;
+      }
+
+      #lovable-badge-divider {
+        width: 1px;
+        height: 24px;
+        background-color: rgba(255, 255, 255, 0.04);
+        flex-shrink: 0;
+      }
+
+      #lovable-badge-close {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+        min-height: 24px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0 var(--badge-radius) var(--badge-radius) 0;
+        flex-shrink: 0;
+        transition: background-color var(--badge-transition-duration) ease, transform 0.1s ease;
+      }
+
+      #lovable-badge-close:hover {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      #lovable-badge-close:active {
+        transform: scale(0.92);
+      }
+
+      #lovable-badge-close:focus {
+        outline: none;
+      }
+
+      #lovable-badge-close:focus-visible {
+        outline: var(--focus-width) solid var(--focus-color);
+        outline-offset: calc(var(--focus-offset) * -1);
+        z-index: 1;
+      }
+
+      #lovable-badge-close svg path {
+        fill: var(--badge-text);
+        transition: fill var(--badge-transition-duration) ease;
+      }
+
+      #lovable-badge-close:hover svg path {
+        fill: var(--badge-text-hover);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #lovable-badge,
+        #lovable-badge-cta,
+        #lovable-badge-close,
+        #lovable-badge-close svg path {
+          transition: none;
+        }
+
+        #lovable-badge-cta:active,
+        #lovable-badge-close:active {
+          transform: none;
+        }
+      }
+
+      @media (prefers-contrast: high) {
+        #lovable-badge {
+          --badge-bg: #000;
+          --badge-text: #fff;
+          --badge-text-hover: #fff;
+          border: 2px solid currentColor;
+        }
+
+        #lovable-badge-cta:focus-visible,
+        #lovable-badge-close:focus-visible {
+          outline-width: 3px;
+        }
+      }
+
+      .lang-switcher {
+        position: relative;
+      }
+
+      .lang-switcher .lang-menu {
+        position: absolute;
+        top: calc(100% + 6px);
         right: 0;
-    }
-
-    .mobile-menu {
-        z-index: 1000 !important;
-    }
-
-    .mobile-menu-btn {
-        position: relative;
-        z-index: 1005 !important;
-        display: inline-flex !important;
-        flex-shrink: 0;
-        color: #fff !important;
+        min-width: 120px;
         background: #1b1b1b;
-    }
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 4px;
+        display: none;
+        z-index: 50;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      }
 
-    .mobile-menu-btn.is-open {
-        position: fixed !important;
-        top: 24px;
-        right: 24px;
-        z-index: 1005 !important;
-    }
+      .lang-switcher.open .lang-menu {
+        display: block;
+      }
 
-    .mobile-menu-btn.is-open .icon-close {
-        opacity: 1 !important;
-        transform: translate(-50%, -50%) rotate(0deg) scale(1) !important;
-    }
+      .lang-switcher .lang-menu button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 8px 12px;
+        font-size: 14px;
+        color: #c5c1b9;
+        background: transparent;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.15s ease, color 0.15s ease;
+      }
 
-    .mobile-menu-btn.is-open .icon-hamburger {
-        opacity: 0 !important;
-        transform: rotate(90deg) scale(0.6) !important;
-    }
-}
+      .lang-switcher .lang-menu button:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: #fff;
+      }
 
-/* Fix mobile language switcher and close button overlap */
-@media (max-width: 767px) {
+      .lang-switcher .lang-menu button.active {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.08);
+      }
 
-    /* Language switcher */
-    #langSwitcher {
+      /* Modal Styles */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        z-index: 100000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        padding: 16px;
+      }
+
+      .modal-backdrop.open {
+        display: flex;
+        opacity: 1;
+      }
+
+      .modal-content {
+        background-color: #1b1b1b;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 32px;
+        width: 100%;
+        max-width: 500px;
         position: relative;
-        z-index: 1004;
-        margin-right: 4px;
-    }
+        transform: scale(0.95) translateY(10px);
+        transition: transform 0.3s ease;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        max-height: 90vh;
+        overflow-y: auto;
+      }
 
-    #langBtn {
+      .modal-backdrop.open .modal-content {
+        transform: scale(1) translateY(0);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: transparent;
+        border: none;
+        color: #c5c1b9;
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: background 0.15s ease, color 0.15s ease;
+      }
+
+      .modal-close:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+
+      /* Mobile navigation */
+      .mobile-menu-btn {
+        display: none;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 10px;
+        background: rgba(27, 27, 27, 0.85);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: #fff;
+        cursor: pointer;
+        z-index: 1002;
         position: relative;
-        z-index: 1004;
-    }
+        transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+      }
 
-    /* Mobile menu button */
-    .mobile-menu-btn {
-        position: relative;
-        z-index: 1005;
-        flex-shrink: 0;
-    }
+      .mobile-menu-btn:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.22);
+      }
 
-    /* Close button when menu is open */
-    .mobile-menu-btn.is-open {
+      .mobile-menu-btn:active {
+        transform: scale(0.95);
+      }
+
+      .mobile-menu-btn:focus-visible {
+        outline: 2px solid #575ECF;
+        outline-offset: 2px;
+      }
+
+      .mobile-menu-btn svg {
+        width: 22px;
+        height: 22px;
+        display: block;
+      }
+
+      /* Icon swap animation */
+      .mobile-menu-btn .icon-hamburger,
+      .mobile-menu-btn .icon-close {
+        transition: opacity 0.2s ease, transform 0.25s ease;
+      }
+
+      .mobile-menu-btn .icon-close {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-90deg) scale(0.6);
+        opacity: 0;
+      }
+
+      .mobile-menu-btn .icon-hamburger {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      }
+
+      .mobile-menu-btn.is-open .icon-hamburger {
+        opacity: 0;
+        transform: rotate(90deg) scale(0.6);
+      }
+
+      .mobile-menu-btn.is-open .icon-close {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+      }
+
+      .mobile-menu {
+        display: none;
+      }
+
+      @media (max-width: 767px) {
+        .desktop-nav {
+          display: none !important;
+        }
+
+        .mobile-menu-btn {
+          display: inline-flex;
+        }
+
+        .mobile-menu {
+          display: flex;
+          position: fixed;
+          inset: 0;
+          z-index: 1000;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 24px;
+          background: rgba(10, 10, 10, 0.98);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+          transform: translateY(-16px);
+          transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+          padding: 80px 24px 40px;
+        }
+
+        .mobile-menu.open {
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+          transform: translateY(0);
+        }
+
+        .mobile-menu a,
+        .mobile-menu button.mobile-nav-link {
+          color: #fff;
+          font-size: 22px;
+          font-weight: 600;
+          text-decoration: none;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 8px 16px;
+          transition: color 0.2s ease, transform 0.2s ease;
+          opacity: 0;
+          transform: translateY(12px);
+          animation: mobileLinkIn 0.4s ease forwards;
+        }
+
+        .mobile-menu.open a,
+        .mobile-menu.open button.mobile-nav-link {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .mobile-menu.open a:nth-child(1),
+        .mobile-menu.open button.mobile-nav-link:nth-child(1) {
+          animation-delay: 0.08s;
+        }
+
+        .mobile-menu.open a:nth-child(2),
+        .mobile-menu.open button.mobile-nav-link:nth-child(2) {
+          animation-delay: 0.14s;
+        }
+
+        .mobile-menu.open a:nth-child(3),
+        .mobile-menu.open button.mobile-nav-link:nth-child(3) {
+          animation-delay: 0.20s;
+        }
+
+        .mobile-menu.open a:nth-child(4),
+        .mobile-menu.open button.mobile-nav-link:nth-child(4) {
+          animation-delay: 0.26s;
+        }
+
+        .mobile-menu.open a:nth-child(5),
+        .mobile-menu.open button.mobile-nav-link:nth-child(5) {
+          animation-delay: 0.32s;
+        }
+
+        @keyframes mobileLinkIn {
+          from {
+            opacity: 0;
+            transform: translateY(12px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu button.mobile-nav-link:hover {
+          color: hsl(var(--primary, 250 80% 65%));
+        }
+
+        .mobile-menu a:active,
+        .mobile-menu button.mobile-nav-link:active {
+          transform: scale(0.97);
+        }
+
+        .mobile-menu .mobile-contact {
+          margin-top: 12px;
+          padding: 14px 32px;
+          border: 1px solid hsl(var(--primary, 250 80% 65%));
+          border-radius: 10px;
+          color: hsl(var(--primary, 250 80% 65%));
+          font-size: 16px;
+          font-weight: 600;
+        }
+
+        .mobile-menu .mobile-contact:hover {
+          background: hsla(var(--primary, 250 80% 65%), 0.1);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .mobile-menu,
+        .mobile-menu-btn .icon-hamburger,
+        .mobile-menu-btn .icon-close,
+        .mobile-menu a,
+        .mobile-menu button.mobile-nav-link {
+          transition: none !important;
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      }
+
+      /* FIX: hamburger / close button visibility */
+      @media (max-width: 767px) {
+        header {
+          z-index: 1003 !important;
+          position: fixed !important;
+          top: 0;
+          left: 0;
+          right: 0;
+        }
+
+        .mobile-menu {
+          z-index: 1000 !important;
+        }
+
+        .mobile-menu-btn {
+          position: relative;
+          z-index: 1005 !important;
+          display: inline-flex !important;
+          flex-shrink: 0;
+          color: #fff !important;
+          background: #1b1b1b;
+        }
+
+        .mobile-menu-btn.is-open {
+          position: fixed !important;
+          top: 24px;
+          right: 24px;
+          z-index: 1005 !important;
+        }
+
+        .mobile-menu-btn.is-open .icon-close {
+          opacity: 1 !important;
+          transform: translate(-50%, -50%) rotate(0deg) scale(1) !important;
+        }
+
+        .mobile-menu-btn.is-open .icon-hamburger {
+          opacity: 0 !important;
+          transform: rotate(90deg) scale(0.6) !important;
+        }
+      }
+
+      /* Fix mobile language switcher and close button overlap */
+      @media (max-width: 767px) {
+        #langSwitcher {
+          position: relative;
+          z-index: 1004;
+          margin-right: 4px;
+        }
+
+        #langBtn {
+          position: relative;
+          z-index: 1004;
+        }
+
+        .mobile-menu-btn {
+          position: relative;
+          z-index: 1005;
+          flex-shrink: 0;
+        }
+
+        .mobile-menu-btn.is-open {
+          position: fixed !important;
+          top: 20px;
+          right: 20px;
+          z-index: 1010 !important;
+        }
+
+        body.mobile-menu-active #langSwitcher {
+          visibility: hidden;
+          pointer-events: none;
+        }
+      }
+
+      /* FIXED MAIN NAVIGATION */
+      header {
         position: fixed !important;
-        top: 20px;
-        right: 20px;
-        z-index: 1010 !important;
-    }
-
-    /* Hide language switcher while mobile menu is open */
-    body.mobile-menu-active #langSwitcher {
-        visibility: hidden;
-        pointer-events: none;
-    }
-}
-
-
-/* FIXED MAIN NAVIGATION */
-header {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 1003 !important;
-
-    background: rgba(10, 10, 10, 0.90);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-
-/* Keep header above mobile overlay */
-@media (max-width: 767px) {
-    header {
-        position: fixed !important;
+        top: 0 !important;
+        left: 0;
+        right: 0;
+        width: 100%;
         z-index: 1003 !important;
-    }
+        background: rgba(10, 10, 10, 0.90);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      }
 
-    .mobile-menu {
-        z-index: 1000 !important;
-    }
+      @media (max-width: 767px) {
+        header {
+          position: fixed !important;
+          z-index: 1003 !important;
+        }
 
-    .mobile-menu-btn.is-open {
-        position: fixed !important;
-        z-index: 1010 !important;
-        top: 20px;
-        right: 20px;
-    }
-}
-</style>
-         
-        <meta name="twitter:title" data-i18n-twitter="twitter:title" content="YURI DEV — Web &amp; App Developer">
-        <meta name="twitter:description" data-i18n-twitter="twitter:description" content="Modern websites, web and mobile apps that deliver results.">
-        <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/lovp_7hcf3menbq9srbsts9n2cbhzny/ff45faede50e53eccb19e6ff12ac5b1f_1793777623775.png">
-        <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/lovp_7hcf3menbq9srbsts9n2cbhzny/ff45faede50e53eccb19e6ff12ac5b1f_1793777623775.png">
-    </head>
-    <body>
-        <!--$-->
-        <div class="min-h-screen overflow-x-hidden">
-            <header class="sticky top-0 inset-x-0 z-30">
-                <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
-                    <a href="#home" class="flex items-center gap-3">
-                        <svg viewBox="0 0 32 32" class="h-8 w-8 text-primary icon-glow" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
-                            <path d="M4 5 L16 18 L28 5"></path>
-                            <path d="M16 18 V28"></path>
-                            <path d="M10 5 L16 11.5 L22 5" stroke-width="1.4" opacity="0.6"></path>
-                        </svg>
-                        <span class="text-lg font-bold tracking-[0.15em]">
-                            YURI <span class="text-primary">DEV</span>
-                        </span>
-                    </a>
-                    <nav class="hidden items-center gap-10 md:flex desktop-nav">
-                        <a href="#home" class="relative py-2 text-sm font-medium transition-colors hover:text-foreground text-foreground" data-i18n-text="nav.home">
-                            Home<span class="absolute inset-x-0 -bottom-0.5 h-px bg-primary glow"></span>
-                        </a>
-                        <a href="#projects" class="relative py-2 text-sm font-medium transition-colors hover:text-foreground text-muted-foreground" data-i18n-text="nav.projects">Projects</a>
-                        <a href="#services" class="relative py-2 text-sm font-medium transition-colors hover:text-foreground text-muted-foreground" data-i18n-text="nav.about">About me</a>
-                        <a href="javascript:void(0)" class="relative py-2 text-sm font-medium transition-colors hover:text-foreground text-muted-foreground open-modal-btn" data-i18n-text="nav.contacts">Contacts</a>
-                    </nav>
-                    <div class="flex items-center gap-3">
-                        <div class="relative lang-switcher" id="langSwitcher">
-                            <button type="button" aria-label="Language" id="langBtn" class="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm font-medium transition hover:border-primary/60">
-                                <span id="langCurrent">EN</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-4 w-4 transition" aria-hidden="true">
-                                    <path d="m6 9 6 6 6-6"></path>
-                                </svg>
-                            </button>
-                            <div class="lang-menu" role="listbox">
-                                <button data-lang="en" class="active" role="option">English</button>
-                                <button data-lang="lv" role="option">Latviešu</button>
-                                <button data-lang="ru" role="option">Русский</button>
-                            </div>
-                        </div>
-                        <button type="button" class="hidden items-center gap-2 rounded-lg border border-primary/60 px-5 py-2.5 text-sm font-medium glow-soft transition hover:bg-primary/10 sm:inline-flex open-modal-btn" data-i18n-text="header.cta">
-                            Get in touch
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4" aria-hidden="true">
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg>
-                        </button>
-                        <!-- Mobile menu button with hamburger + close cross -->
-                        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-                            <!-- Hamburger icon -->
-                            <svg class="icon-hamburger" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <line x1="4" x2="20" y1="7" y2="7"></line>
-                                <line x1="4" x2="20" y1="12" y2="12"></line>
-                                <line x1="4" x2="20" y1="17" y2="17"></line>
-                            </svg>
-                            <!-- Close cross icon -->
-                            <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M18 6 6 18"></path>
-                                <path d="m6 6 12 12"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </header>
+        .mobile-menu {
+          z-index: 1000 !important;
+        }
 
-            <!-- Mobile Menu Overlay -->
-            <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
-                <a href="#home" class="mobile-nav-link" data-i18n-text="nav.home">Home</a>
-                <a href="#projects" class="mobile-nav-link" data-i18n-text="nav.projects">Projects</a>
-                <a href="#services" class="mobile-nav-link" data-i18n-text="nav.about">About me</a>
-                <a href="javascript:void(0)" class="mobile-nav-link open-modal-btn" data-i18n-text="nav.contacts">Contacts</a>
-                <button type="button" class="mobile-contact open-modal-btn" data-i18n-text="header.cta">
-                    Get in touch
-                </button>
+        .mobile-menu-btn.is-open {
+          position: fixed !important;
+          z-index: 1010 !important;
+          top: 20px;
+          right: 20px;
+        }
+      }
+    </style>
+
+    <meta name="twitter:title" data-i18n-twitter="twitter:title" content="YURI DEV — Web &amp; App Developer" />
+    <meta name="twitter:description" data-i18n-twitter="twitter:description" content="Modern websites, web and mobile apps that deliver results." />
+    <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/lovp_7hcf3menbq9srbsts9n2cbhzny/ff45faede50e53eccb19e6ff12ac5b1f_1793777623775.png" />
+    <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/lovp_7hcf3menbq9srbsts9n2cbhzny/ff45faede50e53eccb19e6ff12ac5b1f_1793777623775.png" />
+  </head>
+  <body>
+    <!--$-->
+    <div class="min-h-screen overflow-x-hidden">
+      <header class="sticky top-0 inset-x-0 z-30">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
+          <a href="#home" class="flex items-center gap-3">
+            <svg viewBox="0 0 32 32" class="h-8 w-8 text-primary icon-glow" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+              <path d="M4 5 L16 18 L28 5"></path>
+              <path d="M16 18 V28"></path>
+              <path d="M10 5 L16 11.5 L22 5" stroke-width="1.4" opacity="0.6"></path>
+            </svg>
+            <span class="text-lg font-bold tracking-[0.15em]">
+              YURI <span class="text-primary">DEV</span>
+            </span>
+          </a>
+          <nav class="hidden items-center gap-10 md:flex desktop-nav">
+            <a href="#home" class="relative py-2 text-sm font-medium transition-colors hover:text-foreground text-foreground" data-i18n-text="nav.home">
+              Home<span class="absolute inset-x-0 -bottom-0.5 h-px bg-primary glow"></span>
+            </a>
+            <a href="#projects" class="relative py-2 text-sm font-medium transition-colors hover:text-foreground text-muted-foreground" data-i18n-text="nav.projects">Projects</a>
+            <a href="#services" class="relative py-2 text-sm font-medium transition-colors hover:text-foreground text-muted-foreground" data-i18n-text="nav.about">About me</a>
+            <a href="javascript:void(0)" class="relative py-2 text-sm font-medium transition-colors hover:text-foreground text-muted-foreground open-modal-btn" data-i18n-text="nav.contacts">Contacts</a>
+          </nav>
+          <div class="flex items-center gap-3">
+            <div class="relative lang-switcher" id="langSwitcher">
+              <button type="button" aria-label="Language" id="langBtn" class="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm font-medium transition hover:border-primary/60">
+                <span id="langCurrent">EN</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-4 w-4 transition" aria-hidden="true">
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </button>
+              <div class="lang-menu" role="listbox">
+                <button data-lang="en" class="active" role="option">English</button>
+                <button data-lang="lv" role="option">Latviešu</button>
+                <button data-lang="ru" role="option">Русский</button>
+              </div>
             </div>
-
-            <section id="home" class="relative isolate min-h-[100svh] pt-28">
-                <img src="https://yuri-after-dark.lovable.app/assets/hero-devices-tToL0Ooe.jpg" alt="Laptop and smartphone with YURI DEV interface among night mountains" width="1536" height="1024" class="absolute inset-y-0 right-0 -z-10 h-full w-full object-cover object-center opacity-90 lg:w-[68%]"/>
-                <div class="absolute inset-0 -z-10 bg-gradient-to-r from-background via-background/85 to-transparent lg:via-background/40"></div>
-                <div class="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-background to-transparent"></div>
-                <div class="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-background to-transparent"></div>
-                <div class="mx-auto flex min-h-[calc(100svh-7rem)] max-w-7xl items-center px-6 lg:px-10">
-                    <div class="max-w-2xl animate-in fade-in slide-in-from-bottom-4 duration-1000">
-                        <p class="label-caps" data-i18n-text="hero.label">Web &amp; App Developer</p>
-                        <h1 class="mt-6 text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
-                            <span data-i18n-text="hero.title1">I create modern websites and apps that</span>
-                            <span class="text-primary" data-i18n-text="hero.title2">work</span>
-                            <span class="text-glow" data-i18n-text="hero.title3">for your success</span>
-                        </h1>
-                        <p class="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground" data-i18n-text="hero.desc">I turn ideas into digital products that deliver results. From simple websites to complex web apps and mobile solutions.</p>
-                        <div class="mt-10 flex flex-wrap gap-4">
-                            <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-4 font-medium text-primary-foreground glow transition hover:brightness-110 open-modal-btn" data-i18n-text="hero.cta1">
-                                Discuss a project
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4" aria-hidden="true">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </button>
-                            <a href="#projects" class="inline-flex items-center rounded-lg border border-border bg-surface/60 px-7 py-4 font-medium backdrop-blur transition hover:border-primary/60" data-i18n-text="hero.cta2">View projects</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section id="services" class="mx-auto max-w-7xl px-6 lg:px-10">
-                <div class="grid rounded-2xl border border-border bg-surface/70 backdrop-blur sm:grid-cols-2 lg:grid-cols-4">
-                    <div class="flex gap-4 p-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe h-8 w-8 shrink-0 text-primary icon-glow" aria-hidden="true">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-                            <path d="M2 12h20"></path>
-                        </svg>
-                        <div>
-                            <h3 class="font-semibold" data-i18n-text="svc.web.title">Websites</h3>
-                            <p class="mt-2 text-sm leading-relaxed text-muted-foreground" data-i18n-text="svc.web.desc">Modern websites that look great and bring clients.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 p-8 border-t sm:border-t-0 lg:border-l sm:border-l">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-xml h-8 w-8 shrink-0 text-primary icon-glow" aria-hidden="true">
-                            <path d="m18 16 4-4-4-4"></path>
-                            <path d="m6 8-4 4 4 4"></path>
-                            <path d="m14.5 4-5 16"></path>
-                        </svg>
-                        <div>
-                            <h3 class="font-semibold" data-i18n-text="svc.app.title">Web apps</h3>
-                            <p class="mt-2 text-sm leading-relaxed text-muted-foreground" data-i18n-text="svc.app.desc">Interactive and scalable solutions for your business.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 p-8 border-t sm:border-t-0 lg:border-l sm:border-t lg:border-t-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone h-8 w-8 shrink-0 text-primary icon-glow" aria-hidden="true">
-                            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
-                            <path d="M12 18h.01"></path>
-                        </svg>
-                        <div>
-                            <h3 class="font-semibold" data-i18n-text="svc.mobile.title">Mobile apps</h3>
-                            <p class="mt-2 text-sm leading-relaxed text-muted-foreground" data-i18n-text="svc.mobile.desc">Apps for iOS and Android with thoughtful UX/UI.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 p-8 border-t sm:border-t-0 lg:border-l sm:border-t sm:border-l lg:border-t-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-8 w-8 shrink-0 text-primary icon-glow" aria-hidden="true">
-                            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
-                            <path d="m9 12 2 2 4-4"></path>
-                        </svg>
-                        <div>
-                            <h3 class="font-semibold" data-i18n-text="svc.support.title">Support</h3>
-                            <p class="mt-2 text-sm leading-relaxed text-muted-foreground" data-i18n-text="svc.support.desc">Maintenance, updates and growth for your projects.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section id="projects" class="mx-auto max-w-7xl px-6 py-28 lg:px-10">
-                <div class="flex flex-wrap items-end justify-between gap-6">
-                    <div>
-                        <p class="label-caps" data-i18n-text="projects.label">My projects</p>
-                        <h2 class="mt-4 flex items-center gap-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                            <span data-i18n-text="projects.title">Latest work</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-7 w-7 text-primary" aria-hidden="true">
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg>
-                        </h2>
-                    </div>
-                    <a href="#projects" class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition hover:text-primary">
-                        <span data-i18n-text="projects.all">All projects</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4" aria-hidden="true">
-                            <path d="M5 12h14"></path>
-                            <path d="m12 5 7 7-7 7"></path>
-                        </svg>
-                    </a>
-                </div>
-                <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    <article class="group overflow-hidden rounded-xl border border-border bg-card transition duration-500 hover:-translate-y-1 hover:border-primary/60 hover:glow-soft">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="https://yuri-after-dark.lovable.app/assets/project-audio-BTc-xPsq.jpg" alt="Premium Audio Experience" loading="lazy" width="1024" height="768" class="h-full w-full object-cover transition duration-700 group-hover:scale-105"/>
-                        </div>
-                        <div class="flex items-center justify-between gap-3 p-5">
-                            <div>
-                                <p class="text-xs uppercase tracking-[0.2em] text-muted-foreground" data-i18n-text="proj1.cat">E-commerce</p>
-                                <h3 class="mt-1.5 font-semibold leading-snug">Premium Audio Experience</h3>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 shrink-0 text-primary transition group-hover:translate-x-1" aria-hidden="true">
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg>
-                        </div>
-                    </article>
-                    <article class="group overflow-hidden rounded-xl border border-border bg-card transition duration-500 hover:-translate-y-1 hover:border-primary/60 hover:glow-soft">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="https://yuri-after-dark.lovable.app/assets/project-architecture-D9X-prhD.jpg" alt="Modern Architecture" loading="lazy" width="1024" height="768" class="h-full w-full object-cover transition duration-700 group-hover:scale-105"/>
-                        </div>
-                        <div class="flex items-center justify-between gap-3 p-5">
-                            <div>
-                                <p class="text-xs uppercase tracking-[0.2em] text-muted-foreground" data-i18n-text="proj2.cat">Corporate website</p>
-                                <h3 class="mt-1.5 font-semibold leading-snug">Modern Architecture</h3>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 shrink-0 text-primary transition group-hover:translate-x-1" aria-hidden="true">
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg>
-                        </div>
-                    </article>
-                    <article class="group overflow-hidden rounded-xl border border-border bg-card transition duration-500 hover:-translate-y-1 hover:border-primary/60 hover:glow-soft">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="https://yuri-after-dark.lovable.app/assets/project-finance-BgVDWJay.jpg" alt="Smart Finance" loading="lazy" width="1024" height="768" class="h-full w-full object-cover transition duration-700 group-hover:scale-105"/>
-                        </div>
-                        <div class="flex items-center justify-between gap-3 p-5">
-                            <div>
-                                <p class="text-xs uppercase tracking-[0.2em] text-muted-foreground" data-i18n-text="proj3.cat">Web app</p>
-                                <h3 class="mt-1.5 font-semibold leading-snug">Smart Finance</h3>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 shrink-0 text-primary transition group-hover:translate-x-1" aria-hidden="true">
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg>
-                        </div>
-                    </article>
-                    <article class="group overflow-hidden rounded-xl border border-border bg-card transition duration-500 hover:-translate-y-1 hover:border-primary/60 hover:glow-soft">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="https://yuri-after-dark.lovable.app/assets/project-fitness-h6fz-0CB.jpg" alt="Track Your Health &amp; Fitness" loading="lazy" width="1024" height="768" class="h-full w-full object-cover transition duration-700 group-hover:scale-105"/>
-                        </div>
-                        <div class="flex items-center justify-between gap-3 p-5">
-                            <div>
-                                <p class="text-xs uppercase tracking-[0.2em] text-muted-foreground" data-i18n-text="proj4.cat">Mobile app</p>
-                                <h3 class="mt-1.5 font-semibold leading-snug">Track Your Health &amp; Fitness</h3>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 shrink-0 text-primary transition group-hover:translate-x-1" aria-hidden="true">
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <footer class="border-t border-border">
-                <div class="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-6 py-12 md:flex-row md:items-center lg:px-10">
-                    <div>
-                        <a href="#home" class="flex items-center gap-3">
-                            <svg viewBox="0 0 32 32" class="h-8 w-8 text-primary icon-glow" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
-                                <path d="M4 5 L16 18 L28 5"></path>
-                                <path d="M16 18 V28"></path>
-                                <path d="M10 5 L16 11.5 L22 5" stroke-width="1.4" opacity="0.6"></path>
-                            </svg>
-                            <span class="text-lg font-bold tracking-[0.15em]">
-                                YURI <span class="text-primary">DEV</span>
-                            </span>
-                        </a>
-                        <p class="mt-3 text-sm text-muted-foreground" data-i18n-text="footer.tagline">Your partner in the digital world</p>
-                    </div>
-                    <div class="flex flex-col gap-4 md:items-end">
-                        <div class="flex gap-3">
-                            <a href="https://github.com/mscbuild" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" class="grid h-10 w-10 place-items-center rounded-lg border border-border text-muted-foreground transition hover:border-primary hover:text-primary hover:glow-soft">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github h-4 w-4" aria-hidden="true">
-                                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                                </svg>
-                            </a>
-                            <a href="https://www.linkedin.com/in/jurijsrck" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="grid h-10 w-10 place-items-center rounded-lg border border-border text-muted-foreground transition hover:border-primary hover:text-primary hover:glow-soft">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin h-4 w-4" aria-hidden="true">
-                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                    <rect width="4" height="12" x="2" y="9"></rect>
-                                    <circle cx="4" cy="4" r="2"></circle>
-                                </svg>
-                            </a>
-                            <a href="https://www.youtube.com/@YuriDevs" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="grid h-10 w-10 place-items-center rounded-lg border border-border text-muted-foreground transition hover:border-primary hover:text-primary hover:glow-soft">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube h-4 w-4" aria-hidden="true">
-                                    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
-                                    <path d="m10 15 5-3-5-3z"></path>
-                                </svg>
-                            </a>
-                        </div>
-                        <p class="text-xs text-muted-foreground" data-i18n-text="footer.copy">© 2026 Yuri Dev. All rights reserved.</p>
-                    </div>
-                </div>
-            </footer>
+            <button type="button" class="hidden items-center gap-2 rounded-lg border border-primary/60 px-5 py-2.5 text-sm font-medium glow-soft transition hover:bg-primary/10 sm:inline-flex open-modal-btn" data-i18n-text="header.cta">
+              Get in touch
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </button>
+            <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+              <svg class="icon-hamburger" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="4" x2="20" y1="7" y2="7"></line>
+                <line x1="4" x2="20" y1="12" y2="12"></line>
+                <line x1="4" x2="20" y1="17" y2="17"></line>
+              </svg>
+              <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </div>
         </div>
+      </header>
 
-        <!-- Contact Modal -->
-        <div id="contactModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-            <div class="modal-content">
-                <button type="button" class="modal-close" id="closeContactModal" aria-label="Close modal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 6 6 18"></path>
-                        <path d="m6 6 12 12"></path>
-                    </svg>
-                </button>
-                <h2 id="modalTitle" class="text-2xl font-bold tracking-tight mb-6" data-i18n-text="contact.title">Get in touch</h2>
-                <form id="contactForm" method="POST" class="space-y-4">
-               <input type="hidden" name="access_key" value="e4fb776d-e6d3-436b-873f-d74e87cd5d26">
-              <input type="checkbox" name="botcheck" class="hidden" style="display:none">
-             <div class="grid gap-4 sm:grid-cols-2">
-                 <div>
-            <label for="name" class="block text-sm font-medium text-muted-foreground mb-1.5">Your name</label>
-                <input type="text" id="name" name="name" minlength="2" maxlength="80" autocomplete="name" required class="w-full rounded-lg border border-border bg-surface/50 px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"/>
-        </div>
-           <div><label for="email" class="block text-sm font-medium text-muted-foreground mb-1.5">Your email</label>
-               <input type="email" id="email" name="email" maxlength="254" autocomplete="email"  required class="w-full rounded-lg border border-border bg-surface/50 px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"/>
-        </div>
-       </div>
+      <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+        <a href="#home" class="mobile-nav-link" data-i18n-text="nav.home">Home</a>
+        <a href="#projects" class="mobile-nav-link" data-i18n-text="nav.projects">Projects</a>
+        <a href="#services" class="mobile-nav-link" data-i18n-text="nav.about">About me</a>
+        <a href="javascript:void(0)" class="mobile-nav-link open-modal-btn" data-i18n-text="nav.contacts">Contacts</a>
+        <button type="button" class="mobile-contact open-modal-btn" data-i18n-text="header.cta">
+          Get in touch
+        </button>
+      </div>
 
-       <!-- Тема обращения -->
-      <div>
-        <label for="subject" class="block text-sm font-medium text-muted-foreground mb-1.5">Subject</label>
-      <select  id="subject" name="subject" required style="color-scheme: dark;" class="w-full rounded-lg border border-border bg-[#1b1b1b] px-4 py-2.5 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary">
-            <option value="Websites" style="background:#1b1b1b;color:white;">Websites</option>
-            <option value="Web apps" style="background:#1b1b1b;color:white;">Web apps</option>
-            <option value="Mobile apps" style="background:#1b1b1b;color:white;">Mobile apps</option>
-            <option value="Support" style="background:#1b1b1b;color:white;">Support</option>
-        </select>
+      <section id="home" class="relative isolate min-h-[100svh] pt-28">
+        <img src="https://yuri-after-dark.lovable.app/assets/hero-devices-tToL0Ooe.jpg" alt="Laptop and smartphone with YURI DEV interface among night mountains" width="1536" height="1024" class="absolute inset-y-0 right-0 -z-10 h-full w-full object-cover object-center opacity-90 lg:w-[68%]" />
+        <div class="absolute inset-0 -z-10 bg-gradient-to-r from-background via-background/85 to-transparent lg:via-background/40"></div>
+        <div class="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-background to-transparent"></div>
+        <div class="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-background to-transparent"></div>
+        <div class="mx-auto flex min-h-[calc(100svh-7rem)] max-w-7xl items-center px-6 lg:px-10">
+          <div class="max-w-2xl animate-in fade-in slide-in-from-bottom-4 duration-1000">
+            <p class="label-caps" data-i18n-text="hero.label">Web &amp; App Developer</p>
+            <h1 class="mt-6 text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
+              <span data-i18n-text="hero.title1">I create modern websites and apps that</span>
+              <span class="text-primary" data-i18n-text="hero.title2">work</span>
+              <span class="text-glow" data-i18n-text="hero.title3">for your success</span>
+            </h1>
+            <p class="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground" data-i18n-text="hero.desc">I turn ideas into digital products that deliver results. From simple websites to complex web apps and mobile solutions.</p>
+            <div class="mt-10 flex flex-wrap gap-4">
+              <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-4 font-medium text-primary-foreground glow transition hover:brightness-110 open-modal-btn" data-i18n-text="hero.cta1">
+                Discuss a project
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4" aria-hidden="true">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </button>
+              <a href="#projects" class="inline-flex items-center rounded-lg border border-border bg-surface/60 px-7 py-4 font-medium backdrop-blur transition hover:border-primary/60" data-i18n-text="hero.cta2">View projects</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="mx-auto max-w-7xl px-6 lg:px-10">
+        <div class="grid rounded-2xl border border-border bg-surface/70 backdrop-blur sm:grid-cols-2 lg:grid-cols-4">
+          <div class="flex gap-4 p-8">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe h-8 w-8 shrink-0 text-primary icon-glow" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+              <path d="M2 12h20"></path>
+            </svg>
+            <div>
+              <h3 class="font-semibold" data-i18n-text="svc.web.title">Websites</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted-foreground" data-i18n-text="svc.web.desc">Modern websites that look great and bring clients.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 p-8 border-t sm:border-t-0 lg:border-l sm:border-l">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-xml h-8 w-8 shrink-0 text-primary icon-glow" aria-hidden="true">
+              <path d="m18 16 4-4-4-4"></path>
+              <path d="m6 8-4 4 4 4"></path>
+              <path d="m14.5 4-5 16"></path>
+            </svg>
+            <div>
+              <h3 class="font-semibold" data-i18n-text="svc.app.title">Web apps</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted-foreground" data-i18n-text="svc.app.desc">Interactive and scalable solutions for your business.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 p-8 border-t sm:border-t-0 lg:border-l sm:border-t lg:border-t-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone h-8 w-8 shrink-0 text-primary icon-glow" aria-hidden="true">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+              <path d="M12 18h.01"></path>
+            </svg>
+            <div>
+              <h3 class="font-semibold" data-i18n-text="svc.mobile.title">Mobile apps</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted-foreground" data-i18n-text="svc.mobile.desc">Apps for iOS and Android with thoughtful UX/UI.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 p-8 border-t sm:border-t-0 lg:border-l sm:border-t sm:border-l lg:border-t-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-8 w-8 shrink-0 text-primary icon-glow" aria-hidden="true">
+              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
+              <path d="m9 12 2 2 4-4"></path>
+            </svg>
+            <div>
+              <h3 class="font-semibold" data-i18n-text="svc.support.title">Support</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted-foreground" data-i18n-text="svc.support.desc">Maintenance, updates and growth for your projects.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="mx-auto max-w-7xl px-6 py-28 lg:px-10">
+        <div class="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p class="label-caps" data-i18n-text="projects.label">My projects</p>
+            <h2 class="mt-4 flex items-center gap-3 text-3xl font-bold tracking-tight sm:text-4xl">
+              <span data-i18n-text="projects.title">Latest work</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-7 w-7 text-primary" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </h2>
+          </div>
+          <a href="#projects" class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition hover:text-primary">
+            <span data-i18n-text="projects.all">All projects</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4" aria-hidden="true">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="group overflow-hidden rounded-xl border border-border bg-card transition duration-500 hover:-translate-y-1 hover:border-primary/60 hover:glow-soft">
+            <div class="aspect-[4/3] overflow-hidden">
+              <img src="https://yuri-after-dark.lovable.app/assets/project-audio-BTc-xPsq.jpg" alt="Premium Audio Experience" loading="lazy" width="1024" height="768" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+            </div>
+            <div class="flex items-center justify-between gap-3 p-5">
+              <div>
+                <p class="text-xs uppercase tracking-[0.2em] text-muted-foreground" data-i18n-text="proj1.cat">E-commerce</p>
+                <h3 class="mt-1.5 font-semibold leading-snug">Premium Audio Experience</h3>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 shrink-0 text-primary transition group-hover:translate-x-1" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </div>
+          </article>
+          <article class="group overflow-hidden rounded-xl border border-border bg-card transition duration-500 hover:-translate-y-1 hover:border-primary/60 hover:glow-soft">
+            <div class="aspect-[4/3] overflow-hidden">
+              <img src="https://yuri-after-dark.lovable.app/assets/project-architecture-D9X-prhD.jpg" alt="Modern Architecture" loading="lazy" width="1024" height="768" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+            </div>
+            <div class="flex items-center justify-between gap-3 p-5">
+              <div>
+                <p class="text-xs uppercase tracking-[0.2em] text-muted-foreground" data-i18n-text="proj2.cat">Corporate website</p>
+                <h3 class="mt-1.5 font-semibold leading-snug">Modern Architecture</h3>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 shrink-0 text-primary transition group-hover:translate-x-1" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </div>
+          </article>
+          <article class="group overflow-hidden rounded-xl border border-border bg-card transition duration-500 hover:-translate-y-1 hover:border-primary/60 hover:glow-soft">
+            <div class="aspect-[4/3] overflow-hidden">
+              <img src="https://yuri-after-dark.lovable.app/assets/project-finance-BgVDWJay.jpg" alt="Smart Finance" loading="lazy" width="1024" height="768" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+            </div>
+            <div class="flex items-center justify-between gap-3 p-5">
+              <div>
+                <p class="text-xs uppercase tracking-[0.2em] text-muted-foreground" data-i18n-text="proj3.cat">Web app</p>
+                <h3 class="mt-1.5 font-semibold leading-snug">Smart Finance</h3>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 shrink-0 text-primary transition group-hover:translate-x-1" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </div>
+          </article>
+          <article class="group overflow-hidden rounded-xl border border-border bg-card transition duration-500 hover:-translate-y-1 hover:border-primary/60 hover:glow-soft">
+            <div class="aspect-[4/3] overflow-hidden">
+              <img src="https://yuri-after-dark.lovable.app/assets/project-fitness-h6fz-0CB.jpg" alt="Track Your Health &amp; Fitness" loading="lazy" width="1024" height="768" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+            </div>
+            <div class="flex items-center justify-between gap-3 p-5">
+              <div>
+                <p class="text-xs uppercase tracking-[0.2em] text-muted-foreground" data-i18n-text="proj4.cat">Mobile app</p>
+                <h3 class="mt-1.5 font-semibold leading-snug">Track Your Health &amp; Fitness</h3>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 shrink-0 text-primary transition group-hover:translate-x-1" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <footer class="border-t border-border">
+        <div class="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-6 py-12 md:flex-row md:items-center lg:px-10">
+          <div>
+            <a href="#home" class="flex items-center gap-3">
+              <svg viewBox="0 0 32 32" class="h-8 w-8 text-primary icon-glow" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+                <path d="M4 5 L16 18 L28 5"></path>
+                <path d="M16 18 V28"></path>
+                <path d="M10 5 L16 11.5 L22 5" stroke-width="1.4" opacity="0.6"></path>
+              </svg>
+              <span class="text-lg font-bold tracking-[0.15em]">
+                YURI <span class="text-primary">DEV</span>
+              </span>
+            </a>
+            <p class="mt-3 text-sm text-muted-foreground" data-i18n-text="footer.tagline">Your partner in the digital world</p>
+          </div>
+          <div class="flex flex-col gap-4 md:items-end">
+            <div class="flex gap-3">
+              <a href="https://github.com/mscbuild" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" class="grid h-10 w-10 place-items-center rounded-lg border border-border text-muted-foreground transition hover:border-primary hover:text-primary hover:glow-soft">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github h-4 w-4" aria-hidden="true">
+                  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                  <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                </svg>
+              </a>
+              <a href="https://www.linkedin.com/in/jurijsrck" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="grid h-10 w-10 place-items-center rounded-lg border border-border text-muted-foreground transition hover:border-primary hover:text-primary hover:glow-soft">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin h-4 w-4" aria-hidden="true">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect width="4" height="12" x="2" y="9"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </a>
+              <a href="https://www.youtube.com/@YuriDevs" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="grid h-10 w-10 place-items-center rounded-lg border border-border text-muted-foreground transition hover:border-primary hover:text-primary hover:glow-soft">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube h-4 w-4" aria-hidden="true">
+                  <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
+                  <path d="m10 15 5-3-5-3z"></path>
+                </svg>
+              </a>
+            </div>
+            <p class="text-xs text-muted-foreground" data-i18n-text="footer.copy">© 2026 Yuri Dev. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
 
-    <!-- Сообщение -->
-    <div>
-        <label for="message" class="block text-sm font-medium text-muted-foreground mb-1.5">Message</label>
-   <textarea id="message" name="message" rows="4" minlength="10" maxlength="3000" required  class="w-full rounded-lg border border-border bg-surface/50 px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"></textarea>
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-content">
+        <button type="button" class="modal-close" id="closeContactModal" aria-label="Close modal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+
+        <h2 id="modalTitle" class="text-2xl font-bold tracking-tight mb-6" data-i18n-text="contact.title">
+          Get in touch
+        </h2>
+
+        <form id="contactForm" method="POST" class="space-y-4">
+          <input type="hidden" name="access_key" value="e4fb776d-e6d3-436b-873f-d74e87cd5d26" />
+          <input type="hidden" name="subject" id="emailSubject" value="New Contact Form Submission" />
+          <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="name" class="block text-sm font-medium text-muted-foreground mb-1.5">
+                Your name
+              </label>
+              <input type="text" id="name" name="name" minlength="2" maxlength="80" autocomplete="name" required class="w-full rounded-lg border border-border bg-surface/50 px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-muted-foreground mb-1.5">
+                Your email
+              </label>
+              <input type="email" id="email" name="email" maxlength="254" autocomplete="email" required class="w-full rounded-lg border border-border bg-surface/50 px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" />
+            </div>
+          </div>
+
+          <div>
+            <label for="subject" class="block text-sm font-medium text-muted-foreground mb-1.5">
+              Subject
+            </label>
+            <select id="subject" name="Inquiry Type" required style="color-scheme: dark; background-color: #1b1b1b; color: #ffffff;" class="w-full rounded-lg border border-border bg-[#1b1b1b] px-4 py-2.5 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary">
+              <option value="Websites" style="background-color:#1b1b1b; color:#ffffff;">Websites</option>
+              <option value="Web apps" style="background-color:#1b1b1b; color:#ffffff;">Web apps</option>
+              <option value="Mobile apps" style="background-color:#1b1b1b; color:#ffffff;">Mobile apps</option>
+              <option value="Support" style="background-color:#1b1b1b; color:#ffffff;">Support</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="message" class="block text-sm font-medium text-muted-foreground mb-1.5">
+              Message
+            </label>
+            <textarea id="message" name="message" rows="4" minlength="10" maxlength="3000" required class="w-full rounded-lg border border-border bg-surface/50 px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"></textarea>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <input type="checkbox" id="consent" name="consent" value="Yes" required class="mt-1 h-4 w-4 rounded border-border bg-surface/50 text-primary focus:ring-primary" />
+            <label for="consent" class="text-sm text-muted-foreground">
+              I consent to the processing of my personal data
+            </label>
+          </div>
+
+          <p id="formStatus" role="status" aria-live="polite" class="text-sm"></p>
+
+          <button type="submit" id="submitBtn" class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 font-medium text-primary-foreground glow transition hover:brightness-110 w-full">
+            Send message
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+              <path d="m22 2-7 20-4-9-9-4Z"></path>
+              <path d="M22 2 11 13"></path>
+            </svg>
+          </button>
+        </form>
+      </div>
     </div>
+    <!-- End Contact Modal -->
 
-    <!-- Согласие на обработку данных -->
-    <div class="flex items-start gap-3">
-        <input type="checkbox" id="consent" name="consent" value="Yes  required" class="mt-1 h-4 w-4 rounded border-border bg-surface/50 text-primary focus:ring-primary"/>
-       <label for="consent" class="text-sm text-muted-foreground"> I consent to the processing of my personal data </label>
-     </div>
+    <script>
+      (function () {
+        const translations = {
+          en: {
+            "title": "YURI DEV — Websites and apps that work for your success",
+            "meta.description": "YURI DEV portfolio: modern websites, web apps and mobile solutions turnkey.",
+            "og:title": "YURI DEV — Web & App Developer",
+            "og:description": "Modern websites, web and mobile apps that deliver results.",
+            "twitter:title": "YURI DEV — Web & App Developer",
+            "twitter:description": "Modern websites, web and mobile apps that deliver results.",
+            "nav.home": "Home",
+            "nav.projects": "Projects",
+            "nav.about": "About me",
+            "nav.contacts": "Contacts",
+            "header.cta": "Get in touch",
+            "hero.label": "Web & App Developer",
+            "hero.title1": "I create modern websites and apps that",
+            "hero.title2": "work",
+            "hero.title3": "for your success",
+            "hero.desc": "I turn ideas into digital products that deliver results. From simple websites to complex web apps and mobile solutions.",
+            "hero.cta1": "Discuss a project",
+            "hero.cta2": "View projects",
+            "svc.web.title": "Websites",
+            "svc.web.desc": "Modern websites that look great and bring clients.",
+            "svc.app.title": "Web apps",
+            "svc.app.desc": "Interactive and scalable solutions for your business.",
+            "svc.mobile.title": "Mobile apps",
+            "svc.mobile.desc": "Apps for iOS and Android with thoughtful UX/UI.",
+            "svc.support.title": "Support",
+            "svc.support.desc": "Maintenance, updates and growth for your projects.",
+            "projects.label": "My projects",
+            "projects.title": "Latest work",
+            "projects.all": "All projects",
+            "proj1.cat": "E-commerce",
+            "proj2.cat": "Corporate website",
+            "proj3.cat": "Web app",
+            "proj4.cat": "Mobile app",
+            "footer.tagline": "Your partner in the digital world",
+            "footer.copy": "© 2026 Yuri Dev. All rights reserved.",
+            "contact.label": "Contacts",
+            "contact.title": "Get in touch",
+            "contact.name": "Your name",
+            "contact.email": "Your email",
+            "contact.subject": "Subject",
+            "contact.message": "Message",
+            "contact.send": "Send message",
+            "contact.consent": "I consent to the processing of my personal data"
+          },
+          lv: {
+            "title": "YURI DEV — Vietnes un lietotnes, kas strādā jūsu panākumu labā",
+            "meta.description": "YURI DEV portfolio: modernas vietnes, tīmekļa lietotnes un mobilie risinājumi ar pilnu ciklu.",
+            "og:title": "YURI DEV — Tīmekļa un lietotņu izstrādātājs",
+            "og:description": "Mūsdienu vietnes, tīmekļa un mobilās lietotnes, kas sniedz rezultātu.",
+            "twitter:title": "YURI DEV — Tīmekļa un lietotņu izstrādātājs",
+            "twitter:description": "Mūsdienu vietnes, tīmekļa un mobilās lietotnes, kas sniedz rezultātu.",
+            "nav.home": "Sākums",
+            "nav.projects": "Projekti",
+            "nav.about": "Par mani",
+            "nav.contacts": "Kontakti",
+            "header.cta": "Sazināties",
+            "hero.label": "Tīmekļa un lietotņu izstrādātājs",
+            "hero.title1": "Veidoju modernas vietnes un lietotnes, kas",
+            "hero.title2": "strādā",
+            "hero.title3": "jūsu panākumu labā",
+            "hero.desc": "Pārvēršu idejas digitālos produktos, kas sniedz rezultātu. No vienkāršām vietnēm līdz sarežģītām tīmekļa lietotnēm un mobilajiem risinājumiem.",
+            "hero.cta1": "Apspriest projektu",
+            "hero.cta2": "Skatīt projektus",
+            "svc.web.title": "Vietnes",
+            "svc.web.desc": "Mūsdienu vietnes, kas izskatās lieliski un piesaista klientus.",
+            "svc.app.title": "Tīmekļa lietotnes",
+            "svc.app.desc": "Interaktīvi un mērogojami risinājumi jūsu biznesam.",
+            "svc.mobile.title": "Mobilās lietotnes",
+            "svc.mobile.desc": "Lietotnes iOS un Android ar pārdomātu UX/UI.",
+            "svc.support.title": "Atbalsts",
+            "svc.support.desc": "Jūsu projektu uzturēšana, atjauninājumi un attīstība.",
+            "projects.label": "Mani projekti",
+            "projects.title": "Jaunākie darbi",
+            "projects.all": "Visi projekti",
+            "proj1.cat": "E-komercija",
+            "proj2.cat": "Korporatīvā vietne",
+            "proj3.cat": "Tīmekļa lietotne",
+            "proj4.cat": "Mobilā lietotne",
+            "footer.tagline": "Jūsu partneris digitālajā pasaulē",
+            "footer.copy": "© 2026 Yuri Dev. Visas tiesības aizsargātas.",
+            "contact.label": "Kontakti",
+            "contact.title": "Sazinieties ar mums",
+            "contact.name": "Jūsu vārds",
+            "contact.email": "Jūsu e-pasts",
+            "contact.subject": "Tēma",
+            "contact.message": "Ziņojums",
+            "contact.send": "Nosūtīt ziņojumu",
+            "contact.consent": "Es piekrītu savu personas datu apstrādei"
+          },
+          ru: {
+            "title": "YURI DEV — Сайты и приложения, которые работают на ваш успех",
+            "meta.description": "Портфолио YURI DEV: современные сайты, веб-приложения и мобильные решения под ключ.",
+            "og:title": "YURI DEV — Веб-разработчик и разработчик приложений",
+            "og:description": "Современные сайты, веб- и мобильные приложения, которые приносят результат.",
+            "twitter:title": "YURI DEV — Веб-разработчик и разработчик приложений",
+            "twitter:description": "Современные сайты, веб- и мобильные приложения, которые приносят результат.",
+            "nav.home": "Главная",
+            "nav.projects": "Проекты",
+            "nav.about": "Обо мне",
+            "nav.contacts": "Контакты",
+            "header.cta": "Связаться",
+            "hero.label": "Веб-разработчик и разработчик приложений",
+            "hero.title1": "Я создаю современные сайты и приложения, которые",
+            "hero.title2": "работают",
+            "hero.title3": "на ваш успех",
+            "hero.desc": "Я превращаю идеи в цифровые продукты, которые приносят результат. От простых сайтов до сложных веб-приложений и мобильных решений.",
+            "hero.cta1": "Обсудить проект",
+            "hero.cta2": "Смотреть проекты",
+            "svc.web.title": "Сайты",
+            "svc.web.desc": "Современные сайты, которые отлично выглядят и привлекают клиентов.",
+            "svc.app.title": "Веб-приложения",
+            "svc.app.desc": "Интерактивные и масштабируемые решения для вашего бизнеса.",
+            "svc.mobile.title": "Мобильные приложения",
+            "svc.mobile.desc": "Приложения для iOS и Android с продуманным UX/UI.",
+            "svc.support.title": "Поддержка",
+            "svc.support.desc": "Обслуживание, обновления и развитие ваших проектов.",
+            "projects.label": "Мои проекты",
+            "projects.title": "Последние работы",
+            "projects.all": "Все проекты",
+            "proj1.cat": "Электронная коммерция",
+            "proj2.cat": "Корпоративный сайт",
+            "proj3.cat": "Веб-приложение",
+            "proj4.cat": "Мобильное приложение",
+            "footer.tagline": "Ваш партнер в цифровом мире",
+            "footer.copy": "© 2026 Yuri Dev. Все права защищены.",
+            "contact.label": "Контакты",
+            "contact.title": "Свяжитесь с нами",
+            "contact.name": "Ваше имя",
+            "contact.email": "Ваш email",
+            "contact.subject": "Тема обращения",
+            "contact.message": "Сообщение",
+            "contact.send": "Отправить сообщение",
+            "contact.consent": "Я даю согласие на обработку моих персональных данных"
+          }
+        };
 
-    <!-- Сообщение о результате отправки -->
-    <p id="formStatus" role="status" aria-live="polite" class="text-sm"></p>
+        const langLabels = { en: "EN", lv: "LV", ru: "RU" };
+        let currentLang = "en";
 
-    <!-- Кнопка -->
-    <button type="submit" id="submitBtn" class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 font-medium text-primary-foreground glow transition hover:brightness-110 w-full">
-        Send message
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="m22 2-7 20-4-9-9-4Z"></path>
-            <path d="M22 2 11 13"></path>
-        </svg>
-    </button>
-   </form>
-  </div>
- <script>
-        (function() {
-            const translations = {
-                en: {
-                    "title": "YURI DEV — Websites and apps that work for your success",
-                    "meta.description": "YURI DEV portfolio: modern websites, web apps and mobile solutions turnkey.",
-                    "og:title": "YURI DEV — Web & App Developer",
-                    "og:description": "Modern websites, web and mobile apps that deliver results.",
-                    "twitter:title": "YURI DEV — Web & App Developer",
-                    "twitter:description": "Modern websites, web and mobile apps that deliver results.",
-                    "nav.home": "Home",
-                    "nav.projects": "Projects",
-                    "nav.about": "About me",
-                    "nav.contacts": "Contacts",
-                    "header.cta": "Get in touch",
-                    "hero.label": "Web & App Developer",
-                    "hero.title1": "I create modern websites and apps that",
-                    "hero.title2": "work",
-                    "hero.title3": "for your success",
-                    "hero.desc": "I turn ideas into digital products that deliver results. From simple websites to complex web apps and mobile solutions.",
-                    "hero.cta1": "Discuss a project",
-                    "hero.cta2": "View projects",
-                    "svc.web.title": "Websites",
-                    "svc.web.desc": "Modern websites that look great and bring clients.",
-                    "svc.app.title": "Web apps",
-                    "svc.app.desc": "Interactive and scalable solutions for your business.",
-                    "svc.mobile.title": "Mobile apps",
-                    "svc.mobile.desc": "Apps for iOS and Android with thoughtful UX/UI.",
-                    "svc.support.title": "Support",
-                    "svc.support.desc": "Maintenance, updates and growth for your projects.",
-                    "projects.label": "My projects",
-                    "projects.title": "Latest work",
-                    "projects.all": "All projects",
-                    "proj1.cat": "E-commerce",
-                    "proj2.cat": "Corporate website",
-                    "proj3.cat": "Web app",
-                    "proj4.cat": "Mobile app",
-                    "footer.tagline": "Your partner in the digital world",
-                    "footer.copy": "© 2026 Yuri Dev. All rights reserved.",
-                    "contact.label": "Contacts",
-                    "contact.title": "Get in touch",
-                    "contact.name": "Your name",
-                    "contact.email": "Your email",
-                    "contact.subject": "Subject",
-                    "contact.message": "Message",
-                    "contact.send": "Send message",
-                    "contact.consent": "I consent to the processing of my personal data"
-                },
-                lv: {
-                    "title": "YURI DEV — Vietnes un lietotnes, kas strādā jūsu panākumu labā",
-                    "meta.description": "YURI DEV portfolio: modernas vietnes, tīmekļa lietotnes un mobilie risinājumi ar pilnu ciklu.",
-                    "og:title": "YURI DEV — Tīmekļa un lietotņu izstrādātājs",
-                    "og:description": "Mūsdienu vietnes, tīmekļa un mobilās lietotnes, kas sniedz rezultātu.",
-                    "twitter:title": "YURI DEV — Tīmekļa un lietotņu izstrādātājs",
-                    "twitter:description": "Mūsdienu vietnes, tīmekļa un mobilās lietotnes, kas sniedz rezultātu.",
-                    "nav.home": "Sākums",
-                    "nav.projects": "Projekti",
-                    "nav.about": "Par mani",
-                    "nav.contacts": "Kontakti",
-                    "header.cta": "Sazināties",
-                    "hero.label": "Tīmekļa un lietotņu izstrādātājs",
-                    "hero.title1": "Veidoju modernas vietnes un lietotnes, kas",
-                    "hero.title2": "strādā",
-                    "hero.title3": "jūsu panākumu labā",
-                    "hero.desc": "Pārvēršu idejas digitālos produktos, kas sniedz rezultātu. No vienkāršām vietnēm līdz sarežģītām tīmekļa lietotnēm un mobilajiem risinājumiem.",
-                    "hero.cta1": "Apspriest projektu",
-                    "hero.cta2": "Skatīt projektus",
-                    "svc.web.title": "Vietnes",
-                    "svc.web.desc": "Mūsdienu vietnes, kas izskatās lieliski un piesaista klientus.",
-                    "svc.app.title": "Tīmekļa lietotnes",
-                    "svc.app.desc": "Interaktīvi un mērogojami risinājumi jūsu biznesam.",
-                    "svc.mobile.title": "Mobilās lietotnes",
-                    "svc.mobile.desc": "Lietotnes iOS un Android ar pārdomātu UX/UI.",
-                    "svc.support.title": "Atbalsts",
-                    "svc.support.desc": "Jūsu projektu uzturēšana, atjauninājumi un attīstība.",
-                    "projects.label": "Mani projekti",
-                    "projects.title": "Jaunākie darbi",
-                    "projects.all": "Visi projekti",
-                    "proj1.cat": "E-komercija",
-                    "proj2.cat": "Korporatīvā vietne",
-                    "proj3.cat": "Tīmekļa lietotne",
-                    "proj4.cat": "Mobilā lietotne",
-                    "footer.tagline": "Jūsu partneris digitālajā pasaulē",
-                    "footer.copy": "© 2026 Yuri Dev. Visas tiesības aizsargātas.",
-                    "contact.label": "Kontakti",
-                    "contact.title": "Sazinieties ar mums",
-                    "contact.name": "Jūsu vārds",
-                    "contact.email": "Jūsu e-pasts",
-                    "contact.subject": "Tēma",
-                    "contact.message": "Ziņojums",
-                    "contact.send": "Nosūtīt ziņojumu",
-                    "contact.consent": "Es piekrītu savu personas datu apstrādei"
-                },
-                ru: {
-                    "title": "YURI DEV — Сайты и приложения, которые работают на ваш успех",
-                    "meta.description": "Портфолио YURI DEV: современные сайты, веб-приложения и мобильные решения под ключ.",
-                    "og:title": "YURI DEV — Веб-разработчик и разработчик приложений",
-                    "og:description": "Современные сайты, веб- и мобильные приложения, которые приносят результат.",
-                    "twitter:title": "YURI DEV — Веб-разработчик и разработчик приложений",
-                    "twitter:description": "Современные сайты, веб- и мобильные приложения, которые приносят результат.",
-                    "nav.home": "Главная",
-                    "nav.projects": "Проекты",
-                    "nav.about": "Обо мне",
-                    "nav.contacts": "Контакты",
-                    "header.cta": "Связаться",
-                    "hero.label": "Веб-разработчик и разработчик приложений",
-                    "hero.title1": "Я создаю современные сайты и приложения, которые",
-                    "hero.title2": "работают",
-                    "hero.title3": "на ваш успех",
-                    "hero.desc": "Я превращаю идеи в цифровые продукты, которые приносят результат. От простых сайтов до сложных веб-приложений и мобильных решений.",
-                    "hero.cta1": "Обсудить проект",
-                    "hero.cta2": "Смотреть проекты",
-                    "svc.web.title": "Сайты",
-                    "svc.web.desc": "Современные сайты, которые отлично выглядят и привлекают клиентов.",
-                    "svc.app.title": "Веб-приложения",
-                    "svc.app.desc": "Интерактивные и масштабируемые решения для вашего бизнеса.",
-                    "svc.mobile.title": "Мобильные приложения",
-                    "svc.mobile.desc": "Приложения для iOS и Android с продуманным UX/UI.",
-                    "svc.support.title": "Поддержка",
-                    "svc.support.desc": "Обслуживание, обновления и развитие ваших проектов.",
-                    "projects.label": "Мои проекты",
-                    "projects.title": "Последние работы",
-                    "projects.all": "Все проекты",
-                    "proj1.cat": "Электронная коммерция",
-                    "proj2.cat": "Корпоративный сайт",
-                    "proj3.cat": "Веб-приложение",
-                    "proj4.cat": "Мобильное приложение",
-                    "footer.tagline": "Ваш партнер в цифровом мире",
-                    "footer.copy": "© 2026 Yuri Dev. Все права защищены.",
-                    "contact.label": "Контакты",
-                    "contact.title": "Свяжитесь с нами",
-                    "contact.name": "Ваше имя",
-                    "contact.email": "Ваш email",
-                    "contact.subject": "Тема обращения",
-                    "contact.message": "Сообщение",
-                    "contact.send": "Отправить сообщение",
-                    "contact.consent": "Я даю согласие на обработку моих персональных данных"
+        function applyLanguage(lang) {
+          const dict = translations[lang];
+          if (!dict) return;
+          currentLang = lang;
+          document.documentElement.lang = lang;
+          document.title = dict["title"];
+
+          document.querySelectorAll('[data-i18n-meta]').forEach(el => {
+            const key = el.getAttribute('data-i18n-meta');
+            if (dict[key]) el.setAttribute('content', dict[key]);
+          });
+          document.querySelectorAll('[data-i18n-og]').forEach(el => {
+            const key = el.getAttribute('data-i18n-og');
+            if (dict[key]) el.setAttribute('content', dict[key]);
+          });
+          document.querySelectorAll('[data-i18n-twitter]').forEach(el => {
+            const key = el.getAttribute('data-i18n-twitter');
+            if (dict[key]) el.setAttribute('content', dict[key]);
+          });
+
+          document.querySelectorAll('[data-i18n-text]').forEach(el => {
+            const key = el.getAttribute('data-i18n-text');
+            if (dict[key] !== undefined) {
+              const childNodes = Array.from(el.childNodes);
+              let textNodeFound = false;
+              childNodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '') {
+                  if (!textNodeFound) {
+                    node.textContent = dict[key] + ' ';
+                    textNodeFound = true;
+                  } else {
+                    node.textContent = '';
+                  }
                 }
-            };
-
-            const langLabels = { en: "EN", lv: "LV", ru: "RU" };
-            let currentLang = "en";
-
-            function applyLanguage(lang) {
-                const dict = translations[lang];
-                if (!dict) return;
-                currentLang = lang;
-                document.documentElement.lang = lang;
-
-                document.title = dict["title"];
-
-                document.querySelectorAll('[data-i18n-meta]').forEach(el => {
-                    const key = el.getAttribute('data-i18n-meta');
-                    if (dict[key]) el.setAttribute('content', dict[key]);
-                });
-                document.querySelectorAll('[data-i18n-og]').forEach(el => {
-                    const key = el.getAttribute('data-i18n-og');
-                    if (dict[key]) el.setAttribute('content', dict[key]);
-                });
-                document.querySelectorAll('[data-i18n-twitter]').forEach(el => {
-                    const key = el.getAttribute('data-i18n-twitter');
-                    if (dict[key]) el.setAttribute('content', dict[key]);
-                });
-
-                document.querySelectorAll('[data-i18n-text]').forEach(el => {
-                    const key = el.getAttribute('data-i18n-text');
-                    if (dict[key] !== undefined) {
-                        const childNodes = Array.from(el.childNodes);
-                        let textNodeFound = false;
-                        childNodes.forEach(node => {
-                            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '') {
-                                if (!textNodeFound) {
-                                    node.textContent = dict[key] + ' ';
-                                    textNodeFound = true;
-                                } else {
-                                    node.textContent = '';
-                                }
-                            }
-                        });
-                        if (!textNodeFound) {
-                            el.textContent = dict[key];
-                        }
-                    }
-                });
-
-                document.getElementById('langCurrent').textContent = langLabels[lang];
-
-                document.querySelectorAll('#langSwitcher .lang-menu button').forEach(btn => {
-                    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
-                });
+              });
+              if (!textNodeFound) {
+                el.textContent = dict[key];
+              }
             }
+          });
 
-            const switcher = document.getElementById('langSwitcher');
-            const langBtn = document.getElementById('langBtn');
+          document.getElementById('langCurrent').textContent = langLabels[lang];
 
-            langBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                switcher.classList.toggle('open');
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!switcher.contains(e.target)) {
-                    switcher.classList.remove('open');
-                }
-            });
-
-            document.querySelectorAll('#langSwitcher .lang-menu button').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const lang = this.getAttribute('data-lang');
-                    applyLanguage(lang);
-                    switcher.classList.remove('open');
-                });
-            });
-
-            // ========== Mobile menu logic ==========
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const mobileMenu = document.getElementById('mobileMenu');
-            let mobileMenuOpen = false;
-
-            
-           function openMobileMenu() {
-           mobileMenuOpen = true;
-           mobileMenu.classList.add('open');
-           mobileMenuBtn.classList.add('is-open');
-           mobileMenuBtn.setAttribute('aria-label', 'Close menu');
-           mobileMenuBtn.setAttribute('aria-expanded', 'true');
-           document.body.classList.add('mobile-menu-active');
-           document.body.style.overflow = 'hidden';
-           }
-
-
-            
-         function closeMobileMenu() {
-         if (!mobileMenuOpen) return;
-         mobileMenuOpen = false;
-         mobileMenu.classList.remove('open');
-         mobileMenuBtn.classList.remove('is-open');
-        mobileMenuBtn.setAttribute('aria-label', 'Open menu');
-        mobileMenuBtn.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('mobile-menu-active');
-        if (!document.getElementById('contactModal').classList.contains('open')) {
-        document.body.style.overflow = '';
-    }
-     }
-
-            function toggleMobileMenu() {
-                if (mobileMenuOpen) {
-                    closeMobileMenu();
-                } else {
-                    openMobileMenu();
-                }
-            }
-
-            if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-            }
-
-            // Close mobile menu when a nav link inside it is clicked
-            document.querySelectorAll('#mobileMenu .mobile-nav-link').forEach(link => {
-                link.addEventListener('click', function() {
-                    closeMobileMenu();
-                });
-            });
-
-            // Close mobile menu on Escape
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && mobileMenuOpen) {
-                    closeMobileMenu();
-                }
-            });
-
-            // Close mobile menu if viewport grows past mobile breakpoint
-            const mobileQuery = window.matchMedia('(min-width: 768px)');
-            function handleViewportChange(mq) {
-                if (mq.matches && mobileMenuOpen) {
-                    closeMobileMenu();
-                }
-            }
-            if (mobileQuery.addEventListener) {
-                mobileQuery.addEventListener('change', handleViewportChange);
-            } else if (mobileQuery.addListener) {
-                mobileQuery.addListener(handleViewportChange);
-            }
-
-            // ========== Modal logic ==========
-            const modal = document.getElementById('contactModal');
-            const openModalBtns = document.querySelectorAll('.open-modal-btn');
-            const closeModalBtn = document.getElementById('closeContactModal');
-
-            function openModal(e) {
-                if (e) e.preventDefault();
-                closeMobileMenu();
-                modal.classList.add('open');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeModal() {
-                modal.classList.remove('open');
-                document.body.style.overflow = '';
-            }
-
-            openModalBtns.forEach(btn => {
-                btn.addEventListener('click', openModal);
-            });
-
-            if (closeModalBtn) {
-                closeModalBtn.addEventListener('click', closeModal);
-            }
-
-            if (modal) {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeModal();
-                    }
-                });
-            }
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal && modal.classList.contains('open')) {
-                    closeModal();
-                }
-            });
-
-          const contactForm = document.getElementById('contactForm');
-
-if (contactForm) {
-
-    const submitBtn = document.getElementById('submitBtn');
-    const formStatus = document.getElementById('formStatus');
-
-    contactForm.addEventListener('submit', async function(e) {
-
-        e.preventDefault();
-
-        // Проверка обязательных полей
-        if (!contactForm.checkValidity()) {
-            contactForm.reportValidity();
-            return;
+          document.querySelectorAll('#langSwitcher .lang-menu button').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+          });
         }
 
-        // Проверка согласия
-        const consent = document.getElementById('consent');
+        const switcher = document.getElementById('langSwitcher');
+        const langBtn = document.getElementById('langBtn');
 
-        if (!consent.checked) {
-            formStatus.textContent = 'Please accept the privacy consent.';
-            formStatus.style.color = '#ef4444';
-            return;
+        langBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          switcher.classList.toggle('open');
+        });
+
+        document.addEventListener('click', function (e) {
+          if (!switcher.contains(e.target)) {
+            switcher.classList.remove('open');
+          }
+        });
+
+        document.querySelectorAll('#langSwitcher .lang-menu button').forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const lang = this.getAttribute('data-lang');
+            applyLanguage(lang);
+            switcher.classList.remove('open');
+          });
+        });
+
+        // ========== Mobile menu logic ==========
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let mobileMenuOpen = false;
+
+        function openMobileMenu() {
+          mobileMenuOpen = true;
+          mobileMenu.classList.add('open');
+          mobileMenuBtn.classList.add('is-open');
+          mobileMenuBtn.setAttribute('aria-label', 'Close menu');
+          mobileMenuBtn.setAttribute('aria-expanded', 'true');
+          document.body.classList.add('mobile-menu-active');
+          document.body.style.overflow = 'hidden';
         }
 
-        // Защита от повторной отправки
-        if (submitBtn.disabled) return;
+        function closeMobileMenu() {
+          if (!mobileMenuOpen) return;
+          mobileMenuOpen = false;
+          mobileMenu.classList.remove('open');
+          mobileMenuBtn.classList.remove('is-open');
+          mobileMenuBtn.setAttribute('aria-label', 'Open menu');
+          mobileMenuBtn.setAttribute('aria-expanded', 'false');
+          document.body.classList.remove('mobile-menu-active');
+          if (!document.getElementById('contactModal').classList.contains('open')) {
+            document.body.style.overflow = '';
+          }
+        }
 
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.6';
+        function toggleMobileMenu() {
+          if (mobileMenuOpen) {
+            closeMobileMenu();
+          } else {
+            openMobileMenu();
+          }
+        }
 
-        formStatus.textContent = 'Sending...';
-        formStatus.style.color = '#c5c1b9';
+        if (mobileMenuBtn) {
+          mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        }
 
-        try {
+        document.querySelectorAll('#mobileMenu .mobile-nav-link').forEach(link => {
+          link.addEventListener('click', function () {
+            closeMobileMenu();
+          });
+        });
 
-            const formData = new FormData(contactForm);
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && mobileMenuOpen) {
+            closeMobileMenu();
+          }
+        });
 
-            const response = await fetch(
-                'https://api.web3forms.com/submit',
-                {
-                    method: 'POST',
-                    body: formData
-                }
-            );
+        const mobileQuery = window.matchMedia('(min-width: 768px)');
+        function handleViewportChange(mq) {
+          if (mq.matches && mobileMenuOpen) {
+            closeMobileMenu();
+          }
+        }
+        if (mobileQuery.addEventListener) {
+          mobileQuery.addEventListener('change', handleViewportChange);
+        } else if (mobileQuery.addListener) {
+          mobileQuery.addListener(handleViewportChange);
+        }
 
-            const result = await response.json();
+        // ========== Modal logic ==========
+        const modal = document.getElementById('contactModal');
+        const openModalBtns = document.querySelectorAll('.open-modal-btn');
+        const closeModalBtn = document.getElementById('closeContactModal');
 
-            if (response.ok && result.success) {
+        function openModal(e) {
+          if (e) e.preventDefault();
+          closeMobileMenu();
+          modal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
 
+        function closeModal() {
+          modal.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+
+        openModalBtns.forEach(btn => {
+          btn.addEventListener('click', openModal);
+        });
+
+        if (closeModalBtn) {
+          closeModalBtn.addEventListener('click', closeModal);
+        }
+
+        if (modal) {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+              closeModal();
+            }
+          });
+        }
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modal && modal.classList.contains('open')) {
+            closeModal();
+          }
+        });
+
+        // ========== Contact form ==========
+        const contactForm = document.getElementById('contactForm');
+
+        if (contactForm) {
+          const submitBtn = document.getElementById('submitBtn');
+          const formStatus = document.getElementById('formStatus');
+          const subjectSelect = document.getElementById('subject');
+          const emailSubject = document.getElementById('emailSubject');
+          const consent = document.getElementById('consent');
+
+          contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            if (!contactForm.checkValidity()) {
+              contactForm.reportValidity();
+              return;
+            }
+
+            if (!consent.checked) {
+              formStatus.textContent = 'Please accept the privacy consent.';
+              formStatus.style.color = '#ef4444';
+              return;
+            }
+
+            if (submitBtn.disabled) return;
+
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.6';
+            submitBtn.style.cursor = 'not-allowed';
+
+            formStatus.textContent = 'Sending...';
+            formStatus.style.color = '#c5c1b9';
+
+            try {
+              const formData = new FormData(contactForm);
+              const inquiryType = subjectSelect.value;
+              const emailTitle = `New Inquiry: ${inquiryType}`;
+              formData.set('subject', emailTitle);
+
+              const submissionDate = new Date().toLocaleString('en-GB', {
+                timeZone: 'Europe/Riga',
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+              });
+              formData.set('submission_date', submissionDate);
+              formData.set('page_url', window.location.href);
+              formData.set('page_language', document.documentElement.lang || 'en');
+
+              const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+              });
+
+              const result = await response.json();
+
+              if (response.ok && result.success) {
                 formStatus.textContent = 'Message sent successfully!';
                 formStatus.style.color = '#22c55e';
-
                 contactForm.reset();
 
                 setTimeout(() => {
-                    closeModal();
-                    formStatus.textContent = '';
+                  closeModal();
+                  formStatus.textContent = '';
                 }, 1800);
-
-            } else {
-
-                throw new Error(
-                    result.message || 'Something went wrong.'
-                );
-
+              } else {
+                throw new Error(result.message || 'Something went wrong.');
+              }
+            } catch (error) {
+              console.error('Form submission error:', error);
+              formStatus.textContent = 'Message could not be sent. Please try again later.';
+              formStatus.style.color = '#ef4444';
+            } finally {
+              submitBtn.disabled = false;
+              submitBtn.style.opacity = '1';
+              submitBtn.style.cursor = 'pointer';
             }
-
-        } catch (error) {
-
-            console.error('Form submission error:', error);
-
-            formStatus.textContent =
-                'Message could not be sent. Please try again later.';
-
-            formStatus.style.color = '#ef4444';
-
-        } finally {
-
-            submitBtn.disabled = false;
-            submitBtn.style.opacity = '1';
-
+          });
         }
+        // ========== End Contact form ==========
 
-    });
+        applyLanguage('en');
+      })();
+    </script>
 
-}
-            applyLanguage('en');
-        })();
-        </script>
-
-        <script type="module" async="" src="https://yuri-after-dark.lovable.app/assets/index-CvDesqgr.js"></script>
-   </body>
+    <script type="module" async="" src="https://yuri-after-dark.lovable.app/assets/index-CvDesqgr.js"></script>
+  </body>
 </html>
