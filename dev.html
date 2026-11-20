@@ -576,6 +576,23 @@
           pointer-events: none;
         }
       }
+       
+/* FIX: pointer cursor for all interactive elements */
+button,
+a,
+[role="button"],
+.lang-switcher,
+.lang-switcher button,
+.open-modal-btn,
+.mobile-menu-btn,
+.modal-close {
+    cursor: pointer !important;
+}
+
+/* Disabled buttons */
+button:disabled {
+    cursor: not-allowed !important;
+}
 
       /* FIXED MAIN NAVIGATION */
       header {
